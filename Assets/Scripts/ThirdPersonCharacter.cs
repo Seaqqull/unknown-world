@@ -7,7 +7,10 @@ namespace UnknownWorld
 	[RequireComponent(typeof(Animator))]
 	public class ThirdPersonCharacter : MonoBehaviour
 	{
-		[SerializeField] float m_MovingTurnSpeed = 360;
+        const float minimalInfelicity = 0.0001f;
+
+
+        [SerializeField] float m_MovingTurnSpeed = 360;
 		[SerializeField] float m_StationaryTurnSpeed = 180;
 		[SerializeField] float m_JumpPower = 12f;
 		[Range(1f, 4f)][SerializeField] float m_GravityMultiplier = 2f;
@@ -53,8 +56,10 @@ namespace UnknownWorld
 			move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-			m_TurnAmount = Mathf.Atan2(move.x, move.z);
-			m_ForwardAmount = move.z;
+            m_TurnAmount = (move.z < -minimalInfelicity) ? -Mathf.Atan2(move.x, Mathf.Abs(move.z)) : 
+                                                            Mathf.Atan2(move.x, move.z);
+
+            m_ForwardAmount = move.z;
 
 			ApplyExtraTurnRotation();
 
@@ -179,7 +184,7 @@ namespace UnknownWorld
 		void ApplyExtraTurnRotation()
 		{
 			// help the character turn faster (this is in addition to root rotation in the animation)
-			float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
+			float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, Mathf.Abs(m_ForwardAmount));
 			transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
 		}
 

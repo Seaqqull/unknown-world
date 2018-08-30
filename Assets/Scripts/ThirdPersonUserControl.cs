@@ -3,7 +3,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityScript;
 //UnityStandardAssets.Characters.ThirdPerson
 
-namespace UnknownWorld {
+namespace UnknownWorld {    
     [System.Serializable]
     public class CharacterCharacteristics {
         public float m_movementSpeed;
