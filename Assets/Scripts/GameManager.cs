@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace UnknownWorld
 {
-    [System.Serializable]
-    public class CameraKeeperData {
-        public Transform m_target;
-        public Transform m_lookAt;
-        public CameraController m_camera;
-    }
-
-
     public class GameManager : MonoBehaviour
     {
-        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller
+        [System.Serializable]
+        public class CameraKeeperData
+        {
+            public Transform m_target;/*Cant be deleted, get from m_camera*/
+            public Transform m_lookAt;/*Cant be deleted, get from m_camera*/
+            public CameraController m_camera;
+        }
 
+        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller
+        
         private int? m_activeCamera = null;
         public int m_targetCamera = -1;
 
@@ -37,14 +37,18 @@ namespace UnknownWorld
         {
             if(m_targetCamera != -1)
                 m_cameraTagets[m_targetCamera].m_camera.ActivateCamera(m_cameraTagets[m_targetCamera].m_target, m_cameraTagets[m_targetCamera].m_lookAt);
-            m_activeCamera = m_targetCamera == -1 ? 0 : m_targetCamera;
+            m_targetCamera = 0;
         }
 
-        private void SetAcctiveCamera(int cameraId = -1) {
-            if (cameraId == -1)
-                cameraId = m_targetCamera;
-            m_cameraTagets[m_activeCamera ?? 0].m_camera.ActivateCamera(m_cameraTagets[m_activeCamera ?? 0].m_target, m_cameraTagets[m_activeCamera ?? 0].m_lookAt);
-            m_cameraTagets[cameraId].m_camera.ActivateCamera(m_cameraTagets[cameraId].m_target, m_cameraTagets[cameraId].m_lookAt);
+        private void SetAcctiveCamera(int cameraId = -1) {            
+            m_cameraTagets[m_activeCamera.Value].m_camera.DiactivateCamera();
+            if (cameraId != -1)
+                m_activeCamera = m_targetCamera;
+
+            m_cameraTagets[m_activeCamera.Value].m_camera.ActivateCamera(
+                m_cameraTagets[m_activeCamera.Value].m_target, m_cameraTagets[m_activeCamera.Value].m_lookAt
+            );
+            
         }
 
     }

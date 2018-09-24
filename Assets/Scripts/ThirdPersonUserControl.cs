@@ -4,15 +4,16 @@ using UnityScript;
 //UnityStandardAssets.Characters.ThirdPerson
 
 namespace UnknownWorld {    
-    [System.Serializable]
-    public class CharacterCharacteristics {
-        public float m_movementSpeed;
-        public float m_rotationSpeed;
-    }
-
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour
     {
+        [System.Serializable]
+        public class CharacterCharacteristics
+        {
+            public float m_movementSpeed;
+            public float m_rotationSpeed;
+        }
+
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         public CameraController cameraSettings;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera

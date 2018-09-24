@@ -902,6 +902,7 @@ MonoBehaviour:
     invertY: 0
   allowRuntimeCameraSettingsChanges: 0
   m_DampTime: 0.2
+  m_rotationScale: 0.5
 --- !u!4 &992954904
 Transform:
   m_ObjectHideFlags: 0
