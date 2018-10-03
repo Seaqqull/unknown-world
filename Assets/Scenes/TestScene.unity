@@ -909,8 +909,8 @@ MonoBehaviour:
   - {fileID: 881927421}
   - {fileID: 767851297}
   - {fileID: 604953061}
-  - {fileID: 604953061}
   - {fileID: 97411922}
+  - {fileID: 1978065685}
 --- !u!114 &767851297 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114613845035947426, guid: 87a2b58dcdbc68b4a98563562bfabe75,
@@ -8880,6 +8880,12 @@ OcclusionArea:
   m_Size: {x: 25, y: 8, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
   m_IsViewVolume: 1
+--- !u!114 &1978065685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114613845035947426, guid: 87a2b58dcdbc68b4a98563562bfabe75,
+    type: 2}
+  m_PrefabInternal: {fileID: 1052511078}
+  m_Script: {fileID: 11500000, guid: 02cc2b15c73c74e45a433aee4625de8d, type: 3}
 --- !u!1 &2074971260
 GameObject:
   m_ObjectHideFlags: 0

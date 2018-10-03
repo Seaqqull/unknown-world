@@ -52,18 +52,10 @@ namespace UnknownWorld
 
                 for (int i = 0; i < m_targetManager.m_targets.Length; i++)
                 {
-                    for (int j = 0; j < m_targetManager.m_targets[i].m_points.TracePoints.Length; j++)
+                    if (m_warden.isTargetWithinArea(m_data, m_targetManager.m_targets[i].m_points.TracePoints))
                     {
-                        if (m_warden.isTargetWithinArea(m_data, m_targetManager.m_targets[i].m_points.TracePoints[j]))
-                        {
-                            m_affectedTargets.Add(m_targetManager.m_targets[i]);
-                            m_targetManager.m_targets[i].m_points.TracePoints[j].IsAreaAccessible = true;
-                        }
-                        else
-                            m_targetManager.m_targets[i].m_points.TracePoints[j].IsAreaAccessible = false;
-                    }
-                    
-                    
+                        m_affectedTargets.Add(m_targetManager.m_targets[i]);
+                    }                                                  
                 }
             }
         }
