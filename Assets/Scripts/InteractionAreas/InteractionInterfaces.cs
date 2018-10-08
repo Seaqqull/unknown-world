@@ -16,6 +16,6 @@ namespace UnknownWorld
 
     public interface AInteracitonAnnunciator<Ttype>
     {
-        bool isTargetWithinArea(SimpleData annuncicator, Ttype target);
+        bool isTargetWithinArea(SimpleData annuncicator, Ttype target, bool[] affectionMask);
     }
 }

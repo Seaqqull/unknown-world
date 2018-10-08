@@ -5,37 +5,111 @@ namespace UnknownWorld
     [System.Serializable]
     public class SimpleData
     {
-        public LayerMask m_targetMask;
-        public LayerMask m_obstacleMask;
-
-        private Transform transform;
-        [HideInInspector]
-        public Transform Transform
+        [SerializeField]
+        private LayerMask m_targetMask;
+        public LayerMask TargetMask
         {
             get
             {
-                return transform;
+                return this.m_targetMask;
             }
 
             set
             {
-                transform = value;
+                this.m_targetMask = value;
             }
         }
 
-        [Range(0, 360)]
-        public float m_angle;
-        [Range(0, 500)]
-        public float m_radius;
+        [SerializeField]
+        private LayerMask m_obstacleMask;
+        public LayerMask ObstacleMask
+        {
+            get
+            {
+                return this.m_obstacleMask;
+            }
 
+            set
+            {
+                this.m_obstacleMask = value;
+            }
+        }
+
+        private Transform m_transform;
+        public Transform Transform
+        {
+            get
+            {
+                return this.m_transform;
+            }
+
+            set
+            {
+                this.m_transform = value;
+            }
+        }
+
+        [SerializeField, Range(0, 360)]
+        private float m_angle;
+        public float Angle
+        {
+            get
+            {
+                return this.m_angle;
+            }
+
+            set
+            {
+                this.m_angle = value;
+            }
+        }
+
+        [SerializeField, Range(0, 500)]
+        private float m_radius;
+        public float Radius
+        {
+            get
+            {
+                return this.m_radius;
+            }
+
+            set
+            {
+                this.m_radius = value;
+            }
+        }
     }
     [System.Serializable]
     public class CircleTarget
     {
-        public TracePointContainer m_points;
-        public ThirdPersonUserControl m_target;        
+        [SerializeField]
+        private TracePointContainer m_points;
+        public TracePointContainer Points
+        {
+            get
+            {
+                return this.m_points;
+            }
 
-        [HideInInspector]
-        public bool isInRange;
+            set
+            {
+                this.m_points = value;
+            }
+        }
+
+        [SerializeField]
+        private ThirdPersonUserControl m_target;
+        public ThirdPersonUserControl Target
+        {
+            get
+            {
+                return this.m_target;
+            }
+
+            set
+            {
+                this.m_target = value;
+            }
+        }
     }
 }

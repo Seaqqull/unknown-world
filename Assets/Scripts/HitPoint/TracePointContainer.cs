@@ -8,10 +8,9 @@ namespace UnknownWorld
     public class TracePointContainer : MonoBehaviour
     {
         private ThirdPersonUserControl m_character;
-        
-        private TracePoint[] m_tracePoints;
-        public TracePoint[] m_points;
 
+        public TracePoint[] m_points;
+        private TracePoint[] m_tracePoints;
         public TracePoint[] TracePoints
         {
             get
@@ -20,7 +19,8 @@ namespace UnknownWorld
             }
         }
 
-        private void Start()
+
+        private void Awake()
         {
             m_character = GetComponent<ThirdPersonUserControl>();
             updateInternal();
