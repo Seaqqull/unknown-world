@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnknownWorld
+namespace UnknownWorld.Manager
 {
     public class GameManager : MonoBehaviour
     {
         [System.Serializable]
         public class CameraKeeperData
         {
-            public Transform m_target;/*Cant be deleted, get from m_camera*/
-            public Transform m_lookAt;/*Cant be deleted, get from m_camera*/
             public CameraController m_camera;
+            public Transform m_target; // Cant be deleted, get from m_camera
+            public Transform m_lookAt; // Cant be deleted, get from m_camera/            
         }
 
-        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller
-        
+
         private int? m_activeCamera = null;
+
+        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller                
         public int m_targetCamera = -1;
 
+
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             SetCameraTargetFromPlayer();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (m_activeCamera.HasValue && m_targetCamera != m_activeCamera)
                 SetAcctiveCamera();

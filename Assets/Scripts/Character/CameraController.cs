@@ -11,6 +11,12 @@ namespace UnknownWorld
             KeyboardAndMouse, Controller,
         }
 
+        public struct CameraDefaultSettings
+        {
+            public Quaternion m_rotation;
+            public Vector3 m_position;
+        }
+
         [System.Serializable]
         public struct InvertSettings
         {
@@ -18,54 +24,46 @@ namespace UnknownWorld
             public bool invertY;
         }
 
-        public struct CameraDefaultSettings
-        {
-            public Quaternion m_rotation;
-            public Vector3 m_position;
-        }
+
+        [SerializeField] private bool allowRuntimeCameraSettingsChanges;
+        [SerializeField] private Transform m_targetlookAtPosition;
+        [SerializeField] private float m_rotationScale = 1.0f;
+        [SerializeField] private Transform m_targetPosition;
+        [SerializeField] private float m_DampTime = 0.2f;
 
         private CameraDefaultSettings m_settingDefault;
+        private bool m_isCameraActive = false;
+        private float m_rotationVelocity;
+        private Vector3 m_moveVelocity;
+        private float m_zoomVelocity;
+        private Camera m_Camera;        
 
-        public Transform m_targetPosition;
-        public Transform m_targetlookAtPosition;
-        public InputChoice inputChoice;
         public InvertSettings keyboardAndMouseInvertSettings;
         public InvertSettings controllerInvertSettings;
-
-        public bool allowRuntimeCameraSettingsChanges;
-        public float m_DampTime = 0.2f;
+        public InputChoice inputChoice;
 
 
-        private bool m_isCameraActive = false;
-        private Camera m_Camera;
-        private float m_zoomVelocity;
-        private Vector3 m_moveVelocity;
+        private void Start()
+        {
 
-        private float m_rotationVelocity;
-        public float m_rotationScale = 1.0f;
-
+        }
 
         private void Awake()
         {
             m_Camera = GetComponentInChildren<Camera>();
         }
 
-        // Use this for initialization
-        void Start()
-        {
-        }
-
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
 
-        }
+        }       
 
         private void FixedUpdate()
         {
             if(m_isCameraActive)
                 Move();         
         }
+
 
         private void Move()
         {
@@ -82,7 +80,19 @@ namespace UnknownWorld
             //m_Camera.orthographicSize = Mathf.SmoothDamp(m_Camera.orthographicSize, requiredSize, ref m_zoomVelocity, m_DampTime);
         }
 
-        public void ActivateCamera(Transform cameraTarget, Transform cameraLookAt) {
+        
+        public void DiactivateCamera(){
+            m_isCameraActive = false;
+
+            m_targetPosition = null;
+            m_targetlookAtPosition = null;
+
+            transform.position = m_settingDefault.m_position;
+            transform.rotation = m_settingDefault.m_rotation;
+        }
+
+        public void ActivateCamera(Transform cameraTarget, Transform cameraLookAt)
+        {
             m_isCameraActive = true;
 
             m_targetPosition = cameraTarget;
@@ -92,15 +102,5 @@ namespace UnknownWorld
             m_settingDefault.m_position = m_targetPosition.position;
         }
 
-        public void DiactivateCamera() {
-            m_isCameraActive = false;
-
-            m_targetPosition = null;
-            m_targetlookAtPosition = null;
-
-            transform.position = m_settingDefault.m_position;
-            transform.rotation = m_settingDefault.m_rotation;
-        }
     }
-
 }
