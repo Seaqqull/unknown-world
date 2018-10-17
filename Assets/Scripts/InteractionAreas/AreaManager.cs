@@ -126,7 +126,7 @@ namespace UnknownWorld.Area
                     for (int k = 0; k < m_cameras[j].Areas.Count; k++)
                     {
                         AreasMask.Add(new UnknownWorld.Area.Data.AreaAffectionMask(
-                            m_targets[i].Points.TracingPoints.Length,
+                            m_targets[i].AreaContainer.TracingAreas.Length,
                             m_targets[i].Subject.Id, m_cameras[j].Id, m_cameras[j].Areas[k].Id));
                     }                    
                 }                
@@ -153,7 +153,7 @@ namespace UnknownWorld.Area
             List<int> indexes = new List<int>();
             for (int i = 0; i < m_areasMask.Count; i++)
             {
-                if (m_areasMask[i].AreaAddresses.targetId == targetId) indexes.Add(i);
+                if (m_areasMask[i].AreaAddresses.TargetId == targetId) indexes.Add(i);
             }
             return indexes;
         }
@@ -196,8 +196,8 @@ namespace UnknownWorld.Area
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.areaId == areaId &&
-                    AreasMask[i].AreaAddresses.cameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.CameraId == cameraId)
                 {
                     AreasMask[i].AffectedMask.SetAll(false);
                 }
@@ -210,7 +210,7 @@ namespace UnknownWorld.Area
             {
                 if (m_targets[i].Subject.Id == targetId && m_affectedTargetMask[i])
                 {
-                    BitArray currentTargetMask = new BitArray(m_targets[i].Subject.AreaContainer.TracingPoints.Length);
+                    BitArray currentTargetMask = new BitArray(m_targets[i].Subject.AreaContainer.TracingAreas.Length);
                     for (int j = 0; j < m_targetIndexes[i].Length; j++)
                     {
                         currentTargetMask.Or(m_areasMask[m_targetIndexes[i][j]].AffectedMask);
@@ -225,9 +225,9 @@ namespace UnknownWorld.Area
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.targetId == targetId &&
-                    AreasMask[i].AreaAddresses.areaId == areaId &&
-                    AreasMask[i].AreaAddresses.cameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.CameraId == cameraId)
                 {
                     AreasMask[i].AffectedMask.SetAll(false);
                     break;
@@ -239,9 +239,9 @@ namespace UnknownWorld.Area
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.targetId == targetId &&
-                    AreasMask[i].AreaAddresses.areaId == areaId &&
-                    AreasMask[i].AreaAddresses.cameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.CameraId == cameraId)
                 {
                     return AreasMask[i].AffectedMask.Length;
                 }
@@ -253,9 +253,9 @@ namespace UnknownWorld.Area
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.targetId == targetId &&
-                    AreasMask[i].AreaAddresses.areaId == areaId &&
-                    AreasMask[i].AreaAddresses.cameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.CameraId == cameraId)
                 {
                     return AreasMask[i].AffectedMask;
                 }
@@ -267,9 +267,9 @@ namespace UnknownWorld.Area
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.targetId == targetId &&
-                    AreasMask[i].AreaAddresses.areaId == areaId &&
-                    AreasMask[i].AreaAddresses.cameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.CameraId == cameraId)
                 {
                     AreasMask[i].AffectedMask = mask;
                     break;

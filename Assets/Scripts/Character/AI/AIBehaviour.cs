@@ -39,17 +39,17 @@ namespace UnknownWorld.Behaviour
         }
 
 
-        public int GetTargetCount()
+        public int GetTargetsCount()
         {
             return m_areaManager.Targets.Count;
         }
 
-        public void ClearMasks(uint areaId)
+        public void ClearAreaMasks(uint areaId)
         {
             m_areaManager.ClearMasks(this.Id, areaId);
         }
 
-        public uint GetTargetId(int targetPosition)
+        public uint GetSubjectId(int targetPosition)
         {
             return m_areaManager.Targets[targetPosition].Subject.Id;
         }
@@ -59,9 +59,9 @@ namespace UnknownWorld.Behaviour
             return m_areaManager.GetMask(targetId, this.Id, areaId);
         }
 
-        public UnknownWorld.Area.Target.TracingAreaContainer GetPoints(int targetPosition)
+        public UnknownWorld.Area.Target.TracingAreaContainer GetAreaContainer(int targetPosition)
         {
-            return m_areaManager.Targets[targetPosition].Points;
+            return m_areaManager.Targets[targetPosition].AreaContainer;
         }       
 
     }

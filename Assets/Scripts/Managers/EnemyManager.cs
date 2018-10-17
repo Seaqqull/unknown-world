@@ -85,7 +85,7 @@ namespace UnknownWorld.Manager
             
             for (int i = 0; i < m_characters.Count; i++)
             {
-                m_characterHitMask.Add(new BitArray(m_characters[i].AreaContainer.TracingPoints.Length));
+                m_characterHitMask.Add(new BitArray(m_characters[i].AreaContainer.TracingAreas.Length));
             }            
         }        
 

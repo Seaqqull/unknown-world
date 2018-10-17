@@ -64,8 +64,6 @@ namespace UnknownWorld.Area.Observer
         protected virtual void Awake()
         {
             m_owner = GetComponent<UnknownWorld.Behaviour.PersonBehaviour>();
-            //m_data.Transform = GetComponent<Transform>();
-            //m_data.Transform.Translate(m_data.Offset);
 
             m_id = m_idCounter++;
 
@@ -88,7 +86,7 @@ namespace UnknownWorld.Area.Observer
 
         public abstract void OnDrawGizmos();        
 
-        public abstract bool isTargetWithinArea(UnknownWorld.Area.Target.TracingArea[] target, BitArray affectionMask);        
+        public abstract bool IsTargetWithinArea(UnknownWorld.Area.Target.TracingArea[] target, BitArray affectionMask, params object[] list);        
 
     }
 }

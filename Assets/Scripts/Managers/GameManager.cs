@@ -25,6 +25,9 @@ namespace UnknownWorld.Manager
         private void Start()
         {
             SetCameraTargetFromPlayer();
+
+            // ignore colision between character and target
+            Physics.IgnoreLayerCollision(11, 10);
         }
 
         // Update is called once per frame

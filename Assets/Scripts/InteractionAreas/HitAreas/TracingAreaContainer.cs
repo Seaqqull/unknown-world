@@ -5,52 +5,49 @@ namespace UnknownWorld.Area.Target
     [System.Serializable]
     public class TracingAreaContainer : MonoBehaviour
     {
-        private UnknownWorld.Behaviour.PersonBehaviour m_character;
-        private TracingArea[] m_tracePoints;
+        private UnknownWorld.Behaviour.PersonBehaviour m_person;
+        private TracingArea[] m_tracingAreas;
 
-        public TracingArea[] TracingPoints
+        public TracingArea[] TracingAreas
         {
             get
             {
-                return this.m_tracePoints;
+                return this.m_tracingAreas;
             }
         }
 
 
         void Awake()
         {
-            m_character = GetComponent<UnknownWorld.Behaviour.PersonBehaviour>();
-            m_tracePoints = GetComponentsInChildren<TracingArea>();
-
-            // ignore colision between character and target
-            Physics.IgnoreLayerCollision(11, 10);
+            m_person = GetComponent<UnknownWorld.Behaviour.PersonBehaviour>();
+            m_tracingAreas = GetComponentsInChildren<TracingArea>();
         }
 
 
         public int GetPointsCount()
         {
-            return m_tracePoints.Length;
+            return m_tracingAreas.Length;
         }
 
         public Transform GetPointTransform(int index)
         {
-            if (index >= m_tracePoints.Length && index < 0)
+            if (index >= m_tracingAreas.Length && index < 0)
                 return null;
-            return m_tracePoints[index].transform;
+            return m_tracingAreas[index].transform;
         }
 
-        public UnknownWorld.Area.Data.HitAreaState SetPointState(int index)
+        public UnknownWorld.Area.Data.HitAreaState GetPointState(int index)
         {
-            if ((index >= m_tracePoints.Length) && (index < 0))
+            if ((index >= m_tracingAreas.Length) && (index < 0))
                 return UnknownWorld.Area.Data.HitAreaState.Unknown;
-            return m_tracePoints[index].AreaState;
+            return m_tracingAreas[index].State;
         }
 
         public void SetPointState(int index, UnknownWorld.Area.Data.HitAreaState areaState)
         {
-            if ((index >= m_tracePoints.Length) && (index < 0))
+            if ((index >= m_tracingAreas.Length) && (index < 0))
                 return;
-            m_tracePoints[index].AreaState = areaState;
+            m_tracingAreas[index].State = areaState;
         }
         
     }

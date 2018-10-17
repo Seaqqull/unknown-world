@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnknownWorld.Area.Target;
 
 namespace UnknownWorld.Area.Observer
 {
-    public class SearchingCircleView : SearchingArea
+    public class SearchingCircleSonar : SearchingArea
     {
         protected UnknownWorld.Behaviour.AIBehaviour m_ownerAi;
 
 
         protected override void Awake()
-        {            
+        {
             base.Awake();
 
             m_ownerAi = (base.m_owner as UnknownWorld.Behaviour.AIBehaviour);
         }
-
 
         private void ShowTargets()
         {
@@ -112,17 +112,16 @@ namespace UnknownWorld.Area.Observer
         {
             bool isContainerAffected = false;
 
-            Vector3 positionWithOffset = transform.position + m_data.Offset;
+            Vector3 positionWithOffset = transform.position + m_data.Offset;            
             Vector3 vectorsSubstraction;
 
             for (int i = 0; i < target.Length; i++)
             {
                 vectorsSubstraction = target[i].transform.position - positionWithOffset;
 
-                if ((((1 << target[i].Collider.gameObject.layer) & m_data.TargetMask) == 0) ||
+                if ((((1<<target[i].Collider.gameObject.layer) & m_data.TargetMask) == 0) ||
                     (vectorsSubstraction.magnitude > m_data.Radius) ||
-                    (Vector3.Angle(transform.forward, vectorsSubstraction.normalized) > m_data.Angle / 2)||
-                    Physics.Raycast(positionWithOffset, vectorsSubstraction.normalized, vectorsSubstraction.magnitude, m_data.ObstacleMask))
+                    (Vector3.Angle(transform.forward, vectorsSubstraction.normalized) > m_data.Angle / 2))
                     continue;
                 
                 isContainerAffected = true;

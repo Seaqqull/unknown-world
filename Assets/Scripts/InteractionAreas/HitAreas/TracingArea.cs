@@ -8,7 +8,7 @@ namespace UnknownWorld.Area.Target
     {
         protected static Color EDITOR_GIZMO_COLOR = Color.blue;
 
-        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_areaState = HitAreaState.Activated;
+        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Activated;
         [SerializeField] private Vector3 m_offset;
         [SerializeField] protected string m_name;
 
@@ -17,16 +17,16 @@ namespace UnknownWorld.Area.Target
         protected Vector3 m_defaultOffset;
         protected Collider m_colider;
 
-        public HitAreaState AreaState
+        public HitAreaState State
         {
             get
             {
-                return this.m_areaState;
+                return this.m_state;
             }
 
             set
             {
-                this.m_areaState = value;
+                this.m_state = value;
                 SetAreaColor();
             }
         }
@@ -58,7 +58,7 @@ namespace UnknownWorld.Area.Target
         protected virtual void Awake()
         {
             m_areaContainer = GetComponentInParent<UnknownWorld.Area.Target.TracingAreaContainer>();
-            AreaState = HitAreaState.Activated;
+            m_state = HitAreaState.Activated;
             transform.position += m_offset;
             m_defaultOffset = m_offset;
             m_colider = GetCollider();
@@ -67,7 +67,7 @@ namespace UnknownWorld.Area.Target
 
         protected virtual void OnDestroy()
         {
-            AreaState = HitAreaState.Activated;
+            m_state = HitAreaState.Activated;
 
             transform.Translate(-m_defaultOffset);            
             m_offset = m_defaultOffset;            
@@ -75,7 +75,7 @@ namespace UnknownWorld.Area.Target
         
         protected virtual void SetAreaColor()
         {
-            switch (m_areaState)
+            switch (m_state)
             {
                 case Data.HitAreaState.Accessible:
                     this.m_gizmoColor = this.m_gizmoColorAccessible;

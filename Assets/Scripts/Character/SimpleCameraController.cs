@@ -133,8 +133,8 @@ namespace UnityTemplateProjects
 
         private void OnEnable()
         {
-            m_TargetCameraState.SetFromTransform(transform);
             m_InterpolatingCameraState.SetFromTransform(transform);
+            m_TargetCameraState.SetFromTransform(transform);            
         }
         
         

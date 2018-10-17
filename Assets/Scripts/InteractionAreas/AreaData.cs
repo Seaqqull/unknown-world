@@ -34,21 +34,21 @@ namespace UnknownWorld.Area.Data
             private uint m_cameraId;
             private uint m_targetId;
 
-            public uint areaId
+            public uint AreaId
             {
                 get
                 {
                     return this.m_areaId;
                 }
             }
-            public uint cameraId
+            public uint CameraId
             {
                 get
                 {
                     return this.m_cameraId;
                 }
             }
-            public uint targetId
+            public uint TargetId
             {
                 get
                 {
@@ -101,7 +101,7 @@ namespace UnknownWorld.Area.Data
         [SerializeField] private UnknownWorld.Area.Target.TracingAreaContainer m_points;
         [SerializeField] private UnknownWorld.Behaviour.CharacterBehaviour m_subject;
 
-        public UnknownWorld.Area.Target.TracingAreaContainer Points
+        public UnknownWorld.Area.Target.TracingAreaContainer AreaContainer
         {
             get
             {
