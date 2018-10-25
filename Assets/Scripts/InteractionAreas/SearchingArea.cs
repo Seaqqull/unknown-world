@@ -11,6 +11,7 @@ namespace UnknownWorld.Area.Observer
         [SerializeField] public Color m_colorZone = Color.white;
         [SerializeField] public Color m_colorTarget = Color.red;         
         [SerializeField] protected int m_priority = 0;
+        [SerializeField] protected Transform m_socket;
 
         protected UnknownWorld.Behaviour.PersonBehaviour m_owner;
         protected static uint m_idCounter = 0;
@@ -68,14 +69,16 @@ namespace UnknownWorld.Area.Observer
             m_id = m_idCounter++;
 
             IsActive = m_isAreaActive;
+
+            if (!m_socket) m_socket = this.transform;
         }
 
 
-        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal, bool isSocketed = false)
         {
             if (!angleIsGlobal)
-            {
-                angleInDegrees += transform.eulerAngles.y;
+            {               
+                angleInDegrees += (!isSocketed) ? transform.eulerAngles.y : m_socket.eulerAngles.y;
             }
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }

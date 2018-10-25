@@ -19,7 +19,7 @@ namespace UnknownWorld.Area.Observer
 
         private void ShowTargets()
         {
-            Vector3 positionWithOffset = transform.position + m_data.Offset;
+            Vector3 positionWithOffset = ((!base.m_socket)? transform.position : base.m_socket.transform.position) + m_data.Offset;
             UnityEditor.Handles.color = m_colorTarget;
 
             if (m_owner)
@@ -40,7 +40,7 @@ namespace UnknownWorld.Area.Observer
         [System.Obsolete("This method can be used instead of standart handle drawing -> DrawCircleHandle")]
         private void DrawCircleGizmo()
         {
-            Vector3 positionWithOffset = transform.position + m_data.Offset;
+            Vector3 positionWithOffset = ((!base.m_socket)? transform.position : base.m_socket.transform.position) + m_data.Offset;
             Gizmos.color = m_colorZone;
 
             float theta = 0;
@@ -63,15 +63,15 @@ namespace UnknownWorld.Area.Observer
             if (m_data.Angle != 360.0f)
             {
                 UnityEditor.Handles.DrawLine(positionWithOffset,
-                    positionWithOffset + DirFromAngle(-m_data.Angle / 2, false) * m_data.Radius);
+                    positionWithOffset + DirFromAngle(-m_data.Angle / 2, false, base.m_socket) * m_data.Radius);
                 UnityEditor.Handles.DrawLine(positionWithOffset,
-                    positionWithOffset + DirFromAngle(m_data.Angle / 2, false) * m_data.Radius);
+                    positionWithOffset + DirFromAngle(m_data.Angle / 2, false, base.m_socket) * m_data.Radius);
             }
         }
 
         private void DrawCircleHandle()
         {
-            Vector3 positionWithOffset = transform.position + m_data.Offset;
+            Vector3 positionWithOffset = ((!base.m_socket)? transform.position : base.m_socket.transform.position) + m_data.Offset;
             UnityEditor.Handles.color = m_colorZone;
 
             UnityEditor.Handles.DrawWireArc(positionWithOffset,
@@ -79,9 +79,9 @@ namespace UnknownWorld.Area.Observer
             if (m_data.Angle != 360.0f)
             {
                 UnityEditor.Handles.DrawLine(positionWithOffset,
-                positionWithOffset + DirFromAngle(-m_data.Angle / 2, false) * m_data.Radius);
+                positionWithOffset + DirFromAngle(-m_data.Angle / 2, false, base.m_socket) * m_data.Radius);
                 UnityEditor.Handles.DrawLine(positionWithOffset,
-                    positionWithOffset + DirFromAngle(m_data.Angle / 2, false) * m_data.Radius);
+                    positionWithOffset + DirFromAngle(m_data.Angle / 2, false, base.m_socket) * m_data.Radius);
             }
         }
 
@@ -112,19 +112,18 @@ namespace UnknownWorld.Area.Observer
         {
             bool isContainerAffected = false;
 
-            Vector3 positionWithOffset = transform.position + m_data.Offset;
+            Vector3 positionWithOffset = ((!base.m_socket)? transform.position : base.m_socket.transform.position) + m_data.Offset;
             Vector3 vectorsSubstraction;
 
             for (int i = 0; i < target.Length; i++)
             {
                 vectorsSubstraction = target[i].transform.position - positionWithOffset;
-
+                
                 if ((((1 << target[i].Collider.gameObject.layer) & m_data.TargetMask) == 0) ||
                     (vectorsSubstraction.magnitude > m_data.Radius) ||
-                    (Vector3.Angle(transform.forward, vectorsSubstraction.normalized) > m_data.Angle / 2)||
+                    (Vector3.Angle(base.m_socket.transform.forward, vectorsSubstraction.normalized) > m_data.Angle / 2)||
                     Physics.Raycast(positionWithOffset, vectorsSubstraction.normalized, vectorsSubstraction.magnitude, m_data.ObstacleMask))
                     continue;
-                
                 isContainerAffected = true;
                 affectionMask[i] = true;
             }
