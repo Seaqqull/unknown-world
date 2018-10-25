@@ -127,7 +127,7 @@ ModelImporter:
     400118: Spine1
     400120: Spine2
     400122: //RootNode
-    7400000: Zombie Biting
+    7400000: Zombie Bite
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -158,7 +158,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Zombie Biting
+      name: Zombie Bite
       takeName: mixamo.com
       firstFrame: 0
       lastFrame: 140

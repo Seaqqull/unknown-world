@@ -127,7 +127,7 @@ ModelImporter:
     400118: Spine1
     400120: Spine2
     400122: //RootNode
-    7400000: ZombieGirlW_TurningHalfLeft
+    7400000: ZombieGirlW_TurnHalfLeft
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -158,7 +158,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ZombieGirlW_TurningHalfLeft
+      name: ZombieGirlW_TurnHalfLeft
       takeName: mixamo.com
       firstFrame: 0
       lastFrame: 293
