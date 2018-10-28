@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace UnknownWorld.Manager
 {
-    public class EnemyManager : MonoBehaviour
+    public class ObserverManager : MonoBehaviour
     {
         private List<UnknownWorld.Behaviour.CharacterBehaviour> m_characters;       
-        private List<UnknownWorld.Area.AreaManager> m_areas;
+        private List<UnknownWorld.Manager.AreaManager> m_areas;
         private List<BitArray> m_characterHitMask;
         private Coroutine m_coroutine;
         protected bool m_isActive;
@@ -22,9 +22,10 @@ namespace UnknownWorld.Manager
             {
                 if (this.m_characterHitMask == null)
                 {
-                    m_characterHitMask = new List<BitArray>();
+                    ;
                 }
-                return this.m_characterHitMask;
+                return this.m_characterHitMask ??
+                    (m_characterHitMask = new List<BitArray>());
             }
         }
         public bool IsActive
@@ -57,8 +58,8 @@ namespace UnknownWorld.Manager
         {
             m_characters = FindObjectsOfType<UnknownWorld.Behaviour.CharacterBehaviour>().
                 OfType<UnknownWorld.Behaviour.CharacterBehaviour>().ToList();
-            m_areas = FindObjectsOfType<UnknownWorld.Area.AreaManager>().
-                OfType<UnknownWorld.Area.AreaManager>().ToList();
+            m_areas = FindObjectsOfType<UnknownWorld.Manager.AreaManager>().
+                OfType<UnknownWorld.Manager.AreaManager>().ToList();
             IsActive = m_isAreaActive;
 
             UpdateCharacterHitMask();            
@@ -129,10 +130,22 @@ namespace UnknownWorld.Manager
                 {
                     for (int j = 0; j < m_characterHitMask[i].Count; j++)
                     {
-                        m_characters[i].AreaContainer.SetPointState(j, 
-                            m_characterHitMask[i][j] ? Area.Data.HitAreaState.Accessible : Area.Data.HitAreaState.Activated);
+                        if ((!m_characters[i].IsActive) ||
+                            (m_characters[i].AreaContainer.TracingAreas[j].State == Area.Data.HitAreaState.Disabled))
+                            continue;
+
+                        m_characters[i].AreaContainer.SetAreaState(j, 
+                            (!m_characterHitMask[i][j]) ? Area.Data.HitAreaState.Enabled : Area.Data.HitAreaState.Accessible);
                     }
                 }
+            }
+        }
+
+        public void ClearCharacterMask(uint characterId)
+        {
+            for (int i = 0; i < m_areas.Count; i++)
+            {
+                m_areas[i].ClearByTargetId(characterId);
             }
         }
 

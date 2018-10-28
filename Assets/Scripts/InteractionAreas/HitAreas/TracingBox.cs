@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnknownWorld.Area.Data;
 
 namespace UnknownWorld.Area.Target
 {
@@ -17,7 +18,9 @@ namespace UnknownWorld.Area.Target
 
         protected override void OnDrawGizmos()
         {
-            if (!base.m_colider) return;
+            if ((!base.m_colider)||
+                (base.m_state == Data.HitAreaState.Disabled) ||
+                (base.m_state == Data.HitAreaState.Unknown)) return;
 
             Gizmos.color = base.m_gizmoColor;
             Gizmos.
@@ -28,6 +31,10 @@ namespace UnknownWorld.Area.Target
         {
             return GetComponent<BoxCollider>();
         }
-        
+
+        protected override void SetState(HitAreaState incomeState)
+        {
+            base.SetState(incomeState);
+        }
     }
 }

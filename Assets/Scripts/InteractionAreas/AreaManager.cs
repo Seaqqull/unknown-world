@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace UnknownWorld.Area
+namespace UnknownWorld.Manager
 {
     [System.Serializable]
     public class AreaManager : MonoBehaviour
@@ -13,56 +13,44 @@ namespace UnknownWorld.Area
         [SerializeField] private bool m_isManagerActive = true;
 
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_areasMask;
-        private List<UnknownWorld.Behaviour.AIBehaviour> m_cameras;
+        private List<UnknownWorld.Behaviour.AIBehaviour> m_observers;
         private BitArray m_affectedTargetMask; // Update every time, when target.count changed        
         protected static uint m_idCounter = 0;
         private int[][] m_targetIndexes;
         private Coroutine m_coroutine;
-        protected bool m_isActive;        
+        protected bool m_isActive;
         protected uint m_id;
 
         public List<UnknownWorld.Area.Data.AreaAffectionMask> AreasMask
         {
             get
             {
-                if (this.m_areasMask == null)
-                {
-                    this.m_areasMask = new List<UnknownWorld.Area.Data.AreaAffectionMask>();
-                }
-                return this.m_areasMask;
+                return this.m_areasMask ?? 
+                    (this.m_areasMask = new List<UnknownWorld.Area.Data.AreaAffectionMask>());
             }
         }
-        public List<UnknownWorld.Behaviour.AIBehaviour> Cameras
+        public List<UnknownWorld.Behaviour.AIBehaviour> Observers
         {
             get
             {
-                if (this.m_cameras == null)
-                {
-                    this.m_cameras = new List<UnknownWorld.Behaviour.AIBehaviour>();
-                }
-                return this.m_cameras;
+                return this.m_observers ?? 
+                    (this.m_observers = new List<UnknownWorld.Behaviour.AIBehaviour>());
             }
         }
         public List<UnknownWorld.Area.Data.AreaTarget> Targets
         {
             get
             {
-                if (this.m_targets == null)
-                {
-                    this.m_targets = new List<UnknownWorld.Area.Data.AreaTarget>();
-                }
-                return this.m_targets;
+                return this.m_targets ??
+                    (this.m_targets = new List<UnknownWorld.Area.Data.AreaTarget>());
             }
         }
         public BitArray AffectedTargetMask
         {
             get
             {
-                if (this.m_affectedTargetMask == null)
-                {
-                    this.m_affectedTargetMask = new BitArray(0);
-                }
-                return this.m_affectedTargetMask;
+                return this.m_affectedTargetMask ??
+                    (this.m_affectedTargetMask = new BitArray(0));
             }
         }
         public int[][] TargetIndexes
@@ -89,6 +77,11 @@ namespace UnknownWorld.Area
                 if (!this.m_isActive)
                 {
                     StopCoroutine(this.m_coroutine);
+
+                    for (int i = 0; i < m_observers.Count; i++)
+                    {
+                        ClearMasks(m_observers[i].Id);
+                    }
                 }
                 else
                 {
@@ -113,7 +106,7 @@ namespace UnknownWorld.Area
 
         protected virtual void Start()
         {
-            m_cameras = GetComponentsInChildren<UnknownWorld.Behaviour.AIBehaviour>().
+            m_observers = GetComponentsInChildren<UnknownWorld.Behaviour.AIBehaviour>().
                 OfType<UnknownWorld.Behaviour.AIBehaviour>().ToList();
             
             m_affectedTargetMask = new BitArray(Targets.Count); 
@@ -121,13 +114,14 @@ namespace UnknownWorld.Area
 
             for (int i = 0; i < m_targets.Count; i++)
             {
-                for (int j = 0; j < m_cameras.Count; j++)
+                m_targets[i].UpdateAreaManager();
+                for (int j = 0; j < m_observers.Count; j++)
                 {
-                    for (int k = 0; k < m_cameras[j].Areas.Count; k++)
+                    for (int k = 0; k < m_observers[j].Areas.Count; k++)
                     {
                         AreasMask.Add(new UnknownWorld.Area.Data.AreaAffectionMask(
                             m_targets[i].AreaContainer.TracingAreas.Length,
-                            m_targets[i].Subject.Id, m_cameras[j].Id, m_cameras[j].Areas[k].Id));
+                            m_targets[i].Subject.Id, m_observers[j].Id, m_observers[j].Areas[k].Id, m_observers[j].Areas[k].Type));
                     }                    
                 }                
             }
@@ -135,6 +129,10 @@ namespace UnknownWorld.Area
             UpdateTargetsIndexes();
         }
 
+        protected virtual void Update()
+        {
+            IsActive = m_isManagerActive;// only for editor
+        }
 
         // call every time, when AreaMasks have been changed to update indexes of target in affection mask
         protected void UpdateTargetsIndexes()
@@ -169,8 +167,9 @@ namespace UnknownWorld.Area
                 for (int i = 0; i < m_targetIndexes.Length; i++) // possible targets
                 {
                     isTargetAffected = false;
+                    
                     for (int j = 0; j < m_targetIndexes[i].Length; j++) // found indexes
-                    {
+                    {                        
                         for (int k = 0; k < m_areasMask[m_targetIndexes[i][j]].AffectedMask.Length; k++) // mask
                         {
                             if (m_areasMask[m_targetIndexes[i][j]].AffectedMask[k]) isTargetAffected = true;
@@ -182,6 +181,28 @@ namespace UnknownWorld.Area
         }
 
 
+        public void ClearMasks(uint observerId)
+        {
+            for (int i = 0; i < AreasMask.Count; i++)
+            {
+                if (AreasMask[i].AreaAddresses.ObserverId == observerId)
+                {
+                    AreasMask[i].AffectedMask.SetAll(false);
+                }
+            }
+        }
+
+        public void ClearByTargetId(uint targetId)
+        {
+            for (int i = 0; i < AreasMask.Count; i++)
+            {
+                if (AreasMask[i].AreaAddresses.TargetId == targetId)
+                {
+                    AreasMask[i].AffectedMask.SetAll(false);
+                }
+            }
+        }
+
         public HashSet<uint> GetAffectedCharactersId()
         {
             HashSet<uint> ids = new HashSet<uint>();
@@ -192,12 +213,12 @@ namespace UnknownWorld.Area
             return ids;
         }
 
-        public void ClearMasks(uint cameraId, uint areaId)
+        public void ClearMasks(uint observerId, uint areaId)
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
                 if (AreasMask[i].AreaAddresses.AreaId == areaId &&
-                    AreasMask[i].AreaAddresses.CameraId == cameraId)
+                    AreasMask[i].AreaAddresses.ObserverId == observerId)
                 {
                     AreasMask[i].AffectedMask.SetAll(false);
                 }
@@ -221,13 +242,13 @@ namespace UnknownWorld.Area
             return null;
         }
 
-        public void ClearMask(uint targetId, uint cameraId, uint areaId)
+        public void ClearMask(uint targetId, uint observerId, uint areaId)
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
-                    AreasMask[i].AreaAddresses.AreaId == areaId &&
-                    AreasMask[i].AreaAddresses.CameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.ObserverId == observerId)
                 {
                     AreasMask[i].AffectedMask.SetAll(false);
                     break;
@@ -235,13 +256,13 @@ namespace UnknownWorld.Area
             }
         }
 
-        public int? GetMaskSize(uint targetId, uint cameraId, uint areaId)
+        public int? GetMaskSize(uint targetId, uint observerId, uint areaId)
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
-                    AreasMask[i].AreaAddresses.AreaId == areaId &&
-                    AreasMask[i].AreaAddresses.CameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.ObserverId == observerId)
                 {
                     return AreasMask[i].AffectedMask.Length;
                 }
@@ -249,13 +270,13 @@ namespace UnknownWorld.Area
             return null;
         }
 
-        public BitArray GetMask(uint targetId, uint cameraId, uint areaId)
+        public BitArray GetMask(uint targetId, uint observerId, uint areaId)
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
-                    AreasMask[i].AreaAddresses.AreaId == areaId &&
-                    AreasMask[i].AreaAddresses.CameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.ObserverId == observerId)
                 {
                     return AreasMask[i].AffectedMask;
                 }
@@ -263,13 +284,13 @@ namespace UnknownWorld.Area
             return null;
         }
         
-        public void SetMask(uint targetId, uint cameraId, uint areaId, BitArray mask)
+        public void SetMask(uint targetId, uint observerId, uint areaId, BitArray mask)
         {
             for (int i = 0; i < AreasMask.Count; i++)
             {
-                if (AreasMask[i].AreaAddresses.TargetId == targetId &&
-                    AreasMask[i].AreaAddresses.AreaId == areaId &&
-                    AreasMask[i].AreaAddresses.CameraId == cameraId)
+                if (AreasMask[i].AreaAddresses.AreaId == areaId &&
+                    AreasMask[i].AreaAddresses.TargetId == targetId &&
+                    AreasMask[i].AreaAddresses.ObserverId == observerId)
                 {
                     AreasMask[i].AffectedMask = mask;
                     break;

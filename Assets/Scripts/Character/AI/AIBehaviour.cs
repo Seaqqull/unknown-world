@@ -9,17 +9,21 @@ namespace UnknownWorld.Behaviour
     public class AIBehaviour : PersonBehaviour
     {
         private List<UnknownWorld.Area.Observer.SearchingArea> m_areas;
-        protected UnknownWorld.Area.AreaManager m_areaManager;
+        protected UnknownWorld.Manager.AreaManager m_areaManager;
 
+        public bool IsManagerActive
+        {
+            get
+            {
+                return m_areaManager.IsActive;
+            }
+        }
         public List<UnknownWorld.Area.Observer.SearchingArea> Areas
         {
             get
             {
-                if (this.m_areas == null)
-                {
-                    this.m_areas = new List<UnknownWorld.Area.Observer.SearchingArea>();
-                }
-                return this.m_areas;
+                return this.m_areas ?? 
+                    (this.m_areas = new List<UnknownWorld.Area.Observer.SearchingArea>());
             }
 
             set
@@ -33,9 +37,15 @@ namespace UnknownWorld.Behaviour
         {
             base.Awake();
             /* AI specific initialization */
-            m_areaManager = GetComponentInParent<UnknownWorld.Area.AreaManager>();
+            m_areaManager = GetComponentInParent<UnknownWorld.Manager.AreaManager>();
             m_areas = GetComponents<UnknownWorld.Area.Observer.SearchingArea>().
                 OfType<UnknownWorld.Area.Observer.SearchingArea>().ToList();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            IsActive = m_isPersonActive;// only for editor
         }
 
 
@@ -53,7 +63,17 @@ namespace UnknownWorld.Behaviour
         {
             return m_areaManager.Targets[targetPosition].Subject.Id;
         }
-       
+
+        protected override void SetIsActive(bool isActive)
+        {
+            if (m_isActive == isActive) return;
+
+            base.SetIsActive(isActive);
+
+            if(!isActive)
+                m_areaManager.ClearMasks(m_id);
+        }
+
         public BitArray GetMask(uint targetId, uint areaId)
         {
             return m_areaManager.GetMask(targetId, this.Id, areaId);
@@ -62,7 +82,12 @@ namespace UnknownWorld.Behaviour
         public UnknownWorld.Area.Target.TracingAreaContainer GetAreaContainer(int targetPosition)
         {
             return m_areaManager.Targets[targetPosition].AreaContainer;
-        }       
+        }
+
+        public bool IsTargetActive(int targetPosition)
+        {
+            return m_areaManager.Targets[targetPosition].Subject.IsActive;
+        }
 
     }
 }

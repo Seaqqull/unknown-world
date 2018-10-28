@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // LocomotionSimpleAgent.cs
-using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]

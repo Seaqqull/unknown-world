@@ -6,13 +6,12 @@ namespace UnknownWorld.Area.Target
     [System.Serializable]
     public abstract class TracingArea : MonoBehaviour
     {
-        protected static Color EDITOR_GIZMO_COLOR = Color.blue;
+        protected static Color editor_gizmo_color = Color.blue;
 
-        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Activated;
+        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Enabled;
         [SerializeField] protected string m_name;
 
-        protected UnknownWorld.Area.Target.TracingAreaContainer m_areaContainer;
-        protected Color m_gizmoColor = EDITOR_GIZMO_COLOR;
+        protected Color m_gizmoColor = editor_gizmo_color;
         protected Collider m_colider;
 
         public HitAreaState State
@@ -23,8 +22,8 @@ namespace UnknownWorld.Area.Target
             }
 
             set
-            {
-                this.m_state = value;
+            {                
+                SetState(value);
                 SetAreaColor();
             }
         }
@@ -50,15 +49,14 @@ namespace UnknownWorld.Area.Target
 
         protected virtual void Awake()
         {
-            m_areaContainer = GetComponentInParent<UnknownWorld.Area.Target.TracingAreaContainer>();
-            m_state = HitAreaState.Activated;
+            State = HitAreaState.Enabled;
 
             m_colider = GetCollider();
         }
 
         protected virtual void OnDestroy()
         {
-            m_state = HitAreaState.Activated;   
+            m_state = HitAreaState.Enabled;   
         }
         
         protected virtual void SetAreaColor()
@@ -68,10 +66,10 @@ namespace UnknownWorld.Area.Target
                 case Data.HitAreaState.Accessible:
                     this.m_gizmoColor = this.m_gizmoColorAccessible;
                     break;
-                case Data.HitAreaState.Deactivated:
+                case Data.HitAreaState.Disabled:
                     this.m_gizmoColor = this.m_gizmoColorInactive;
                     break;
-                case Data.HitAreaState.Activated:
+                case Data.HitAreaState.Enabled:
                     this.m_gizmoColor = this.m_gizmoColorActive;
                     break;
                 default:
@@ -84,8 +82,13 @@ namespace UnknownWorld.Area.Target
             return GetComponent<Collider>();
         }
 
+        protected virtual void SetState(HitAreaState incomeState)
+        {
+            m_state = incomeState;
+        }
+        
 
         protected abstract void OnDrawGizmos();
-
+        
     }
 }

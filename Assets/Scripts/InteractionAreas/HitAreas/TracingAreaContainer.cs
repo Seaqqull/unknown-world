@@ -5,7 +5,6 @@ namespace UnknownWorld.Area.Target
     [System.Serializable]
     public class TracingAreaContainer : MonoBehaviour
     {
-        private UnknownWorld.Behaviour.PersonBehaviour m_person;
         private TracingArea[] m_tracingAreas;
 
         public TracingArea[] TracingAreas
@@ -18,8 +17,7 @@ namespace UnknownWorld.Area.Target
 
 
         void Awake()
-        {
-            m_person = GetComponent<UnknownWorld.Behaviour.PersonBehaviour>();
+        {     
             m_tracingAreas = GetComponentsInChildren<TracingArea>();
         }
 
@@ -27,6 +25,33 @@ namespace UnknownWorld.Area.Target
         public int GetPointsCount()
         {
             return m_tracingAreas.Length;
+        }
+
+        public void EnableAllAreas()
+        {
+            for (int i = 0; i < m_tracingAreas.Length; i++)
+                m_tracingAreas[i].State = Data.HitAreaState.Enabled;
+        }
+
+        public void DisableAllAreas()
+        {
+            for (int i = 0; i < m_tracingAreas.Length; i++)
+                m_tracingAreas[i].State = Data.HitAreaState.Disabled;
+        }
+
+        public void DisableArea(int index)
+        {
+            m_tracingAreas[index].State = Data.HitAreaState.Disabled;
+        }
+
+        public void DisableArea(string name)
+        {
+            for (int i = 0; i < m_tracingAreas.Length; i++)
+                if (m_tracingAreas[i].Name == name)
+                {
+                    m_tracingAreas[i].State = Data.HitAreaState.Disabled;
+                    break;
+                }
         }
 
         public Transform GetPointTransform(int index)
@@ -43,12 +68,12 @@ namespace UnknownWorld.Area.Target
             return m_tracingAreas[index].State;
         }
 
-        public void SetPointState(int index, UnknownWorld.Area.Data.HitAreaState areaState)
+        public void SetAreaState(int index, UnknownWorld.Area.Data.HitAreaState areaState)
         {
             if ((index >= m_tracingAreas.Length) && (index < 0))
                 return;
             m_tracingAreas[index].State = areaState;
         }
-        
+  
     }
 }

@@ -19,10 +19,19 @@ namespace UnknownWorld.Area.Data
     public enum HitAreaState
     {
         Unknown,
-        Activated,
+        Enabled,
         Accessible,
-        Deactivated
+        Disabled
     }
+
+    [System.Serializable]
+    public enum ObservationType
+    {
+        Undefined,
+        Sonar,
+        Sound,
+        View
+    }    
 
     [System.Serializable]
     public class AreaAffectionMask
@@ -30,22 +39,15 @@ namespace UnknownWorld.Area.Data
         [System.Serializable]
         public struct AreaAddress
         {
-            private uint m_areaId;
-            private uint m_cameraId;
+            private uint m_areaId;            
             private uint m_targetId;
+            private uint m_observerId;
 
             public uint AreaId
             {
                 get
                 {
                     return this.m_areaId;
-                }
-            }
-            public uint CameraId
-            {
-                get
-                {
-                    return this.m_cameraId;
                 }
             }
             public uint TargetId
@@ -55,18 +57,33 @@ namespace UnknownWorld.Area.Data
                     return this.m_targetId;
                 }
             }
-
-            public AreaAddress(uint targetId = 0, uint cameraId = 0, uint areaId = 0)
+            public uint ObserverId
             {
-                this.m_cameraId = cameraId;
+                get
+                {
+                    return this.m_observerId;
+                }
+            }
+
+            public AreaAddress(uint targetId = 0, uint observerId = 0, uint areaId = 0)
+            {
+                this.m_observerId = observerId;
                 this.m_targetId = targetId;
                 this.m_areaId = areaId;
             }
         }
 
+        private ObservationType m_searchingType;
         private AreaAddress m_areaAddresses;
         private BitArray m_affectedMask;
 
+        public ObservationType SearchingType
+        {
+            get
+            {
+                return m_searchingType;
+            }
+        }
         public AreaAddress AreaAddresses
         {
             get
@@ -86,20 +103,22 @@ namespace UnknownWorld.Area.Data
             }
         }
 
-
-        public AreaAffectionMask(int maskSize, uint targetId = 0, uint cameraId = 0, uint areaId = 0)
+        
+        public AreaAffectionMask(int maskSize, uint targetId = 0, uint cameraId = 0, uint areaId = 0, ObservationType observatorType = ObservationType.Undefined)
         {
             m_areaAddresses = new AreaAddress(targetId, cameraId, areaId);
             m_affectedMask = new BitArray(maskSize);
+            m_searchingType = observatorType;
         }
 
     }
 
     [System.Serializable]
     public class AreaTarget
-    {
-        [SerializeField] private UnknownWorld.Area.Target.TracingAreaContainer m_points;
+    {        
         [SerializeField] private UnknownWorld.Behaviour.CharacterBehaviour m_subject;
+
+        private UnknownWorld.Area.Target.TracingAreaContainer m_points;
 
         public UnknownWorld.Area.Target.TracingAreaContainer AreaContainer
         {
@@ -126,15 +145,20 @@ namespace UnknownWorld.Area.Data
             }
         }
 
+        public void UpdateAreaManager()
+        {
+            m_points = m_subject.AreaContainer;
+        }
     }
 
     [System.Serializable]
     public class AreaData
     {
         [SerializeField] [Range(0, 500)] private float m_radius;
-        [SerializeField] [Range(0, 360)] private float m_angle;
-        [SerializeField] private LayerMask m_obstacleMask;
+        [SerializeField] [Range(0, 360)] private float m_angle;        
+        [SerializeField] private LayerMask m_obstacleMask;        
         [SerializeField] private LayerMask m_targetMask;
+        [SerializeField] private Vector3 m_rotation;
         [SerializeField] private Vector3 m_offset;
                
         public LayerMask ObstacleMask
@@ -159,6 +183,17 @@ namespace UnknownWorld.Area.Data
             set
             {
                 this.m_targetMask = value;
+            }
+        }
+        public Vector3 Rotation
+        {
+            get
+            {
+                return this.m_rotation;
+            }
+            set
+            {
+                this.m_rotation = value;
             }
         }
         public Vector3 Offset
