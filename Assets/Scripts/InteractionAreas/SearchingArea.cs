@@ -100,7 +100,7 @@ namespace UnknownWorld.Area.Observer
         {
             if (!angleIsGlobal)
             {               
-                angleInDegrees += m_socket.transform.eulerAngles.y + m_data.Rotation.y;
+                angleInDegrees += m_socket.eulerAngles.y + m_data.Rotation.y;
             }
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }        

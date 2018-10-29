@@ -45,7 +45,6 @@ namespace UnknownWorld.Behaviour
         protected override void Update()
         {
             base.Update();
-            IsActive = m_isPersonActive;// only for editor
         }
 
 
@@ -66,12 +65,12 @@ namespace UnknownWorld.Behaviour
 
         protected override void SetIsActive(bool isActive)
         {
-            if (m_isActive == isActive) return;
+            if (IsActive == isActive) return;
 
             base.SetIsActive(isActive);
 
             if(!isActive)
-                m_areaManager.ClearMasks(m_id);
+                m_areaManager.ClearMasks(Id);
         }
 
         public BitArray GetMask(uint targetId, uint areaId)

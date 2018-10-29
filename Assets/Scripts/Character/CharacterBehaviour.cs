@@ -10,23 +10,38 @@ namespace UnknownWorld.Behaviour
         protected override void Awake()
         {
             base.Awake();
+
             m_observerManager = FindObjectOfType<UnknownWorld.Manager.ObserverManager>();
+            StaminaUIUpdate += (stamina) => {
+                StaminaSlider.value = 
+                UnknownWorld.Area.Data.VectorOperations.Map(stamina, StaminaMin, StaminaMax, StaminaSlider.minValue, StaminaSlider.maxValue);
+            };
+            HealthUIUpdate += (health) => {
+                HealthSlider.value = 
+                UnknownWorld.Area.Data.VectorOperations.Map(health, HealthMin, HealthMax, HealthSlider.minValue, HealthSlider.maxValue);
+            };
         }
 
         protected override void Update()
         {
-            base.Update();
-            IsActive = m_isPersonActive; // only for editor
+            base.Update();            
         }
 
         protected override void SetIsActive(bool isActive)
         {
-            if (m_isActive == isActive) return;
+            if (IsActive == isActive) return;
 
             base.SetIsActive(isActive);
 
-            if (!m_isActive)
-                m_observerManager.ClearCharacterMask(m_id);
+            if (!IsActive)
+            {
+                m_observerManager.ClearCharacterMask(Id);
+                m_areaContainer.DisableAllAreas();
+            }
+            else
+            {
+                m_areaContainer.EnableAllAreas();
+            }
         }
     }
 }

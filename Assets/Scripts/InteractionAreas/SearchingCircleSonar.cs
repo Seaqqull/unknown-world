@@ -19,7 +19,7 @@ namespace UnknownWorld.Area.Observer
 
         private void ShowTargets()
         {
-            Vector3 positionWithOffset = m_socket.transform.position + m_data.Offset;
+            Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             UnityEditor.Handles.color = m_colorTarget;
 
             if (m_ownerAi)
@@ -40,7 +40,7 @@ namespace UnknownWorld.Area.Observer
         [System.Obsolete("This method can be used instead of standart handle drawing -> DrawCircleHandle")]
         private void DrawCircleGizmo()
         {
-            Vector3 positionWithOffset = m_socket.transform.position + m_data.Offset;
+            Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             Gizmos.color = m_colorZone;
 
             float theta = 0;
@@ -72,7 +72,7 @@ namespace UnknownWorld.Area.Observer
 
         private void DrawCircleHandle()
         {
-            Vector3 positionWithOffset = m_socket.transform.position + m_data.Offset;
+            Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             UnityEditor.Handles.color = m_colorZone;
 
             UnityEditor.Handles.DrawWireArc(positionWithOffset,
@@ -132,22 +132,22 @@ namespace UnknownWorld.Area.Observer
         {
             bool isContainerAffected = false;
 
-            Vector3 positionWithOffset = m_socket.transform.position + m_data.Offset;
-            Vector3 vectorsSubstraction;
+            Vector3 forwardRotation = Quaternion.Euler(m_data.Rotation) * m_socket.forward;
+            Vector3 positionWithOffset = m_socket.position + m_data.Offset;
+            Vector3 vectorSubtraction;
 
             for (int i = 0; i < target.Length; i++)
             {
                 if ((target[i].State == Data.HitAreaState.Disabled) ||
-                   (target[i].State == Data.HitAreaState.Unknown))
+                    (target[i].State == Data.HitAreaState.Unknown))
                     continue;
 
-                vectorsSubstraction = target[i].transform.position - positionWithOffset;
+                vectorSubtraction = target[i].transform.position - positionWithOffset;
 
-                if ((((1<<target[i].Collider.gameObject.layer) & m_data.TargetMask) == 0) ||
-                    (vectorsSubstraction.magnitude > m_data.Radius) ||
-                    (m_data.Angle != 360) ||
-                    //(Vector3.Angle(transform.forward, vectorsSubstraction.normalized) > m_data.Angle / 2)
-                    (Vector3.Angle((Quaternion.Euler(m_data.Rotation) * m_socket.transform.forward), vectorsSubstraction.normalized) > m_data.Angle / 2))
+                if ((((1 << target[i].Collider.gameObject.layer) & m_data.TargetMask) == 0) ||
+                    (vectorSubtraction.magnitude > m_data.Radius) ||
+                    ((m_data.Angle != 360) &&
+                     (Vector2.Angle(new Vector2(vectorSubtraction.x, vectorSubtraction.z), new Vector2(forwardRotation.x, forwardRotation.z)) > m_data.Angle / 2)))
                     continue;
                 
                 isContainerAffected = true;
