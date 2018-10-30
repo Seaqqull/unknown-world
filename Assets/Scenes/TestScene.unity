@@ -561,6 +561,16 @@ Prefab:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 223972441967693762, guid: b5536925054d1544abf0509ad89e0968,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223972441967693762, guid: b5536925054d1544abf0509ad89e0968,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 284887108}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5536925054d1544abf0509ad89e0968, type: 2}
   m_IsPrefabAsset: 0
@@ -1276,60 +1286,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
-      propertyPath: cameraSettings
+    - target: {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_cameraSettings
       value: 
       objectReference: {fileID: 992954903}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_staminaRegen
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_staminaMax
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_healthRegen
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_healthMax
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_stamina
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_health
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_isPersonActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_movementSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_rotationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_healthSlider
-      value: 
-      objectReference: {fileID: 956702043}
     - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
         type: 2}
       propertyPath: m_staminaSlider
@@ -1337,24 +1297,9 @@ Prefab:
       objectReference: {fileID: 262486980}
     - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
         type: 2}
-      propertyPath: m_data.m_stamina
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_health
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_staminaRegen
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114858823838574686, guid: 7737647c22c1fc64a88d5cd030c352ce,
-        type: 2}
-      propertyPath: m_data.m_healthRegen
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: m_healthSlider
+      value: 
+      objectReference: {fileID: 956702043}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
   m_IsPrefabAsset: 0

@@ -16,6 +16,15 @@ namespace UnknownWorld.Area.Observer
             m_ownerAi = (base.m_owner as UnknownWorld.Behaviour.AIBehaviour);
         }
 
+        protected override void OnDrawGizmos()
+        {
+            base.OnDrawGizmos();
+
+            DrawCircleHandle();
+
+            ShowTargets();
+        }
+
 
         private void ShowTargets()
         {
@@ -116,16 +125,7 @@ namespace UnknownWorld.Area.Observer
             }
         }
 
-
-        public override void OnDrawGizmos()
-        {
-            base.OnDrawGizmos();
-
-            DrawCircleHandle();
-
-            ShowTargets();
-        }
-
+        
         public override bool IsTargetWithinArea(UnknownWorld.Area.Target.TracingArea[] target, BitArray affectionMask, params object[] list)
         {
             bool isContainerAffected = false;

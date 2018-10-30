@@ -657,12 +657,11 @@ GameObject:
   - component: {fileID: 9579096}
   - component: {fileID: 5426510}
   - component: {fileID: 13615390}
-  - component: {fileID: 11444856}
   - component: {fileID: 11469404}
   - component: {fileID: 114398695157758506}
   - component: {fileID: 114858823838574686}
   m_Layer: 11
-  m_Name: ThirdPersonController
+  m_Name: EthanController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2483,18 +2482,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &11444856
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 521b611700410be45810047f0a74e899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraSettings: {fileID: 0}
 --- !u!114 &11469404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2506,14 +2493,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7a80d520cacc042b5fe14f373d8173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GravityMultiplier: 2
-  m_GroundCheckDistance: 0.3
-  m_StationaryTurnSpeed: 180
-  m_RunCycleLegOffset: 0.2
-  m_MoveSpeedMultiplier: 0.7
-  m_AnimSpeedMultiplier: 0.7
-  m_MovingTurnSpeed: 360
-  m_JumpPower: 6
+  m_gravityMultiplier: 2
+  m_groundCheckDistance: 0.3
+  m_stationaryTurnSpeed: 180
+  m_cameraSettings: {fileID: 0}
+  m_runCycleLegOffset: 0.2
+  m_moveSpeedMultiplier: 0.7
+  m_animSpeedMultiplier: 0.7
+  m_movingTurnSpeed: 360
+  m_jumpPower: 6
 --- !u!136 &13615390
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3081,10 +3069,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfea556fdfacdf24fbbe890b7ea65526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 1
-  m_rotationSpeed: 1
-  m_stamina: 0
-  m_health: 0
+  m_data:
+    m_percentToExhaustion: 1
+    m_recoveryAfterExhaustion: 1
+    m_staminaMultiplier: 1
+    m_healthMultiplier: 1
+    m_isPersonActive: 1
+    m_movementSpeed: 1
+    m_rotationSpeed: 1
+    m_isStaminaLock: 0
+    m_isHealthLock: 0
+    m_staminaRegen: 3
+    m_staminaMax: 100
+    m_healthRegen: 3
+    m_healthMax: 100
+    m_staminaMin: 0
+    m_healthMin: 0
+    m_stamina: 50
+    m_health: 25
+  m_staminaSlider: {fileID: 0}
+  m_healthSlider: {fileID: 0}
+  m_staminaConsumption:
+    m_jumpCost: 10
+    m_runCost: 10
 --- !u!114 &114968178940394558
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -141,6 +141,7 @@ namespace UnknownWorld.Manager
             }
         }
 
+
         public void ClearCharacterMask(uint characterId)
         {
             for (int i = 0; i < m_areas.Count; i++)

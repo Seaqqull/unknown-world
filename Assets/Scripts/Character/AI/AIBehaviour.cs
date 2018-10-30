@@ -48,6 +48,17 @@ namespace UnknownWorld.Behaviour
         }
 
 
+        protected override void SetIsActive(bool isActive)
+        {
+            if (IsActive == isActive) return;
+
+            base.SetIsActive(isActive);
+
+            if (!isActive)
+                m_areaManager.ClearMasks(Id);
+        }
+
+
         public int GetTargetsCount()
         {
             return m_areaManager.Targets.Count;
@@ -63,14 +74,9 @@ namespace UnknownWorld.Behaviour
             return m_areaManager.Targets[targetPosition].Subject.Id;
         }
 
-        protected override void SetIsActive(bool isActive)
+        public bool IsTargetActive(int targetPosition)
         {
-            if (IsActive == isActive) return;
-
-            base.SetIsActive(isActive);
-
-            if(!isActive)
-                m_areaManager.ClearMasks(Id);
+            return m_areaManager.Targets[targetPosition].Subject.IsActive;
         }
 
         public BitArray GetMask(uint targetId, uint areaId)
@@ -82,11 +88,6 @@ namespace UnknownWorld.Behaviour
         {
             return m_areaManager.Targets[targetPosition].AreaContainer;
         }
-
-        public bool IsTargetActive(int targetPosition)
-        {
-            return m_areaManager.Targets[targetPosition].Subject.IsActive;
-        }
-
+        
     }
 }

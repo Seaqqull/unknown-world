@@ -34,7 +34,7 @@ namespace UnknownWorld.Manager
         private void Update()
         {
             if (m_activeCamera.HasValue && m_targetCamera != m_activeCamera)
-                SetAcctiveCamera();
+                SetActiveCamera();
         }
 
 
@@ -45,7 +45,7 @@ namespace UnknownWorld.Manager
             m_targetCamera = 0;
         }
 
-        private void SetAcctiveCamera(int cameraId = -1) {            
+        private void SetActiveCamera(int cameraId = -1) {            
             m_cameraTagets[m_activeCamera.Value].m_camera.DiactivateCamera();
             if (cameraId != -1)
                 m_activeCamera = m_targetCamera;

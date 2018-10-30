@@ -58,6 +58,7 @@ namespace UnknownWorld.Area.Target
         {
             m_state = HitAreaState.Enabled;   
         }
+
         
         protected virtual void SetAreaColor()
         {

@@ -1,11 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnknownWorld.Behaviour
 {
-    [System.Serializable]
+    [Serializable]
     public class CharacterBehaviour : PersonBehaviour
     {
+        [Serializable]
+        public class StaminaActionCost
+        {
+            [SerializeField] private float m_jumpCost;
+            [SerializeField] private float m_runCost;
+
+            public float JumpCost
+            {
+                get { return this.m_jumpCost; }                
+            }
+            public float RunCost
+            {                
+                get { return this.m_runCost; }
+            }
+        }
+
+
+        [SerializeField] private StaminaActionCost m_staminaConsumption;
+
         private UnknownWorld.Manager.ObserverManager m_observerManager;
+
+        public StaminaActionCost StaminaConsumption
+        {
+            get { return this.m_staminaConsumption; }            
+        }
+
 
         protected override void Awake()
         {

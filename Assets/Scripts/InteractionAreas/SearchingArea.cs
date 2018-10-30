@@ -73,11 +73,12 @@ namespace UnknownWorld.Area.Observer
             IsActive = m_isAreaActive;// only for editor
         }
 
-        public virtual void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             if (!m_socket)
                 m_socket = transform;
         }
+
 
         protected virtual void SetIsActive(bool isActive)
         {
@@ -95,7 +96,10 @@ namespace UnknownWorld.Area.Observer
                 m_searchingCorotation = StartCoroutine("FindTargetsWithDelay", m_searchingDelay);
             }
         }
-        
+
+        protected abstract IEnumerator FindTargetsWithDelay(float delay);
+
+
         public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
         {
             if (!angleIsGlobal)
@@ -104,10 +108,7 @@ namespace UnknownWorld.Area.Observer
             }
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }        
-
-
-        protected abstract IEnumerator FindTargetsWithDelay(float delay);        
-
+        
         public abstract bool IsTargetWithinArea(UnknownWorld.Area.Target.TracingArea[] target, BitArray affectionMask, params object[] list);        
 
     }

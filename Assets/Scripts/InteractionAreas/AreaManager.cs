@@ -131,7 +131,9 @@ namespace UnknownWorld.Manager
 
         protected virtual void Update()
         {
+#if UNITY_EDITOR
             IsActive = m_isManagerActive;// only for editor
+#endif
         }
 
         // call every time, when AreaMasks have been changed to update indexes of target in affection mask
