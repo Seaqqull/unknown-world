@@ -1,0 +1,82 @@
+﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityScript;
+
+
+namespace UnknownWorld.Behaviour
+{
+    public class CharacterInputController : MonoBehaviour
+    {
+        [SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
+
+        private CharacterAnimationController m_character; // A reference to the ThirdPersonCharacter on the object
+        private CharacterBehaviour m_behaviour;
+        private float m_movementInputValue;
+        private float m_turnInputValue;        
+        private Vector3 m_move;
+        private bool m_crouch;
+        private bool m_jump; // the world-relative desired move direction, calculated from the camForward and user input.                       
+        private bool m_run;
+
+
+        private void Awake()
+        {
+            m_character = GetComponent<CharacterAnimationController>();
+            m_behaviour = GetComponent<CharacterBehaviour>();
+        }
+
+        private void Update()
+        {
+            if (!m_jump)
+            {
+                m_jump = (m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.JumpCost)) ? CrossPlatformInputManager.GetButtonDown("Jump") : false;
+            }
+            // read inputs
+            m_movementInputValue = CrossPlatformInputManager.GetAxis("Vertical");
+            m_turnInputValue = CrossPlatformInputManager.GetAxis("Horizontal");            
+        }
+
+        private void FixedUpdate()
+        {
+            MoveAndRotate();
+        }
+
+        private void MoveAndRotate()
+        {
+            m_crouch = Input.GetKey(KeyCode.C);
+
+            // calculate move direction to pass to character
+            // we use world-relative directions in the case of no main camera
+            m_move = m_movementInputValue * transform.forward * m_behaviour.MovementSpeed
+                   + m_turnInputValue * transform.right * m_behaviour.RotationSpeed;
+
+#if !MOBILE_INPUT
+            // walk speed multiplier
+            if ((!Input.GetKey(KeyCode.LeftShift)) ||
+                (!m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime)))
+            {
+                m_move *= 0.5f;
+                m_run = false;
+            }
+            else
+            {
+                m_run = true;
+            }
+#endif
+
+            // pass all parameters to the character control script
+            m_character.Move(m_move, m_crouch, m_jump);
+            PerformStaminaConsumption();
+            m_jump = false;
+        }
+
+        private void PerformStaminaConsumption()
+        {
+            if (m_character.IsGrounded && m_run && !m_crouch)
+                m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime);
+
+            if(m_character.IsGrounded && m_jump && !m_crouch && m_character.GetAnimationStateInfo(0, "Grounded"))
+                m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.JumpCost);
+        }
+    }
+}

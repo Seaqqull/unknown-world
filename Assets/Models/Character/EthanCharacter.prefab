@@ -657,11 +657,13 @@ GameObject:
   - component: {fileID: 9579096}
   - component: {fileID: 5426510}
   - component: {fileID: 13615390}
+  - component: {fileID: 114363771927386526}
   - component: {fileID: 11469404}
   - component: {fileID: 114398695157758506}
   - component: {fileID: 114858823838574686}
+  - component: {fileID: 114232518152029220}
   m_Layer: 11
-  m_Name: EthanController
+  m_Name: EthanCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2496,7 +2498,6 @@ MonoBehaviour:
   m_gravityMultiplier: 2
   m_groundCheckDistance: 0.3
   m_stationaryTurnSpeed: 180
-  m_cameraSettings: {fileID: 0}
   m_runCycleLegOffset: 0.2
   m_moveSpeedMultiplier: 0.7
   m_animSpeedMultiplier: 0.7
@@ -3013,6 +3014,31 @@ MonoBehaviour:
   m_gizmoColorInactive: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_gizmoColorActive: {r: 0, g: 0, b: 1, a: 1}
   m_gizmoSize: 0.1
+--- !u!114 &114232518152029220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cea84ced2d7fa241bea67b6cda2be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_color: {r: 0, g: 0, b: 0, a: 1}
+  m_size: 0.3
+--- !u!114 &114363771927386526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 376addae8474cd648af1ca407177f5a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cameraSettings: {fileID: 0}
 --- !u!114 &114398695157758506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3069,6 +3095,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfea556fdfacdf24fbbe890b7ea65526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_point:
+    m_transferDelay: 0
+    m_action: 3
+    m_minImpactSpeed: 1
+    m_type: 3
+    m_priority: 0
+    m_animationSpeed: 1
+    m_movementSpeed: 1
+    m_accuracyRadius: 0.5
+    m_impactRadius: 0
+    m_point: {fileID: 114232518152029220}
   m_data:
     m_percentToExhaustion: 1
     m_recoveryAfterExhaustion: 1

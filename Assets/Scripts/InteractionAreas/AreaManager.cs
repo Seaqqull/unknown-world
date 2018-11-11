@@ -91,10 +91,7 @@ namespace UnknownWorld.Manager
         }
         public uint Id
         {
-            get
-            {
-                return this.m_id;
-            }
+            get { return this.m_id; }
         }
         
 
@@ -132,7 +129,7 @@ namespace UnknownWorld.Manager
         protected virtual void Update()
         {
 #if UNITY_EDITOR
-            IsActive = m_isManagerActive;// only for editor
+            IsActive = m_isManagerActive;
 #endif
         }
 
@@ -141,6 +138,7 @@ namespace UnknownWorld.Manager
         {
             List<int> tmpIndexes;
             m_targetIndexes = new int[m_targets.Count][];
+
             for (int i = 0; i < m_targets.Count; i++)
             {
                 tmpIndexes = GetTargetIndexesInAffectionMask(m_targets[i].Subject.Id);
@@ -179,8 +177,19 @@ namespace UnknownWorld.Manager
                     }
                     m_affectedTargetMask[i] = isTargetAffected;
                 }
+
+                // new
+                for (int i = 0; i < m_observers.Count; i++)
+                {
+                    if ((m_observers[i].AffectionState == Utility.Data.DataState.Unknown) ||
+                        (m_observers[i].AffectionState == Utility.Data.DataState.Processed)) // only if first time or previous data was processed
+                    {
+                        m_observers[i].AffectionInfo = GetObserverAffectionInfo(m_observers[i].Id);
+                        m_observers[i].AffectionState = Utility.Data.DataState.Updated;
+                    }
+                }
             }
-        }
+        }        
 
 
         public void ClearMasks(uint observerId)
@@ -188,9 +197,7 @@ namespace UnknownWorld.Manager
             for (int i = 0; i < AreasMask.Count; i++)
             {
                 if (AreasMask[i].AreaAddresses.ObserverId == observerId)
-                {
                     AreasMask[i].AffectedMask.SetAll(false);
-                }
             }
         }
 
@@ -199,9 +206,7 @@ namespace UnknownWorld.Manager
             for (int i = 0; i < AreasMask.Count; i++)
             {
                 if (AreasMask[i].AreaAddresses.TargetId == targetId)
-                {
                     AreasMask[i].AffectedMask.SetAll(false);
-                }
             }
         }
 
@@ -285,7 +290,17 @@ namespace UnknownWorld.Manager
             }
             return null;
         }
-        
+
+        public UnknownWorld.Behaviour.CharacterBehaviour GetTargetInfo(uint targetId)
+        {
+            for (int i = 0; i < Targets.Count; i++)
+            {
+                if (Targets[i].Subject.Id == targetId)
+                    return Targets[i].Subject;
+            }
+            return null;
+        }
+
         public void SetMask(uint targetId, uint observerId, uint areaId, BitArray mask)
         {
             for (int i = 0; i < AreasMask.Count; i++)
@@ -299,6 +314,56 @@ namespace UnknownWorld.Manager
                 }
             }
         }
-        
+
+        public List<UnknownWorld.Area.Data.AreaAffectionMask> GetAreaAffectionInfo(uint areaId)
+        {
+            List<UnknownWorld.Area.Data.AreaAffectionMask> findedTargets = new List<Area.Data.AreaAffectionMask>();
+
+            for (int i = 0; i < m_areasMask.Count; i++)
+            {
+                if (m_areasMask[i].AreaAddresses.AreaId == areaId)
+                    findedTargets.Add(m_areasMask[i]);
+            }
+            return findedTargets;
+        }
+
+        public List<UnknownWorld.Area.Data.AreaAffectionMask> GetTargetAffectionInfo(uint targetId)
+        {
+            List<UnknownWorld.Area.Data.AreaAffectionMask> findedTargets = new List<Area.Data.AreaAffectionMask>();
+
+            for (int i = 0; i < m_areasMask.Count; i++)
+            {
+                if (m_areasMask[i].AreaAddresses.TargetId == targetId)
+                    findedTargets.Add(m_areasMask[i]);
+            }
+            return findedTargets;
+        }
+
+        public List<UnknownWorld.Area.Data.AreaAffectionMask> GetObserverAffectionInfo(uint observerId)
+        {
+            List<UnknownWorld.Area.Data.AreaAffectionMask> findedTargets = new List<Area.Data.AreaAffectionMask>();
+
+            for (int i = 0; i < m_areasMask.Count; i++)
+            {
+                if (m_areasMask[i].AreaAddresses.ObserverId == observerId)
+                    findedTargets.Add(m_areasMask[i]);
+            }
+            return findedTargets;
+        }
+
+        public UnknownWorld.Area.Data.AreaAffectionMask GetSingleAffectionInfo(uint targetId, uint observerId, uint areaId)
+        {
+            for (int i = 0; i < m_areasMask.Count; i++)
+            {
+                if ((m_areasMask[i].AreaAddresses.AreaId == areaId) &&
+                    (m_areasMask[i].AreaAddresses.TargetId == targetId) &&
+                    (m_areasMask[i].AreaAddresses.ObserverId == observerId))
+                {
+                    return m_areasMask[i];
+                }
+            }
+            return null;
+        }
+
     }
 }

@@ -132,6 +132,7 @@ namespace UnknownWorld.Behaviour
         }
 
 
+        [SerializeField] private UnknownWorld.Path.Data.PathPoint m_point;
         [SerializeField] private PersonCharacteristics m_data;
         [SerializeField] private Slider m_staminaSlider;
         [SerializeField] private Slider m_healthSlider;        
@@ -150,6 +151,10 @@ namespace UnknownWorld.Behaviour
             {
                 return this.m_areaContainer;
             }
+        }
+        public UnknownWorld.Path.Data.PathPoint FollowingPoint
+        {
+            get { return this.m_point; }
         }
         public event Action<float> StaminaUIUpdate
         {

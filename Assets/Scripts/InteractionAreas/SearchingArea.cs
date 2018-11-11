@@ -12,7 +12,7 @@ namespace UnknownWorld.Area.Observer
         [SerializeField] public Color m_colorZone = Color.white;
         [SerializeField] public Color m_colorTarget = Color.red;
         [SerializeField] protected bool m_isAreaActive = true;
-        [SerializeField] protected int m_priority = 0;
+        [SerializeField] protected ushort m_priority = 0;
         [SerializeField] protected Transform m_socket;        
 
         protected UnknownWorld.Behaviour.PersonBehaviour m_owner;
@@ -40,7 +40,7 @@ namespace UnknownWorld.Area.Observer
             }
 
         }
-        public int Priority
+        public ushort Priority
         {
             get
             {

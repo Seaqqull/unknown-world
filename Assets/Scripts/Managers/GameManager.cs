@@ -28,6 +28,9 @@ namespace UnknownWorld.Manager
 
             // ignore colision between character and target
             Physics.IgnoreLayerCollision(11, 10);
+
+            // initialize path data
+            SetPathStandartData();
         }
 
         // Update is called once per frame
@@ -37,6 +40,16 @@ namespace UnknownWorld.Manager
                 SetActiveCamera();
         }
 
+
+        private void SetPathStandartData()
+        {
+            if (!UnknownWorld.Path.Data.PathHelper.PathPrefab)
+                UnknownWorld.Path.Data.PathHelper.PathPrefab = Resources.Load("Path/IntermediatePoint") as GameObject;
+            if (!UnknownWorld.Path.Data.PathHelper.PathSpawner)
+                UnknownWorld.Path.Data.PathHelper.PathSpawner = GameObject.Find("Path Targets");
+
+            UnknownWorld.Path.Data.PathHelper.PathWaitTime = 1.0f;
+        }
 
         private void SetCameraTargetFromPlayer()
         {

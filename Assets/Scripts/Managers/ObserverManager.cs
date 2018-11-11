@@ -20,12 +20,8 @@ namespace UnknownWorld.Manager
         {
             get
             {
-                if (this.m_characterHitMask == null)
-                {
-                    ;
-                }
                 return this.m_characterHitMask ??
-                    (m_characterHitMask = new List<BitArray>());
+                    (this.m_characterHitMask = new List<BitArray>());
             }
         }
         public bool IsActive

@@ -4,18 +4,6 @@ using UnityEngine;
 namespace UnknownWorld.Area.Data
 {
     [System.Serializable]
-    public enum ObserverState
-    {
-        Dead,
-        Waiting,
-        Escaping,
-        ChasingSound,
-        ChasingEnemy,
-        FollowingRoute,
-        ReturningRoute
-    }
-
-    [System.Serializable]
     public enum HitAreaState
     {
         Unknown,

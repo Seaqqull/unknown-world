@@ -2,13 +2,12 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnknownWorld.Behaviour
-{
-    [RequireComponent(typeof(CharacterBehaviour))]
+{    
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]    
     [RequireComponent(typeof(Animator))]
         
-    public class CharacterController : MonoBehaviour
+    public class CharacterAnimationController : MonoBehaviour
     {
         private const float minimalInfelicity = 0.0001f;
 
@@ -16,37 +15,47 @@ namespace UnknownWorld.Behaviour
         [Range(1f, 4f)] [SerializeField] private float m_gravityMultiplier = 2f;
         [SerializeField] private float m_groundCheckDistance = 0.1f;
         [SerializeField] private float m_stationaryTurnSpeed = 180;
-        [SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
+        //[SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
         [SerializeField] private float m_runCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
         [SerializeField] private float m_moveSpeedMultiplier = 1f;
         [SerializeField] private float m_animSpeedMultiplier = 1f;
         [SerializeField] private float m_movingTurnSpeed = 360;        
         [SerializeField] private float m_jumpPower = 12f;
-        
+
+        public float MoveSpeedMultiplier
+        {
+            get { return this.m_moveSpeedMultiplier; }
+            set { this.m_moveSpeedMultiplier = value; }
+        }
+        public float AnimSpeedMultiplier
+        {
+            get { return this.m_animSpeedMultiplier; }
+            set { this.m_animSpeedMultiplier = value; }
+        }
+        public bool IsGrounded
+        {
+            get { return this.m_isGrounded; }
+        }
+
         private float m_origGroundCheckDistance;
-        private CharacterBehaviour m_behaviour;
-        private float m_movementInputValue;
+        //private CharacterBehaviour m_behaviour;
+        //private float m_movementInputValue;
         private const float m_legHalf = 0.5f;
         private CapsuleCollider m_capsule;
         private Vector3 m_capsuleCenter;
         private Vector3 m_groundNormal;
-        private float m_turnInputValue;
+        //private float m_turnInputValue;
         private float m_capsuleHeight;
         private float m_forwardAmount;
         private Rigidbody m_rigidbody;
         private Animator m_animator;
         private float m_turnAmount;
         private bool m_isCrouching;
-        private bool m_isGrounded;        
-        private bool m_isRunning;
-        private Vector3 m_move;
-        private bool m_crouch;
-        private bool m_jump; // the world-relative desired move direction, calculated from the camForward and user input.                       
+        private bool m_isGrounded;                 
         
 
         private void Start()
         {
-            m_behaviour = GetComponent<CharacterBehaviour>();
             m_capsule = GetComponent<CapsuleCollider>();
             m_rigidbody = GetComponent<Rigidbody>();
             m_animator = GetComponent<Animator>();
@@ -55,22 +64,6 @@ namespace UnknownWorld.Behaviour
 
             m_rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             m_origGroundCheckDistance = m_groundCheckDistance;
-        }
-
-        private void Update()
-        {
-            if (!m_jump)
-            {
-                m_jump = (m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.JumpCost)) ? CrossPlatformInputManager.GetButtonDown("Jump") : false;
-            }
-            // read inputs
-            m_turnInputValue = CrossPlatformInputManager.GetAxis("Horizontal");
-            m_movementInputValue = CrossPlatformInputManager.GetAxis("Vertical");
-        }
-
-        private void FixedUpdate()
-        {
-            MoveAndRotate();
         }
 
         private void OnAnimatorMove()
@@ -88,34 +81,6 @@ namespace UnknownWorld.Behaviour
             }
         }
 
-
-        private void MoveAndRotate()
-        {
-            m_crouch = Input.GetKey(KeyCode.C);
-
-            // calculate move direction to pass to character
-            // we use world-relative directions in the case of no main camera
-            m_move = m_movementInputValue * transform.forward * m_behaviour.MovementSpeed
-                   + m_turnInputValue * transform.right * m_behaviour.RotationSpeed;
-
-#if !MOBILE_INPUT
-            // walk speed multiplier
-            if ((!Input.GetKey(KeyCode.LeftShift)) ||
-                (!m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime)))
-            {
-                m_move *= 0.5f;
-                m_isRunning = false;
-            }
-            else
-            {
-                m_isRunning = true;
-            }
-#endif
-
-            // pass all parameters to the character control script
-            Move(m_move, m_crouch, m_jump);
-            m_jump = false;
-        }
 
         private void CheckGroundStatus()
         {
@@ -220,15 +185,7 @@ namespace UnknownWorld.Behaviour
                 m_isGrounded = false;
                 m_animator.applyRootMotion = false;
                 m_groundCheckDistance = 0.1f;
-
-                m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.JumpCost);
             }
-        }
-
-        private void PerformStaminaConsumption()
-        {                
-            if (m_isGrounded && m_isRunning && !m_isCrouching)
-                m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime);
         }
 
 
@@ -257,16 +214,18 @@ namespace UnknownWorld.Behaviour
             else
             {
                 HandleAirborneMovement();
-
             }
 
             ScaleCapsuleForCrouching(crouch);
 
             // send input and other state parameters to the animator
             UpdateAnimator(move);
-
-            PerformStaminaConsumption();
         }
 
+        public bool GetAnimationStateInfo(int layerIndex, string stateName)
+        {
+            return m_animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded");
+        }
+        
     }
 }

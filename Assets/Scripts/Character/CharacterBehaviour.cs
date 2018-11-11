@@ -22,7 +22,6 @@ namespace UnknownWorld.Behaviour
             }
         }
 
-
         [SerializeField] private StaminaActionCost m_staminaConsumption;
 
         private UnknownWorld.Manager.ObserverManager m_observerManager;
@@ -53,6 +52,7 @@ namespace UnknownWorld.Behaviour
             base.Update();            
         }
 
+
         protected override void SetIsActive(bool isActive)
         {
             if (IsActive == isActive) return;
@@ -69,5 +69,6 @@ namespace UnknownWorld.Behaviour
                 m_areaContainer.EnableAllAreas();
             }
         }
+
     }
 }
