@@ -9,7 +9,7 @@ namespace UnknownWorld.Behaviour
     {
         [SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
 
-        private CharacterAnimationController m_character; // A reference to the ThirdPersonCharacter on the object
+        private CharacterAnimationController m_animation; // A reference to the ThirdPersonCharacter on the object
         private CharacterBehaviour m_behaviour;
         private float m_movementInputValue;
         private float m_turnInputValue;        
@@ -21,7 +21,7 @@ namespace UnknownWorld.Behaviour
 
         private void Awake()
         {
-            m_character = GetComponent<CharacterAnimationController>();
+            m_animation = GetComponent<CharacterAnimationController>();
             m_behaviour = GetComponent<CharacterBehaviour>();
         }
 
@@ -32,8 +32,11 @@ namespace UnknownWorld.Behaviour
                 m_jump = (m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.JumpCost)) ? CrossPlatformInputManager.GetButtonDown("Jump") : false;
             }
             // read inputs
-            m_movementInputValue = CrossPlatformInputManager.GetAxis("Vertical");
-            m_turnInputValue = CrossPlatformInputManager.GetAxis("Horizontal");            
+            if (m_animation.GetAnimationStateInfo(0, "Grounded"))
+            {
+                m_movementInputValue = CrossPlatformInputManager.GetAxis("Vertical");
+                m_turnInputValue = CrossPlatformInputManager.GetAxis("Horizontal");
+            }                      
         }
 
         private void FixedUpdate()
@@ -65,17 +68,17 @@ namespace UnknownWorld.Behaviour
 #endif
 
             // pass all parameters to the character control script
-            m_character.Move(m_move, m_crouch, m_jump);
+            m_animation.Move(m_move, m_crouch, m_jump);
             PerformStaminaConsumption();
             m_jump = false;
         }
 
         private void PerformStaminaConsumption()
         {
-            if (m_character.IsGrounded && m_run && !m_crouch)
+            if (m_animation.IsGrounded && m_run && !m_crouch)
                 m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime);
 
-            if(m_character.IsGrounded && m_jump && !m_crouch && m_character.GetAnimationStateInfo(0, "Grounded"))
+            if(m_animation.GroundCheckDistance == 0.1f && m_jump)
                 m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.JumpCost);
         }
     }

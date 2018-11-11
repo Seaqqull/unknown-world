@@ -22,6 +22,10 @@ namespace UnknownWorld.Behaviour
         [SerializeField] private float m_movingTurnSpeed = 360;        
         [SerializeField] private float m_jumpPower = 12f;
 
+        public float GroundCheckDistance
+        {
+            get { return this.m_groundCheckDistance; }
+        }
         public float MoveSpeedMultiplier
         {
             get { return this.m_moveSpeedMultiplier; }
@@ -36,6 +40,8 @@ namespace UnknownWorld.Behaviour
         {
             get { return this.m_isGrounded; }
         }
+
+
 
         private float m_origGroundCheckDistance;
         //private CharacterBehaviour m_behaviour;
@@ -224,7 +230,7 @@ namespace UnknownWorld.Behaviour
 
         public bool GetAnimationStateInfo(int layerIndex, string stateName)
         {
-            return m_animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded");
+            return m_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
         }
         
     }
