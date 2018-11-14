@@ -28,6 +28,7 @@ namespace UnknownWorld.Area.Observer
 
         private void ShowTargets()
         {
+#if UNITY_EDITOR
             Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             UnityEditor.Handles.color = m_colorTarget;
 
@@ -44,11 +45,13 @@ namespace UnknownWorld.Area.Observer
                     }
                 }
             }
+#endif
         }
 
         [System.Obsolete("This method can be used instead of standart handle drawing -> DrawCircleHandle")]
         private void DrawCircleGizmo()
         {
+#if UNITY_EDITOR
             Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             Gizmos.color = m_colorZone;
 
@@ -77,10 +80,12 @@ namespace UnknownWorld.Area.Observer
                 UnityEditor.Handles.DrawLine(positionWithOffset,
                     positionWithOffset + DirFromAngle(m_data.Angle / 2, false) * m_data.Radius);
             }
+#endif
         }
 
         private void DrawCircleHandle()
         {
+#if UNITY_EDITOR
             Vector3 positionWithOffset = m_socket.position + m_data.Offset;
             UnityEditor.Handles.color = m_colorZone;
 
@@ -94,6 +99,7 @@ namespace UnknownWorld.Area.Observer
                 UnityEditor.Handles.DrawLine(positionWithOffset,
                     positionWithOffset + DirFromAngle(m_data.Angle / 2, false) * m_data.Radius);
             }
+#endif
         }
 
         protected override void SetIsActive(bool isActive)

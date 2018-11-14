@@ -55,6 +55,7 @@ namespace UnknownWorld.Path
 
         protected virtual void OnDrawGizmosSelected()
         {
+#if UNITY_EDITOR
             if (Points.Count == 0) return;
 
             Gizmos.color = m_lineColor;
@@ -83,6 +84,7 @@ namespace UnknownWorld.Path
             UnityEditor.Handles.color = m_accuracyColor;
             UnityEditor.Handles.DrawWireArc(m_points[i].Transform.position,
                 Vector3.up, Vector3.forward, 360, m_points[i].AccuracyRadius);
+#endif
         }
 
 
