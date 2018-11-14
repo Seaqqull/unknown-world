@@ -13,6 +13,7 @@ public class SettingsMenu : MonoBehaviour {
 
     private Resolution[] m_resolutions;
 
+
     private void Start()
     {
         m_resolutions = Screen.resolutions;
@@ -24,6 +25,7 @@ public class SettingsMenu : MonoBehaviour {
             options.FindIndex((res) => res == Screen.currentResolution.width + " x " + Screen.currentResolution.height);
         m_graphicsDropdown.RefreshShownValue();
     }
+
 
     public void SetVolume(float volume)
     {
