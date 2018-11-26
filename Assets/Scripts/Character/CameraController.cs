@@ -36,7 +36,12 @@ namespace UnknownWorld
         private float m_rotationVelocity;
         private Vector3 m_moveVelocity;
         private float m_zoomVelocity;
-        private Camera m_Camera;        
+        private Camera m_Camera;
+
+        public Camera Camera
+        {
+            get { return this.m_Camera; }
+        }
 
         public InvertSettings keyboardAndMouseInvertSettings;
         public InvertSettings controllerInvertSettings;

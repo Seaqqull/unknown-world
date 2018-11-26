@@ -104,6 +104,13 @@ namespace UnknownWorld.Path.Data
             m_impactRadius = 0.0f;
         }
 
+        public void ClearPoint()
+        {
+            if ((m_point) &&
+                (m_type == PointType.FollowingSuspicion))
+                Object.Destroy(this.m_point.gameObject);
+        }
+
         public PathPoint(PathPoint point)
         {
             this.m_transferDelay = point.m_transferDelay;
@@ -117,16 +124,10 @@ namespace UnknownWorld.Path.Data
             this.m_impactRadius = point.m_impactRadius;
             this.m_point = point.m_point;
         }
-
-        public void ClearPoint()
-        {
-            if ((m_point) &&
-                (m_type == PointType.FollowingSuspicion))
-                Object.Destroy(this.m_point.gameObject);
-        }
+        
     }
 
-    public class PathHelper : MonoBehaviour
+    public static class PathHelper
     {
         public static GameObject PathSpawner;
 
@@ -134,31 +135,30 @@ namespace UnknownWorld.Path.Data
 
         public static float PathWaitTime;
 
-        public static bool IsTargetIn(Transform target, UnknownWorld.Path.Data.PointType dType, List<UnknownWorld.Path.Data.PathPoint> targets)
+
+        public static void ClearAll(List<PathPoint> list)
         {
-            for (int i = 0; i < targets.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                if ((target == targets[i].Transform) &&
-                    (dType == targets[i].Type))
-                    return true;
+                list[i].ClearPoint();
+                list.RemoveAt(i--);
             }
-            return false;
         }
 
-        public static PointAction ObservationToAction(UnknownWorld.Area.Data.ObservationType dType)
+        public static void ClearExceptOne(List<PathPoint> list, ref int index)
         {
-            switch (dType)
+            for (int i = 0; i < list.Count; i++)
             {
-                case Area.Data.ObservationType.Undefined:
-                    return PointAction.Undefined;
-                case Area.Data.ObservationType.Sonar:
-                    return PointAction.Stop;
-                case Area.Data.ObservationType.Sound:
-                    return PointAction.Stop;
-                case Area.Data.ObservationType.View:
-                    return PointAction.Attack;
-                default:
-                    return PointAction.Undefined;
+                if (i != index)
+                {
+                    list[i].ClearPoint();
+                    list.RemoveAt(i);
+                    if (i < index)
+                    {
+                        i--;
+                        index--;
+                    }
+                }
             }
         }
 
@@ -179,31 +179,33 @@ namespace UnknownWorld.Path.Data
             }
         }
 
-        public static void ClearExceptOne(List<PathPoint> list, ref int index)
+        public static PointAction ObservationToAction(UnknownWorld.Area.Data.ObservationType dType)
         {
-            for (int i = 0; i < list.Count; i++)
+            switch (dType)
             {
-                if (i != index)
-                {
-                    list[i].ClearPoint();
-                    list.RemoveAt(i);
-                    if (i < index)
-                    {
-                        i--;
-                        index--;
-                    }
-                }                
+                case Area.Data.ObservationType.Undefined:
+                    return PointAction.Undefined;
+                case Area.Data.ObservationType.Sonar:
+                    return PointAction.Stop;
+                case Area.Data.ObservationType.Sound:
+                    return PointAction.Stop;
+                case Area.Data.ObservationType.View:
+                    return PointAction.Attack;
+                default:
+                    return PointAction.Undefined;
             }
         }
-        
-        public static void ClearAll(List<PathPoint> list)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i].ClearPoint();
-                list.RemoveAt(i--);
-            }            
-        }
 
+        public static bool IsTargetIn(Transform target, UnknownWorld.Path.Data.PointType dType, List<UnknownWorld.Path.Data.PathPoint> targets)
+        {
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if ((target == targets[i].Transform) &&
+                    (dType == targets[i].Type))
+                    return true;
+            }
+            return false;
+        }
+        
     }
 }

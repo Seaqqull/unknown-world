@@ -31,6 +31,9 @@ namespace UnknownWorld.Manager
 
             // initialize path data
             SetPathStandartData();
+
+            // initialize weapon data
+            SetWeaponStandartData();
         }
 
         // Update is called once per frame
@@ -51,6 +54,16 @@ namespace UnknownWorld.Manager
             UnknownWorld.Path.Data.PathHelper.PathWaitTime = 1.0f;
         }
 
+        private void SetWeaponStandartData()
+        {
+            if (!UnknownWorld.Weapon.Data.WeaponHelper.SimpleBulletPrefab)
+                UnknownWorld.Weapon.Data.WeaponHelper.SimpleBulletPrefab = Resources.Load("Weapon/SimpleBullet") as GameObject;
+            if (!UnknownWorld.Weapon.Data.WeaponHelper.GameManager)
+                UnknownWorld.Weapon.Data.WeaponHelper.GameManager = this;
+            if (!UnknownWorld.Weapon.Data.WeaponHelper.WeaponContainer)
+                UnknownWorld.Weapon.Data.WeaponHelper.WeaponContainer = GameObject.Find("--- Weapons ---");
+        }
+
         private void SetCameraTargetFromPlayer()
         {
             if(m_targetCamera != -1)
@@ -69,5 +82,10 @@ namespace UnknownWorld.Manager
             
         }
 
+
+        public Camera GetActiveCamera()
+        {
+            return m_cameraTagets[m_activeCamera.Value].m_camera.Camera;
+        }
     }
 }

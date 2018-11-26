@@ -245,7 +245,7 @@ namespace UnknownWorld.Behaviour
 #if UNITY_EDITOR
             IsActive = m_data.IsPersonActive;
 #else
-            if (m_isActive) return;
+            if (!m_isActive) return;
 #endif
             if (m_data.IsExhausted)
             {

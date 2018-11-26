@@ -16,7 +16,6 @@ namespace UnknownWorld.Behaviour
 
         private UnknownWorld.Path.PathContainer m_targetsSuspicion;
         private UnknownWorld.Path.PathContainer m_targetsDirect;
-
         private UnknownWorld.Path.PathContainer m_path;
         private bool m_isTargetReselect = false;
         private Coroutine m_updateCorotation;

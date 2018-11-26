@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 114788618997299006}
   - component: {fileID: 114557034637044972}
   - component: {fileID: 114780879269518442}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: zombiegirl_w_kurniawan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2016,6 +2016,7 @@ MonoBehaviour:
     m_health: 100
   m_staminaSlider: {fileID: 0}
   m_healthSlider: {fileID: 0}
+  m_attackDistance: 1
   m_targetUpdateDelay: 0.2
 --- !u!114 &114780879269518442
 MonoBehaviour:
