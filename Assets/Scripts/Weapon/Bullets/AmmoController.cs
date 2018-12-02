@@ -10,8 +10,8 @@ namespace UnknownWorld.Weapon.Ammo
         [SerializeField] [Range(1, ushort.MaxValue)] private float m_reloadScale = 1.0f;
         [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_available = 0;
         [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_capacity = 0;
-        [SerializeField] private bool m_isDirectCallOnly = true;
         [SerializeField] private string m_buttonReload = "Reload";
+        [SerializeField] private bool m_isDirectCallOnly = true;        
         [SerializeField] private bool m_isAmmoUnlimited = false;
         [SerializeField] private GameObject m_bullet;
 
@@ -138,10 +138,7 @@ namespace UnknownWorld.Weapon.Ammo
                 Invoke("Reload", m_weaponSpecification.ReloadSpeed * m_reloadScale);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool DoReload()
@@ -154,10 +151,7 @@ namespace UnknownWorld.Weapon.Ammo
                 Invoke("Reload", m_weaponSpecification.ReloadSpeed * m_reloadScale);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public void DeActivate()
@@ -194,7 +188,6 @@ namespace UnknownWorld.Weapon.Ammo
             
             if (m_state != Data.AmmoState.Shootable) return m_state;
 
-            // make public and call after bullet shot
             Shoot(bulletsToPerformShot);
 
             return Data.AmmoState.Shootable;

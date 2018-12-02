@@ -28,6 +28,7 @@ namespace UnknownWorld.Manager
 
             // ignore colision between character and target
             Physics.IgnoreLayerCollision(11, 10);
+            Physics.IgnoreLayerCollision(11, 12);
 
             // initialize path data
             SetPathStandartData();
@@ -62,6 +63,8 @@ namespace UnknownWorld.Manager
                 UnknownWorld.Weapon.Data.WeaponHelper.GameManager = this;
             if (!UnknownWorld.Weapon.Data.WeaponHelper.WeaponContainer)
                 UnknownWorld.Weapon.Data.WeaponHelper.WeaponContainer = GameObject.Find("--- Weapons ---");
+            if (!UnknownWorld.Weapon.Data.WeaponHelper.BulletContainer)
+                UnknownWorld.Weapon.Data.WeaponHelper.BulletContainer = GameObject.Find("--- Bullets ---");            
         }
 
         private void SetCameraTargetFromPlayer()

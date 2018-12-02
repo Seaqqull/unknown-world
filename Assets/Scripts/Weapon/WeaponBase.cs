@@ -16,11 +16,11 @@ namespace UnknownWorld.Weapon
         [SerializeField] protected string m_buttonShootingMode = "ShotMode";
         [SerializeField] protected List<Ammo.AmmoController> m_ammoTypes;
         [SerializeField] protected string m_buttonAmmoType = "AmmoType";
-        [SerializeField] protected Transform m_bulletParent;
+        [SerializeField] protected bool m_isDirectCallOnly = true;
         [SerializeField] protected int m_shootingModeIndex;
-        [SerializeField] protected LayerMask m_targetMask;        
+        [SerializeField] protected LayerMask m_targetMask;
         [SerializeField] protected bool m_isReloadInstant;
-        [SerializeField] protected int m_ammoTypeIndex;        
+        [SerializeField] protected int m_ammoTypeIndex;
 
         public List<ShotController> ShootingModes
         {
@@ -42,8 +42,8 @@ namespace UnknownWorld.Weapon
         }
         public Transform BulletParent
         {
-            get { return this.m_bulletParent; }
-            set { this.m_bulletParent = value; }
+            get { return this.m_data.BulletParent; }
+            set { this.m_data.BulletParent = value; }
         }        
         public Data.WeaponState State
         {
@@ -55,6 +55,11 @@ namespace UnknownWorld.Weapon
                 if (DoStateChange(value))
                     this.m_state = value;
             }
+        }
+        public bool IsDirectCallOnly
+        {
+            get { return this.m_isDirectCallOnly; }
+            set { this.m_isDirectCallOnly = value; }
         }
         public Data.WeaponType Type
         {
@@ -85,6 +90,10 @@ namespace UnknownWorld.Weapon
             get { return this.m_characteristic.BurstSpeed; }
             set { this.m_characteristic.BurstSpeed = value; }
         }
+        public float ShotTime
+        {
+            get { return 60.0f / m_characteristic.ShootSpeed; }
+        }
         public float Damage
         {
             get { return this.m_characteristic.Damage; }
@@ -99,12 +108,13 @@ namespace UnknownWorld.Weapon
 
         protected virtual void Start()
         {
-            Activate();
+
         }
 
         protected virtual void Update()
         {
-            if ((m_state == Data.WeaponState.Dropped) ||
+            if ((m_isDirectCallOnly) ||
+                (m_state == Data.WeaponState.Dropped) ||
                 (m_state == Data.WeaponState.Inactive)) return;
 
             // Change current ammo
@@ -121,6 +131,19 @@ namespace UnknownWorld.Weapon
         }
 
 
+        protected void Shot()
+        {
+            UnknownWorld.Weapon.Ammo.Bullet bullet = Instantiate(m_ammoTypes[m_ammoTypeIndex].BulletObject, /*UnknownWorld.Weapon.Data.WeaponHelper.BulletContainer.transform*/(m_data.BulletParent) ? m_data.BulletParent : transform)
+                    .GetComponent<UnknownWorld.Weapon.Ammo.Bullet>();
+
+            bullet.transform.position = m_data.BulletStartPosition.position;
+
+            bullet.SetBulletParams(Damage, m_characteristic.BulletSpeed, m_characteristic.Range, m_targetMask);
+           
+            bullet.Launch();
+        }
+
+
         protected virtual void Drop()
         {
             DeActivate();
@@ -129,26 +152,7 @@ namespace UnknownWorld.Weapon
             transform.parent = null;
             transform.parent = Data.WeaponHelper.WeaponContainer.transform;
         }
-
-        protected virtual void Activate()
-        {
-            m_state = Data.WeaponState.Inaction;
-
-            m_ammoTypes[m_ammoTypeIndex].Activate(this, m_characteristic);
-            m_data.Bullet = m_ammoTypes[m_ammoTypeIndex].Bullet;
-
-            m_shootingModes[m_shootingModeIndex].Activate(this, m_characteristic, m_data);
-        }
-
-        protected virtual void DeActivate()
-        {
-            m_state = Data.WeaponState.Inactive;
-
-            m_shootingModes[m_shootingModeIndex].DeActivate();
-            m_ammoTypes[m_ammoTypeIndex].DeActivate();
-            m_data.Bullet = null;            
-        }
-        
+                
         protected virtual bool DoStateChange(Data.WeaponState newState)
         {
             switch (newState)
@@ -172,27 +176,38 @@ namespace UnknownWorld.Weapon
         }
 
 
+        public virtual void Activate()
+        {
+            m_state = Data.WeaponState.Inaction;
+
+            m_ammoTypes[m_ammoTypeIndex].Activate(this, m_characteristic);
+            m_data.Bullet = m_ammoTypes[m_ammoTypeIndex].Bullet;
+
+            m_shootingModes[m_shootingModeIndex].Activate(this, m_characteristic, m_data);
+        }
+
+        public virtual void DeActivate()
+        {
+            m_state = Data.WeaponState.Inactive;
+
+            m_shootingModes[m_shootingModeIndex].DeActivate();
+            m_ammoTypes[m_ammoTypeIndex].DeActivate();
+            m_data.Bullet = null;
+        }
+
+
         public bool DoShot()
         {
             if (m_ammoTypes[m_ammoTypeIndex].DoShot(m_shootingModes[m_shootingModeIndex].BulletsToPerformShot)
                     == Data.AmmoState.Shootable)
             {
-                if (!m_shootingModes[m_shootingModeIndex].DoShot(60.0f / m_characteristic.ShootSpeed, false))
+                if (!m_shootingModes[m_shootingModeIndex].DoShot(ShotTime, false))
                 {
                     m_shootingModes[m_shootingModeIndex].CancelShot();
                     return false;
                 }
-                // make shot animation
-
                 // shot bullet
-                UnknownWorld.Weapon.Ammo.Bullet bullet = Instantiate(m_ammoTypes[m_ammoTypeIndex].BulletObject,/*give shoot transform*/ (m_bulletParent) ? m_bulletParent : transform)
-                    .GetComponent<UnknownWorld.Weapon.Ammo.Bullet>();
-                bullet.SetBulletParams(Damage, ShootSpeed, Range, m_targetMask);
-
-                // set local rotation based on shot
-                //bullet.gameObject.transform.localRotation = m_shootingModes[m_shootingModeIndex].TargetDirection; // target relative rotation
-                bullet.Launch();
-
+                Invoke("Shot", m_characteristic.ShotDelay);
                 return true;
             }
 
@@ -222,21 +237,13 @@ namespace UnknownWorld.Weapon
             if (m_ammoTypes[m_ammoTypeIndex].DoShot(m_shootingModes[m_shootingModeIndex].BulletsToPerformShot)
                     == Data.AmmoState.Shootable)
             {
-                if (!m_shootingModes[m_shootingModeIndex].OnShot(60.0f / m_characteristic.ShootSpeed))
+                if (!m_shootingModes[m_shootingModeIndex].OnShot(ShotTime))
                 {
                     m_shootingModes[m_shootingModeIndex].CancelShot();
                     return;
                 }
-                // make shot animation
-
                 // shot bullet
-                UnknownWorld.Weapon.Ammo.Bullet bullet = Instantiate(m_ammoTypes[m_ammoTypeIndex].BulletObject,/*give shoot transform*/ (m_bulletParent) ? m_bulletParent : transform)
-                    .GetComponent<UnknownWorld.Weapon.Ammo.Bullet>();
-                bullet.SetBulletParams(Damage, ShootSpeed, Range, m_targetMask);
-
-                // set local rotation based on shot
-                //bullet.gameObject.transform.localRotation = m_shootingModes[m_shootingModeIndex].TargetDirection; // target relative rotation
-                bullet.Launch();
+                Invoke("Shot", m_characteristic.ShotDelay);
             }
             else
                 m_shootingModes[m_shootingModeIndex].CancelShot();

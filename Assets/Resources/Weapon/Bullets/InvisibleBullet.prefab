@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1407876957646150}
+  m_RootGameObject: {fileID: 1718218940304358}
   m_IsPrefabAsset: 1
---- !u!1 &1407876957646150
+--- !u!1 &1718218940304358
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4983321737546976}
-  - component: {fileID: 114551754102052340}
-  - component: {fileID: 65069872451019154}
-  m_Layer: 10
-  m_Name: TracingBox
+  - component: {fileID: 4466896352058816}
+  - component: {fileID: 136131486931741542}
+  - component: {fileID: 114882975897627932}
+  m_Layer: 13
+  m_Name: InvisibleBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4983321737546976
+--- !u!4 &4466896352058816
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407876957646150}
+  m_GameObject: {fileID: 1718218940304358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,33 +41,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65069872451019154
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407876957646150}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114551754102052340
+--- !u!114 &114882975897627932
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1407876957646150}
+  m_GameObject: {fileID: 1718218940304358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2665536e73ccf3e48bb591d85103ec6a, type: 3}
+  m_Script: {fileID: 11500000, guid: e326f2b3968e0d643ab754cab425c6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_state: 1
-  m_damageMultiplier: 1
-  m_name: 
-  m_gizmoColorAccessible: {r: 1, g: 0, b: 0, a: 1}
-  m_gizmoColorInactive: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_gizmoColorActive: {r: 0, g: 0, b: 1, a: 1}
-  m_gizmoSize: 0.1
+  m_explosionParticle: {fileID: 0}
+  m_shotParticle: {fileID: 0}
+  m_flyParticle: {fileID: 0}
+  m_explosionAudio: {fileID: 0}
+  m_damageScale: 1
+  m_speedScale: 0
+  m_rangeScale: 0
+  m_shotAudio: {fileID: 0}
+  m_flyAudio: {fileID: 0}
+  m_lifetime: 0.25
+--- !u!136 &136131486931741542
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718218940304358}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 1.5
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.75}

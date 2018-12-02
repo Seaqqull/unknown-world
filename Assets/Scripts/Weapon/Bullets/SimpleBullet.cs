@@ -16,13 +16,13 @@ namespace UnknownWorld.Weapon.Ammo
             OnBulletDestroy();
             if (((1 << other.gameObject.layer) & m_targetMask) == 0)
             {
-                UnknownWorld.Behaviour.PersonBehaviour affectedTarget = other.GetComponent<UnknownWorld.Behaviour.PersonBehaviour>();//.DoDamage(m_damage * m_damageScale);
+                UnknownWorld.Area.Target.TracingArea affectedTarget = other.GetComponent<UnknownWorld.Area.Target.TracingArea>();
                 if (affectedTarget)
                 {
-                    Debug.Log("Bullet hit target");
-                }                
+                    affectedTarget.PerformDamage(m_damage * m_damageScale);
+                }
             }
-            Destroy(gameObject);
+            DestroyBullet();
         }
     }
 }

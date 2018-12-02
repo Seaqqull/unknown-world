@@ -15,10 +15,11 @@ namespace UnknownWorld.Weapon.Ammo
         [SerializeField] protected float m_rangeScale = 1.0f;
         [SerializeField] protected AudioSource m_shotAudio;
         [SerializeField] protected AudioSource m_flyAudio;
-        [SerializeField] protected LayerMask m_targetMask;
-
-        protected static uint m_idCounter = 0;
-        protected bool m_isLaunched = false;        
+        
+        protected static uint m_idCounter = 0;        
+        protected bool m_isLaunched = false;
+        protected Vector3 m_startPosition;
+        protected LayerMask m_targetMask;
         protected float m_damage;
         protected float m_speed;
         protected float m_range;
@@ -77,12 +78,22 @@ namespace UnknownWorld.Weapon.Ammo
 
         protected virtual void Update()
         {
-            if (m_isLaunched)
+            if (!m_isLaunched) return;
+
+            transform.position += Vector3.forward * (m_speed * m_speedScale * Time.deltaTime);
+
+            if ((m_rangeScale != 0.0f) && 
+                (Vector3.Distance(transform.position, m_startPosition) > (m_range * m_rangeScale)))
             {
-                transform.position += Vector3.forward * (m_speed * m_speedScale * Time.deltaTime);
+                DestroyBullet();
             }
         }
 
+
+        protected virtual void DestroyBullet()
+        {
+            Destroy(gameObject);
+        }
 
         protected virtual void OnBulletStart()
         {
@@ -129,7 +140,8 @@ namespace UnknownWorld.Weapon.Ammo
 
         public virtual void Launch()
         {
-            m_isLaunched = true;
+            m_startPosition = transform.position;
+            m_isLaunched = true;            
 
             OnBulletStart();
         }

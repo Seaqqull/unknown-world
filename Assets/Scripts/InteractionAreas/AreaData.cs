@@ -4,6 +4,15 @@ using UnityEngine;
 namespace UnknownWorld.Area.Data
 {
     [System.Serializable]
+    public enum ObservationType
+    {
+        Undefined,
+        Sonar,
+        Sound,
+        View
+    }
+
+    [System.Serializable]
     public enum HitAreaState
     {
         Unknown,
@@ -12,14 +21,6 @@ namespace UnknownWorld.Area.Data
         Disabled
     }
 
-    [System.Serializable]
-    public enum ObservationType
-    {
-        Undefined,
-        Sonar,
-        Sound,
-        View
-    }    
 
     [System.Serializable]
     public class AreaAffectionMask

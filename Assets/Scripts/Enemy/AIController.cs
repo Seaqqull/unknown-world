@@ -2,17 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.AI;
 
 namespace UnknownWorld.Behaviour
 {
     public class AIController : MonoBehaviour
     {
-        
-
         [SerializeField] private UnknownWorld.Behaviour.AiAnimationController m_animation;
+        [SerializeField] private List<UnknownWorld.Weapon.WeaponBase> m_weapons;
         [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay;
         [SerializeField] private bool m_isTargetUltimate = true;
+        [SerializeField] private int m_activeWeapon = 0;
 
         private UnknownWorld.Path.PathContainer m_targetsSuspicion;
         private UnknownWorld.Path.PathContainer m_targetsDirect;
@@ -26,6 +27,14 @@ namespace UnknownWorld.Behaviour
         private int m_pathIndex;
         private float m_speed;
 
+        public List<UnknownWorld.Weapon.WeaponBase> Weapons
+        {
+            get {
+                return this.m_weapons ??
+                    (this.m_weapons = new List<UnknownWorld.Weapon.WeaponBase>());
+            }
+            set { this.m_weapons = value; }
+        }
         public bool IsTargetUltimate
         {
             get { return this.m_isTargetUltimate; }
@@ -72,12 +81,25 @@ namespace UnknownWorld.Behaviour
             m_agent.SetDestination(m_path.GetDestination(ref m_pathIndex));
             m_agent.speed = m_path.GetPoint(m_pathIndex).MovementSpeed;
 
+            // only when 1 weapon or order not required
+            Weapons = GetComponentsInChildren<UnknownWorld.Weapon.WeaponBase>().
+                OfType<UnknownWorld.Weapon.WeaponBase>().ToList();
+
+            m_weapons[m_activeWeapon].Activate();
+
             IsActive = true;
         }
         
-        private void Update()
+        private void FixedUpdate()
         {
             if (!m_isActive) return;
+
+            if (m_behaviour.IsDeath)
+            {
+                if (!m_animation.IsDead)
+                    m_animation.Dead();
+                return;
+            }
 
             // when AI use direct or suspicion target that was changed
             if (m_isTargetReselect)
@@ -104,14 +126,18 @@ namespace UnknownWorld.Behaviour
                         CheckTargets();
                         break;
                     case AIBehaviour.AIState.Attacking:
-                        return;
+                    case AIBehaviour.AIState.Reloading:
                     case AIBehaviour.AIState.Dead:
                         return;
                 }
             }
 
-            UpdateVelocity();
-            CheckNearness();
+            if ((m_behaviour.State != AIBehaviour.AIState.Attacking) &&
+                (m_behaviour.State != AIBehaviour.AIState.Reloading))
+            {
+                UpdateVelocity();
+                CheckNearness();
+            }            
         }
 
 
@@ -205,7 +231,7 @@ namespace UnknownWorld.Behaviour
                     break;
                 case AIBehaviour.AIState.FollowingTarget:
                     if ((!m_agent.pathPending) &&
-                        (m_agent.remainingDistance <= m_targetsDirect.GetPoint(m_pathIndex).AccuracyRadius))
+                        (m_agent.remainingDistance <= m_weapons[m_activeWeapon].Range))
                     {
                         UpdateDirectAction();
                     }
@@ -274,13 +300,24 @@ namespace UnknownWorld.Behaviour
                 case Path.Data.PointAction.Stop:
                     m_agent.speed = 0.0f;
                     m_behaviour.State = AIBehaviour.AIState.Waiting;
+
                     Invoke("OnUpdateDirectAction", m_targetsDirect.GetPoint(m_pathIndex).TransferDelay); // wait attack time
                     break;
                 case Path.Data.PointAction.Attack:
+                    if (m_behaviour.State == AIBehaviour.AIState.Attacking)
+                        return;
+
                     m_agent.speed = 0.0f;
-                    m_behaviour.State = AIBehaviour.AIState.Attacking;
-                    Debug.Log("Begin attack");
-                    Invoke("OnUpdateDirectAction", m_targetsDirect.GetPoint(m_pathIndex).TransferDelay); // attack time
+
+                    if ((m_animation.IsActionPerfomerable()) &&
+                        (m_weapons[m_activeWeapon].DoShot()))
+                    {
+                        m_behaviour.State = AIBehaviour.AIState.Attacking;                        
+                        m_animation.Attack(m_weapons[m_activeWeapon].ShotTime);
+                        Invoke("OnUpdateDirectAction", m_weapons[m_activeWeapon].ShotTime);
+                    }
+                    else
+                        OnUpdateDirectAction();
                     break;
             }
         }
@@ -308,9 +345,8 @@ namespace UnknownWorld.Behaviour
                 (m_behaviour.State == AIBehaviour.AIState.Attacking) ||
                 (m_behaviour.State == AIBehaviour.AIState.FollowingTarget))
             {
-                SelectClosestTarget();
-                Debug.Log("End attack");
-                m_behaviour.State = AIBehaviour.AIState.FollowingTarget;
+                SelectClosestTarget();                
+                //m_behaviour.State = AIBehaviour.AIState.FollowingTarget;
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnknownWorld.Utility.Methods
 {
-    class List
+    public static class List
     {
         public static void ClearExceptOne<T>(List<T> list, ref int index)
         {
@@ -20,6 +20,20 @@ namespace UnknownWorld.Utility.Methods
             List<T> temp = new List<T>(list);
             temp.RemoveAt(index);
             return temp;
+        }
+    }
+
+    class AreaEqualityComparer : IEqualityComparer<UnknownWorld.Area.Target.TracingArea>
+    {
+        public int GetHashCode(UnknownWorld.Area.Target.TracingArea obj)
+        {
+            return obj.Id.GetHashCode();
+        }
+
+        public bool Equals(UnknownWorld.Area.Target.TracingArea x, UnknownWorld.Area.Target.TracingArea y)
+        {
+            // Two items are equal if their keys are equal.
+            return x.Id == y.Id;
         }
     }
 }

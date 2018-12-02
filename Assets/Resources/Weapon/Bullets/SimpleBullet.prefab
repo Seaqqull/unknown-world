@@ -121,9 +121,6 @@ MonoBehaviour:
   m_rangeScale: 1
   m_shotAudio: {fileID: 0}
   m_flyAudio: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!136 &136040022078834852
 CapsuleCollider:
   m_ObjectHideFlags: 1

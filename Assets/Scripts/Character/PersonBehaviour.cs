@@ -240,13 +240,23 @@ namespace UnknownWorld.Behaviour
             m_isDeath = false;
         }
 
+        protected virtual void Start()
+        {
+            if (!m_areaContainer) return;
+
+            m_areaContainer.SetHealthLink((damage) => {
+                Damage(damage);
+            });
+        }
+
         protected virtual void Update()
         {
 #if UNITY_EDITOR
             IsActive = m_data.IsPersonActive;
-#else
-            if (!m_isActive) return;
 #endif
+            if ((m_isDeath) || 
+                (!m_isActive)) return;
+
             if (m_data.IsExhausted)
             {
                 if (m_data.TimeFromExhaustion >= m_data.RecoveryAfterExhaustion)
@@ -257,7 +267,7 @@ namespace UnknownWorld.Behaviour
             
 
             StaminaRegen();
-            HealthRegen();            
+            HealthRegen();
         }
 
 
@@ -296,7 +306,15 @@ namespace UnknownWorld.Behaviour
         {
             if (m_data.IsHealthLock) return;
 
-            m_isActive = false;
+            m_data.Health = m_data.HealthMin;
+            m_healthUIUpdater(m_data.Health);
+
+            m_data.IsExhausted = false;
+
+            m_data.IsPersonActive = false;
+            IsActive = false;
+
+            m_isDeath = true;
         }
 
         protected virtual void SetIsActive(bool isActive)
@@ -304,8 +322,19 @@ namespace UnknownWorld.Behaviour
             if (isActive == m_isActive) return;
 
             m_isActive = isActive;
-        }        
+        }
 
+
+        public void Damage(float damage)
+        {
+            if ((m_isDeath) ||
+                (m_data.IsHealthLock))
+                return;
+
+            m_data.Health -= (damage * m_data.HealthMultiplier);
+
+            if (m_data.Health < m_data.HealthMin) Death();
+        }
 
         public bool DoHealthAction(float healthConsumption)
         {
@@ -314,6 +343,7 @@ namespace UnknownWorld.Behaviour
                 return false;
 
             m_data.Health -= (healthConsumption * m_data.HealthMultiplier);
+
             return true;
         }
 

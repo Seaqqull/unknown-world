@@ -5,6 +5,38 @@ using UnityEngine;
 namespace UnknownWorld.Weapon.Data
 {
     [System.Serializable]
+    public enum WeaponModeType
+    {
+        Unknown,
+        Single,
+        Burst,
+        Automatic,
+        Stream
+    }
+
+    [System.Serializable]
+    public enum WeaponState
+    {
+        Unknown,
+        Inactive, // when weapon not selected
+        Inaction, // when weapon 
+        Shoot, // when shooting
+        Reaload, // when weapon reloading
+        Dropped // when weapon dropped
+    }
+
+    [System.Serializable]
+    public enum WeaponType
+    {
+        Unknown,
+        Arm,
+        Pistol,
+        SemiAutomaticRifle,
+        AutomaticRifle,
+        Sniper
+    }
+
+    [System.Serializable]
     public enum ShotState
     {
         Unknown,
@@ -26,37 +58,7 @@ namespace UnknownWorld.Weapon.Data
         ShotNotAllowed
     }
 
-    [System.Serializable]
-    public enum WeaponType
-    {
-        Unknown,
-        Pistol,
-        SemiAutomaticRifle,
-        AutomaticRifle,
-        Sniper
-    }
-
-    [System.Serializable]
-    public enum WeaponState
-    {
-        Unknown,
-        Inactive, // when weapon not selected
-        Inaction, // when weapon 
-        Shoot, // when shooting
-        Reaload, // when weapon reloading
-        Dropped // when weapon dropped
-    }
-
-    [System.Serializable]
-    public enum WeaponModeType
-    {
-        Unknown,
-        Single,
-        Burst,
-        Automatic,
-        Stream
-    }
-
+    
     public interface IWeaponAction
     {
         bool DoShot();
@@ -72,34 +74,23 @@ namespace UnknownWorld.Weapon.Data
         bool ChangeShootingMode(bool modeDestination);
     }
 
-    [System.Serializable]
-    public class WeaponData
-    {
-        [SerializeField] private Transform m_bulletStart;
-
-        private UnknownWorld.Weapon.Ammo.Bullet m_bullet;
-
-        public UnknownWorld.Weapon.Ammo.Bullet Bullet
-        {
-            get { return this.m_bullet; }
-            set { this.m_bullet = value; }
-        }
-        public Transform BulletStartPosition
-        {
-            get { return this.m_bulletStart; }
-            set { this.m_bulletStart = value; }
-        }    
-    }
 
     [System.Serializable]
     public class WeaponCharacteristic
-    {        
+    {
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_reloadSpeed = 5.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_shootSpeed = 60.0f;
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_bulletSpeed = 1.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_burstSpeed = 0.0f;
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_shotDelay = 0.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_damage = 0.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_range = 0.0f;
 
+        public float BulletSpeed
+        {
+            get { return this.m_bulletSpeed; }
+            set { this.m_bulletSpeed = value; }
+        }
         public float ReloadSpeed
         {
             get { return this.m_reloadSpeed; }
@@ -115,6 +106,11 @@ namespace UnknownWorld.Weapon.Data
             get { return this.m_burstSpeed; }
             set { this.m_burstSpeed = value; }
         }
+        public float ShotDelay
+        {
+            get { return this.m_shotDelay; }
+            set { this.m_shotDelay = value; }
+        }
         public float Damage
         {
             get { return this.m_damage; }
@@ -127,12 +123,38 @@ namespace UnknownWorld.Weapon.Data
         }
     }
 
+    [System.Serializable]
+    public class WeaponData
+    {
+        [SerializeField] private Transform m_bulletParent;
+        [SerializeField] private Transform m_bulletStart;
+        
+        private UnknownWorld.Weapon.Ammo.Bullet m_bullet;
+
+        public UnknownWorld.Weapon.Ammo.Bullet Bullet
+        {
+            get { return this.m_bullet; }
+            set { this.m_bullet = value; }
+        }
+        public Transform BulletStartPosition
+        {
+            get { return this.m_bulletStart; }
+            set { this.m_bulletStart = value; }
+        }
+        public Transform BulletParent
+        {
+            get { return this.m_bulletParent; }
+            set { this.m_bulletParent = value; }
+        }
+    }
+
+
     public static class WeaponHelper
     {
         public static UnknownWorld.Manager.GameManager GameManager;
         public static GameObject SimpleBulletPrefab;
         public static GameObject WeaponContainer;
-        // calculate mouse rotation to send in AmmoController through Activate
+        public static GameObject BulletContainer;
 
 
         public static bool isMouseHitPosition(Vector3 mousePosition, float maximumShootRange, out Vector3 hitPosition)

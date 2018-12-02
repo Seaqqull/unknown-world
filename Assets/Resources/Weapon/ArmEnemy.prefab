@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1958648457481366}
+  m_IsPrefabAsset: 1
+--- !u!1 &1095458340569382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4868469538899330}
+  m_Layer: 0
+  m_Name: Bullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1744699582812224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4897604317953792}
+  m_Layer: 0
+  m_Name: StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1958648457481366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4942958574213928}
+  - component: {fileID: 114127025915478526}
+  - component: {fileID: 114624424692925904}
+  - component: {fileID: 114536013213599006}
+  m_Layer: 0
+  m_Name: ArmEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4868469538899330
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095458340569382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4942958574213928}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4897604317953792
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1744699582812224}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4942958574213928}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4942958574213928
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958648457481366}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4897604317953792}
+  - {fileID: 4868469538899330}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114127025915478526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958648457481366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a608b5d07319044b0ed195364af233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_characteristic:
+    m_reloadSpeed: 5
+    m_shootSpeed: 42.85
+    m_bulletSpeed: 1
+    m_burstSpeed: 0
+    m_shotDelay: 0.91
+    m_damage: 5
+    m_range: 1.5
+  m_state: 2
+  m_type: 1
+  m_shootingModes:
+  - {fileID: 114536013213599006}
+  m_data:
+    m_bulletParent: {fileID: 4868469538899330}
+    m_bulletStart: {fileID: 4897604317953792}
+  m_buttonShootingMode: ShotMode
+  m_ammoTypes:
+  - {fileID: 114624424692925904}
+  m_buttonAmmoType: AmmoType
+  m_shootingModeIndex: 0
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_isReloadInstant: 0
+  m_ammoTypeIndex: 0
+--- !u!114 &114536013213599006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958648457481366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed512fb8c96945646a7f5c2de4d54e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 1
+  m_bulletsToPerformShot: 1
+  m_isDirectCallOnly: 1
+  m_buttonFire: Fire1
+--- !u!114 &114624424692925904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958648457481366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940148508563ee64daa61975e2232797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_magazineCapacity: 1
+  m_reloadScale: 1
+  m_available: 0
+  m_capacity: 0
+  m_isDirectCallOnly: 1
+  m_buttonReload: Reload
+  m_isAmmoUnlimited: 1
+  m_bullet: {fileID: 1718218940304358, guid: 39d2312beffd2c54f8b405b3de7f179c, type: 2}

@@ -181,7 +181,8 @@ namespace UnknownWorld.Manager
                 // new
                 for (int i = 0; i < m_observers.Count; i++)
                 {
-                    if ((m_observers[i].AffectionState == Utility.Data.DataState.Unknown) ||
+                    if ((!m_observers[i].IsDeath) ||
+                        (m_observers[i].AffectionState == Utility.Data.DataState.Unknown) ||
                         (m_observers[i].AffectionState == Utility.Data.DataState.Processed)) // only if first time or previous data was processed
                     {
                         m_observers[i].AffectionInfo = GetObserverAffectionInfo(m_observers[i].Id);

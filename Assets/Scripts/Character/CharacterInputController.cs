@@ -26,13 +26,17 @@ namespace UnknownWorld.Behaviour
         }
 
         private void Update()
-        {
+        {            
+            if ((m_behaviour.IsDeath) ||
+                (!m_behaviour.IsActive))
+                return;
+
             if (!m_jump)
             {
                 m_jump = (m_behaviour.IsStaminaAction(m_behaviour.StaminaConsumption.JumpCost)) ? CrossPlatformInputManager.GetButtonDown("Jump") : false;
             }
             // read inputs
-            if (m_animation.GetAnimationStateInfo(0, "Grounded"))
+            if (m_animation.State != Data.AnimationState.InAir)
             {
                 m_movementInputValue = CrossPlatformInputManager.GetAxis("Vertical");
                 m_turnInputValue = CrossPlatformInputManager.GetAxis("Horizontal");
@@ -41,7 +45,14 @@ namespace UnknownWorld.Behaviour
 
         private void FixedUpdate()
         {
-            MoveAndRotate();
+            if ((m_behaviour.IsDeath) &&
+                (!m_animation.IsDead))
+            {
+                m_move = Vector3.zero;
+                m_animation.Dead();
+            }
+            else if (!m_behaviour.IsDeath)
+                MoveAndRotate();
         }
 
         private void MoveAndRotate()
@@ -78,7 +89,7 @@ namespace UnknownWorld.Behaviour
             if (m_animation.IsGrounded && m_run && !m_crouch)
                 m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.RunCost * Time.deltaTime);
 
-            if(m_animation.GroundCheckDistance == 0.1f && m_jump)
+            if(/*m_animation.GroundCheckDistance == 0.1f*/m_animation.State == Data.AnimationState.Jump && m_jump)
                 m_behaviour.DoStaminaAction(m_behaviour.StaminaConsumption.JumpCost);
         }
     }

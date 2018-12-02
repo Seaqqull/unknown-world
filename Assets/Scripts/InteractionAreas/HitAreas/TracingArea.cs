@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnknownWorld.Area.Data;
 
 namespace UnknownWorld.Area.Target
@@ -9,11 +10,25 @@ namespace UnknownWorld.Area.Target
         protected static Color editor_gizmo_color = Color.blue;
 
         [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Enabled;
+        [SerializeField] [Range(0, ushort.MaxValue)] protected float m_damageMultiplier = 1.0f;
         [SerializeField] protected string m_name;
 
+        protected Action<float> m_onDamage = delegate { };
         protected Color m_gizmoColor = editor_gizmo_color;
+        protected static uint m_idCounter = 0;
         protected Collider m_colider;
+        protected uint m_id;
 
+        public Action<float> OnDamage
+        {
+            get { return this.m_onDamage; }
+            set { this.m_onDamage = value; }
+        }
+        public float DamageMultiplier
+        {
+            get { return this.m_damageMultiplier; }
+            set { this.m_damageMultiplier = value; }
+        }
         public HitAreaState State
         {
             get
@@ -41,7 +56,11 @@ namespace UnknownWorld.Area.Target
                 return this.m_name;
             }
         }
-                
+        public uint Id
+        {
+            get { return this.m_id; }
+        }
+
         public Color m_gizmoColorAccessible = Color.red;
         public Color m_gizmoColorInactive = Color.grey;
         public Color m_gizmoColorActive = Color.blue;
@@ -50,6 +69,7 @@ namespace UnknownWorld.Area.Target
         protected virtual void Awake()
         {
             State = HitAreaState.Enabled;
+            m_id = m_idCounter++;
 
             m_colider = GetCollider();
         }
@@ -90,6 +110,12 @@ namespace UnknownWorld.Area.Target
         
 
         protected abstract void OnDrawGizmos();
+
+
+        public void PerformDamage(float damage)
+        {
+            m_onDamage(damage * m_damageMultiplier);
+        }
         
     }
 }

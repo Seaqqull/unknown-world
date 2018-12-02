@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UnknownWorld.Area.Target
 {
@@ -59,6 +60,12 @@ namespace UnknownWorld.Area.Target
             if (index >= m_tracingAreas.Length && index < 0)
                 return null;
             return m_tracingAreas[index].transform;
+        }
+
+        public void SetHealthLink(Action<float> onDamage)
+        {
+            for (int i = 0; i < m_tracingAreas.Length; i++)
+                m_tracingAreas[i].OnDamage = onDamage;
         }
 
         public UnknownWorld.Area.Data.HitAreaState GetPointState(int index)

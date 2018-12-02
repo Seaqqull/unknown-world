@@ -20,6 +20,7 @@ namespace UnknownWorld.Behaviour
             EscapingTarget,
             Waiting,
             Attacking,
+            Reloading,
             Dead
         }
 
@@ -117,7 +118,8 @@ namespace UnknownWorld.Behaviour
             {
                 yield return new WaitForSeconds(delay);
 
-                if ((AffectionInfo.Count == 0) ||
+                if ((IsDeath) || 
+                    (AffectionInfo.Count == 0) ||                    
                     (m_affectionDataState != Utility.Data.DataState.Updated)) continue;
 
                 PossibleTargets.Clear();

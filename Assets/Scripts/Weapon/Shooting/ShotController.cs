@@ -68,15 +68,7 @@ namespace UnknownWorld.Weapon.Shooting
             m_state = ShotState.ReadyToShot;
             m_isTargetSetted = false;
         }
-
-        // when select current shot controller
-        public virtual void Activate(UnknownWorld.Weapon.Data.IWeaponAction methods, UnknownWorld.Weapon.Data.WeaponCharacteristic specification, UnknownWorld.Weapon.Data.WeaponData data)
-        {
-            m_weaponSpecification = specification;
-            m_weaponHandler = methods;            
-            m_weaponData = data;
-            m_isActive = true;
-        }
+        
 
         // when select another shot controller
         public virtual void DeActivate()
@@ -85,6 +77,22 @@ namespace UnknownWorld.Weapon.Shooting
             m_weaponHandler = null;
             m_weaponData = null;
             m_isActive = false;            
+        }
+
+        public virtual bool SetShotTarget(Vector3 target, bool isCameraCoordinates)
+        {
+            m_isTargetSetted = false;
+            if (isCameraCoordinates)
+            {
+                m_isTargetSetted = UnknownWorld.Weapon.Data.WeaponHelper.
+                    GetMouseHitDirection(m_weaponData.BulletStartPosition.position, target, m_weaponSpecification.Range * m_weaponData.Bullet.RangeScale, out m_targetDirection, ignoreY: false);
+                return m_isTargetSetted;
+            }
+
+            m_isTargetSetted = true;
+            m_targetDirection = UnknownWorld.Weapon.Data.WeaponHelper.
+                GetTargetDirection(m_weaponData.BulletStartPosition.position, target, ignoreY: true);
+            return true;
         }
 
         public virtual bool OnShot(float shotInactionDelay, bool isTargetNeed = true)
@@ -121,20 +129,13 @@ namespace UnknownWorld.Weapon.Shooting
             return true;
         }
 
-        public virtual bool SetShotTarget(Vector3 target, bool isCameraCoordinates)
+        // when select current shot controller
+        public virtual void Activate(UnknownWorld.Weapon.Data.IWeaponAction methods, UnknownWorld.Weapon.Data.WeaponCharacteristic specification, UnknownWorld.Weapon.Data.WeaponData data)
         {
-            m_isTargetSetted = false;
-            if (isCameraCoordinates)
-            {
-                m_isTargetSetted = UnknownWorld.Weapon.Data.WeaponHelper.
-                    GetMouseHitDirection(m_weaponData.BulletStartPosition.position, target, m_weaponSpecification.Range * m_weaponData.Bullet.RangeScale, out m_targetDirection, ignoreY: false);
-                return m_isTargetSetted;
-            }
-
-            m_isTargetSetted = true;
-            m_targetDirection = UnknownWorld.Weapon.Data.WeaponHelper.
-                GetTargetDirection(m_weaponData.BulletStartPosition.position, target, ignoreY: true);
-            return true;
+            m_weaponSpecification = specification;
+            m_weaponHandler = methods;
+            m_weaponData = data;
+            m_isActive = true;
         }
     }
 }
