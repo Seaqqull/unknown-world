@@ -131,9 +131,9 @@ namespace UnknownWorld.Weapon
         }
 
 
-        protected void Shot()
+        protected virtual void Shot()
         {
-            UnknownWorld.Weapon.Ammo.Bullet bullet = Instantiate(m_ammoTypes[m_ammoTypeIndex].BulletObject, /*UnknownWorld.Weapon.Data.WeaponHelper.BulletContainer.transform*/(m_data.BulletParent) ? m_data.BulletParent : transform)
+            UnknownWorld.Weapon.Ammo.Bullet bullet = Instantiate(m_ammoTypes[m_ammoTypeIndex].BulletObject, (m_data.BulletParent) ? m_data.BulletParent : transform)
                     .GetComponent<UnknownWorld.Weapon.Ammo.Bullet>();
 
             bullet.transform.position = m_data.BulletStartPosition.position;
@@ -142,7 +142,6 @@ namespace UnknownWorld.Weapon
            
             bullet.Launch();
         }
-
 
         protected virtual void Drop()
         {

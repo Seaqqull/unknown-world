@@ -4,6 +4,14 @@ using UnityEngine;
 
 namespace UnknownWorld.Utility.Methods
 {
+    public static class VectorOperations
+    {
+        public static float Map(float value, float istart, float istop, float ostart, float ostop)
+        {
+            return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+        }
+    }
+
     public static class List
     {
         public static void ClearExceptOne<T>(List<T> list, ref int index)
@@ -23,6 +31,7 @@ namespace UnknownWorld.Utility.Methods
         }
     }
 
+
     class AreaEqualityComparer : IEqualityComparer<UnknownWorld.Area.Target.TracingArea>
     {
         public int GetHashCode(UnknownWorld.Area.Target.TracingArea obj)
@@ -36,4 +45,5 @@ namespace UnknownWorld.Utility.Methods
             return x.Id == y.Id;
         }
     }
+
 }

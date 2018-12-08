@@ -135,11 +135,12 @@ namespace UnknownWorld.Behaviour
         [SerializeField] private UnknownWorld.Path.Data.PathPoint m_point;
         [SerializeField] private PersonCharacteristics m_data;
         [SerializeField] private Slider m_staminaSlider;
-        [SerializeField] private Slider m_healthSlider;        
+        [SerializeField] private Slider m_healthSlider;
         
         protected UnknownWorld.Area.Target.TracingAreaContainer m_areaContainer;
         protected event Action<float> m_staminaUIUpdater = delegate { };
         protected event Action<float> m_healthUIUpdater = delegate { };
+        protected UnknownWorld.Sound.SoundContainer m_sound;
         private static uint m_idCounter = 0;
         private bool m_isActive;
         private bool m_isDeath;
@@ -229,12 +230,12 @@ namespace UnknownWorld.Behaviour
         {
             get { return this.m_id; }
         }
-
         
 
         protected virtual void Awake()
         {
             m_areaContainer = GetComponent<UnknownWorld.Area.Target.TracingAreaContainer>();
+            m_sound = GetComponent<UnknownWorld.Sound.SoundContainer>();
             IsActive = m_data.IsPersonActive;
             m_id = m_idCounter++;
             m_isDeath = false;
@@ -246,6 +247,12 @@ namespace UnknownWorld.Behaviour
 
             m_areaContainer.SetHealthLink((damage) => {
                 Damage(damage);
+            });
+
+            if (!m_sound) return;
+
+            m_areaContainer.SetSoundLink((listener) => {
+                return m_sound.GetAudibility(listener);
             });
         }
 

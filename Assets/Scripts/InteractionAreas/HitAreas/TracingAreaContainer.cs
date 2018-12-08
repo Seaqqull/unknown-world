@@ -68,6 +68,12 @@ namespace UnknownWorld.Area.Target
                 m_tracingAreas[i].OnDamage = onDamage;
         }
 
+        public void SetSoundLink(Func<Vector3, float> onSound)
+        {
+            for (int i = 0; i < m_tracingAreas.Length; i++)
+                m_tracingAreas[i].OnSound = onSound;
+        }
+
         public UnknownWorld.Area.Data.HitAreaState GetPointState(int index)
         {
             if ((index >= m_tracingAreas.Length) && (index < 0))

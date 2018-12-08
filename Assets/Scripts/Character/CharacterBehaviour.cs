@@ -38,12 +38,12 @@ namespace UnknownWorld.Behaviour
 
             m_observerManager = FindObjectOfType<UnknownWorld.Manager.ObserverManager>();
             StaminaUIUpdate += (stamina) => {
-                StaminaSlider.value = 
-                UnknownWorld.Area.Data.VectorOperations.Map(stamina, StaminaMin, StaminaMax, StaminaSlider.minValue, StaminaSlider.maxValue);
+                StaminaSlider.value =
+                UnknownWorld.Utility.Methods.VectorOperations.Map(stamina, StaminaMin, StaminaMax, StaminaSlider.minValue, StaminaSlider.maxValue);
             };
             HealthUIUpdate += (health) => {
-                HealthSlider.value = 
-                UnknownWorld.Area.Data.VectorOperations.Map(health, HealthMin, HealthMax, HealthSlider.minValue, HealthSlider.maxValue);
+                HealthSlider.value =
+                UnknownWorld.Utility.Methods.VectorOperations.Map(health, HealthMin, HealthMax, HealthSlider.minValue, HealthSlider.maxValue);
             };
         }
 

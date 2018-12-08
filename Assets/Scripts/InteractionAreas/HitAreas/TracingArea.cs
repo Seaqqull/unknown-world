@@ -13,12 +13,18 @@ namespace UnknownWorld.Area.Target
         [SerializeField] [Range(0, ushort.MaxValue)] protected float m_damageMultiplier = 1.0f;
         [SerializeField] protected string m_name;
 
+        protected Func<Vector3, float> m_onSound = delegate { return 0; };
         protected Action<float> m_onDamage = delegate { };
         protected Color m_gizmoColor = editor_gizmo_color;
         protected static uint m_idCounter = 0;
         protected Collider m_colider;
         protected uint m_id;
 
+        public Func<Vector3, float> OnSound
+        {
+            get { return this.m_onSound; }
+            set { this.m_onSound = value; }
+        }
         public Action<float> OnDamage
         {
             get { return this.m_onDamage; }
@@ -116,6 +122,11 @@ namespace UnknownWorld.Area.Target
         {
             m_onDamage(damage * m_damageMultiplier);
         }
-        
+
+        public float EmitSound(Vector3 listener)
+        {
+            return m_onSound(listener);
+        }
+
     }
 }
