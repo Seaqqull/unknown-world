@@ -25,10 +25,12 @@ namespace UnknownWorld
         }
 
 
-        [SerializeField] private bool allowRuntimeCameraSettingsChanges;
-        [SerializeField] private Transform m_targetlookAtPosition;
-        [SerializeField] private float m_rotationScale = 1.0f;
+        [SerializeField] private bool m_allowRuntimeCameraSettingsChanges;
+
         [SerializeField] private Transform m_targetPosition;
+        [SerializeField] private Transform m_targetlookAtPosition;
+
+        [SerializeField] private float m_rotationScale = 1.0f;        
         [SerializeField] private float m_DampTime = 0.2f;
 
         private CameraDefaultSettings m_settingDefault;

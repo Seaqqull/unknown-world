@@ -9,8 +9,8 @@ namespace UnknownWorld.Behaviour
         [Serializable]
         public class StaminaActionCost
         {
-            [SerializeField] private float m_jumpCost;
-            [SerializeField] private float m_runCost;
+            [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_jumpCost;
+            [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_runCost;
 
             public float JumpCost
             {

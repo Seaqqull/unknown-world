@@ -8,10 +8,12 @@ namespace UnknownWorld.Manager
     [System.Serializable]
     public class AreaManager : MonoBehaviour
     {
-        [SerializeField] private List<UnknownWorld.Area.Data.AreaTarget> m_targets;
-        [SerializeField] private float m_searchingDelay = 0.3f;
         [SerializeField] private bool m_isManagerActive = true;
 
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_searchingDelay = 0.3f;
+
+        [SerializeField] private List<UnknownWorld.Area.Data.AreaTarget> m_targets;        
+        
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_areasMask;
         private List<UnknownWorld.Behaviour.AIBehaviour> m_observers;
         private BitArray m_affectedTargetMask; // Update every time, when target.count changed        

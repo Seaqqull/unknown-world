@@ -78,13 +78,13 @@ namespace UnknownWorld.Weapon.Data
     [System.Serializable]
     public class WeaponCharacteristic
     {
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_damage = 0.0f;
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_range = 0.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_reloadSpeed = 5.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_shootSpeed = 60.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_bulletSpeed = 1.0f;
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_burstSpeed = 0.0f;
-        [SerializeField] [Range(0, ushort.MaxValue)] private float m_shotDelay = 0.0f;
-        [SerializeField] [Range(0, ushort.MaxValue)] private float m_damage = 0.0f;
-        [SerializeField] [Range(0, ushort.MaxValue)] private float m_range = 0.0f;
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_shotDelay = 0.0f;        
 
         public float BulletSpeed
         {

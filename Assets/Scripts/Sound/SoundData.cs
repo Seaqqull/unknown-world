@@ -8,38 +8,48 @@ namespace UnknownWorld.Sound.Data
     {
         [System.Serializable]
         public class SoundSettingDetection
-        {
-            [SerializeField] public AnimationCurve m_curveAudibility = AnimationCurve.Linear(0, 1, 1, 0);
-            [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_maxDistance = 100.0f;
+        {            
             [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_audibility = 100.0f;
+
+            [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_maxDistance = 100.0f;            
             [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_minDistance;
+
             [SerializeField] public bool m_cutOnMin = false;
             [SerializeField] public bool m_cutOnMax = true;
+
+            [SerializeField] public AnimationCurve m_curveAudibility = AnimationCurve.Linear(0, 1, 1, 0);
         }
 
         [System.Serializable]
         public class SoundSetting3D
-        {
-            [SerializeField] public AnimationCurve m_curveVolume = AnimationCurve.Linear(0, 1, 1, 0);
+        {            
             [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_maxDistance = 100.0f;
             [SerializeField] [Range(0.0f, ushort.MaxValue)] public float m_minDistance;
+
             [SerializeField] [Range(0.0f, 5.0f)] public float m_dopplerLevel = 1.0f;
             [SerializeField] [Range(0.0f, 360.0f)] public float m_spread;
+
+            [SerializeField] public AnimationCurve m_curveVolume = AnimationCurve.Linear(0, 1, 1, 0);
         }
 
+
+        [SerializeField] private string m_name;
+
+        [SerializeField] private AudioMixerGroup m_output;
+        [SerializeField] private AudioClip m_audioClip;
+
+        [SerializeField] private bool m_loop;
+        [SerializeField] private bool m_mute;
 
         [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playDelay;
         [SerializeField] [Range(0.0f, 1.1f)] private float m_reverbZoneMix = 1.0f;        
         [SerializeField] [Range(-3.0f, 3.0f)] private float m_pitch = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_volume = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_spatialBlend;
-        [SerializeField] SoundSettingDetection m_settingDetection;
-        [SerializeField] private AudioMixerGroup m_output;
-        [SerializeField] private AudioClip m_audioClip;
+
+        [SerializeField] SoundSettingDetection m_settingDetection;        
         [SerializeField] SoundSetting3D m_setting3D;
-        [SerializeField] private string m_name;
-        [SerializeField] private bool m_loop;
-        [SerializeField] private bool m_mute;
+        
 
         private UnityEngine.AudioSource m_source;
 

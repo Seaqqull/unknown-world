@@ -8,8 +8,8 @@ using System;
 
 public class SettingsMenu : MonoBehaviour {
 
-    [SerializeField] private AudioMixer m_audioMixer;
     [SerializeField] private Dropdown m_graphicsDropdown;
+    [SerializeField] private AudioMixer m_audioMixer;    
 
     private Resolution[] m_resolutions;
 

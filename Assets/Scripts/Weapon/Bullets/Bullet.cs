@@ -9,13 +9,15 @@ namespace UnknownWorld.Weapon.Ammo
         [SerializeField] protected ParticleSystem m_explosionParticle;
         [SerializeField] protected ParticleSystem m_shotParticle;
         [SerializeField] protected ParticleSystem m_flyParticle;
-        [SerializeField] protected AudioSource m_explosionAudio;
+
+        [SerializeField] protected AudioSource m_explosionAudio;        
+        [SerializeField] protected AudioSource m_shotAudio;
+        [SerializeField] protected AudioSource m_flyAudio;
+
         [SerializeField] protected float m_damageScale = 1.0f;
         [SerializeField] protected float m_speedScale = 1.0f;
         [SerializeField] protected float m_rangeScale = 1.0f;
-        [SerializeField] protected AudioSource m_shotAudio;
-        [SerializeField] protected AudioSource m_flyAudio;
-        
+
         protected static uint m_idCounter = 0;        
         protected bool m_isLaunched = false;
         protected Vector3 m_startPosition;

@@ -7,13 +7,16 @@ namespace UnknownWorld.Area.Observer
     [RequireComponent(typeof(UnknownWorld.Behaviour.PersonBehaviour))]
     public abstract class SearchingArea : MonoBehaviour
     {
+        [SerializeField] protected bool m_isAreaActive = true;
+
         [SerializeField] protected UnknownWorld.Area.Data.ObservationType m_type = UnknownWorld.Area.Data.ObservationType.Undefined;
         [SerializeField] [Range(0, 1)] public float m_searchingDelay = 0.2f;
+
+        [SerializeField] [Range(0, ushort.MaxValue)] protected ushort m_priority = 0;
+        [SerializeField] protected Transform m_socket;
+
         [SerializeField] public Color m_colorZone = Color.white;
         [SerializeField] public Color m_colorTarget = Color.red;
-        [SerializeField] protected bool m_isAreaActive = true;
-        [SerializeField] protected ushort m_priority = 0;
-        [SerializeField] protected Transform m_socket;        
 
         protected UnknownWorld.Behaviour.PersonBehaviour m_owner;
         private Coroutine m_searchingCorotation;

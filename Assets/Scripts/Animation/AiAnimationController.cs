@@ -10,14 +10,17 @@ namespace UnknownWorld.Behaviour
     public class AiAnimationController : MonoBehaviour, Data.IPersonAction
     {
         [SerializeField] [Range(1f, 4f)]private float m_gravityMultiplier = 2f;
-        [SerializeField] private float m_groundCheckDistance = 0.1f;
-        [SerializeField] private float m_stationaryTurnSpeed = 180;
-        //[SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
-        [SerializeField] private float m_runCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
-        [SerializeField] private float m_moveSpeedMultiplier = 1f;
-        [SerializeField] private float m_animSpeedMultiplier = 1f;
-        [SerializeField] private float m_movingTurnSpeed = 360;
         [SerializeField] private float m_jumpPower = 12f;
+
+        [SerializeField] private float m_groundCheckDistance = 0.3f;
+        [SerializeField] private float m_stationaryTurnSpeed = 180;
+        [SerializeField] private float m_movingTurnSpeed = 360;
+
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_moveSpeedMultiplier = 1f;
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_animSpeedMultiplier = 1f;
+        
+        [SerializeField] private float m_runCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
+        //[SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform        
 
         public float MoveSpeedMultiplier
         {

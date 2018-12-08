@@ -143,12 +143,15 @@ namespace UnknownWorld.Area.Data
     [System.Serializable]
     public class AreaData
     {
-        [SerializeField] [Range(0, 500)] private float m_radius;
-        [SerializeField] [Range(0, 360)] private float m_angle;        
-        [SerializeField] private LayerMask m_obstacleMask;        
-        [SerializeField] private LayerMask m_targetMask;
-        [SerializeField] private Vector3 m_rotation;
         [SerializeField] private Vector3 m_offset;
+        [SerializeField] private Vector3 m_rotation;
+
+        [SerializeField] [Range(0, 500)] private float m_radius;
+        [SerializeField] [Range(0, 360)] private float m_angle;
+
+        [SerializeField] private LayerMask m_obstacleMask;
+        [SerializeField] private LayerMask m_targetMask;
+                
                
         public LayerMask ObstacleMask
         {

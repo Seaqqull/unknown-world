@@ -6,8 +6,8 @@ namespace UnknownWorld.Path
 {
     public class IntermediatePoint : MonoBehaviour
     {
-        [SerializeField] private Color m_color = Color.black;
         [SerializeField] private float m_size = 0.3f;
+        [SerializeField] private Color m_color = Color.black;        
 
         public Color Color
         {

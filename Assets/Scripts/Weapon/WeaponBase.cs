@@ -8,19 +8,25 @@ namespace UnknownWorld.Weapon
 {
     public abstract class WeaponBase : MonoBehaviour, UnknownWorld.Weapon.Data.IWeaponAction
     {
-        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponCharacteristic m_characteristic;
-        [SerializeField] protected Data.WeaponState m_state = Data.WeaponState.Inactive;
         [SerializeField] protected Data.WeaponType m_type = Data.WeaponType.Unknown;
-        [SerializeField] protected List<Shooting.ShotController> m_shootingModes;
-        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponData m_data;
+        [SerializeField] protected Data.WeaponState m_state = Data.WeaponState.Inactive;
+
         [SerializeField] protected string m_buttonShootingMode = "ShotMode";
-        [SerializeField] protected List<Ammo.AmmoController> m_ammoTypes;
         [SerializeField] protected string m_buttonAmmoType = "AmmoType";
+
         [SerializeField] protected bool m_isDirectCallOnly = true;
-        [SerializeField] protected int m_shootingModeIndex;
-        [SerializeField] protected LayerMask m_targetMask;
         [SerializeField] protected bool m_isReloadInstant;
+
+        [SerializeField] protected LayerMask m_targetMask;
+
+        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponData m_data;
+        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponCharacteristic m_characteristic;
+
+        [SerializeField] protected int m_shootingModeIndex;
+        [SerializeField] protected List<Shooting.ShotController> m_shootingModes;
+
         [SerializeField] protected int m_ammoTypeIndex;
+        [SerializeField] protected List<Ammo.AmmoController> m_ammoTypes;        
 
         public List<ShotController> ShootingModes
         {

@@ -9,10 +9,12 @@ namespace UnknownWorld.Area.Target
     {
         protected static Color editor_gizmo_color = Color.blue;
 
-        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Enabled;
-        [SerializeField] [Range(0, ushort.MaxValue)] protected float m_damageMultiplier = 1.0f;
         [SerializeField] protected string m_name;
 
+        [SerializeField] protected UnknownWorld.Area.Data.HitAreaState m_state = HitAreaState.Enabled;
+
+        [SerializeField] [Range(0, ushort.MaxValue)] protected float m_damageMultiplier = 1.0f;
+        
         protected Func<Vector3, float> m_onSound = delegate { return 0; };
         protected Action<float> m_onDamage = delegate { };
         protected Color m_gizmoColor = editor_gizmo_color;

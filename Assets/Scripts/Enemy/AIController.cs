@@ -10,9 +10,11 @@ namespace UnknownWorld.Behaviour
     public class AIController : MonoBehaviour
     {
         [SerializeField] private UnknownWorld.Behaviour.AiAnimationController m_animation;
-        [SerializeField] private List<UnknownWorld.Weapon.WeaponBase> m_weapons;
+
         [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay;
         [SerializeField] private bool m_isTargetUltimate = true;
+        
+        [SerializeField] private List<UnknownWorld.Weapon.WeaponBase> m_weapons;
         [SerializeField] private int m_activeWeapon = 0;
 
         private UnknownWorld.Path.PathContainer m_targetsSuspicion;
@@ -100,6 +102,9 @@ namespace UnknownWorld.Behaviour
                     m_animation.Dead();
                 return;
             }
+
+            // set attack distance based on current weapon
+            m_behaviour.AttackDistance = m_weapons[m_activeWeapon].Range;
 
             // when AI use direct or suspicion target that was changed
             if (m_isTargetReselect)

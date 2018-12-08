@@ -6,14 +6,17 @@ namespace UnknownWorld.Weapon.Ammo
 {
     public class AmmoController : MonoBehaviour
     {
-        [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_magazineCapacity = 1;
-        [SerializeField] [Range(1, ushort.MaxValue)] private float m_reloadScale = 1.0f;
+        [SerializeField] private GameObject m_bullet;
+
+        [SerializeField] private string m_buttonReload = "Reload";
+
+        [SerializeField] private bool m_isDirectCallOnly = true;
+        [SerializeField] private bool m_isAmmoUnlimited = false;
+
+        [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_magazineCapacity = 1;        
         [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_available = 0;
         [SerializeField] [Range(1, ushort.MaxValue)] private ushort m_capacity = 0;
-        [SerializeField] private string m_buttonReload = "Reload";
-        [SerializeField] private bool m_isDirectCallOnly = true;        
-        [SerializeField] private bool m_isAmmoUnlimited = false;
-        [SerializeField] private GameObject m_bullet;
+        [SerializeField] [Range(1, ushort.MaxValue)] private float m_reloadScale = 1.0f;
 
         private UnknownWorld.Weapon.Data.WeaponCharacteristic m_weaponSpecification;
         private UnknownWorld.Weapon.Data.IWeaponAction m_weaponHandler;

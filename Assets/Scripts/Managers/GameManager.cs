@@ -17,8 +17,8 @@ namespace UnknownWorld.Manager
 
         private int? m_activeCamera = null;
 
-        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller                
         public int m_targetCamera = -1;
+        public CameraKeeperData[] m_cameraTagets; // at [0] always must be the player and default controller                        
 
 
         // Use this for initialization

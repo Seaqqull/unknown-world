@@ -12,9 +12,9 @@ namespace UnknownWorld.Manager
         private List<BitArray> m_characterHitMask;
         private Coroutine m_coroutine;
         protected bool m_isActive;
-        
-        public float m_searchingDelay = 0.15f;        
+
         public bool m_isAreaActive = true;
+        [Range(0.0f, 1.0f)] public float m_searchingDelay = 0.15f;
 
         public List<BitArray> CharacterHitMask
         {

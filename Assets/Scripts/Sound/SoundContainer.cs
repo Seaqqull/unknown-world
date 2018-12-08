@@ -7,11 +7,14 @@ namespace UnknownWorld.Sound
 {
     public class SoundContainer : MonoBehaviour
     {
-        [SerializeField] private List<UnknownWorld.Sound.Data.AudioSource> m_audios;
+        [SerializeField] private string m_name;
+
         [SerializeField] private bool m_isAccommodate = true;
         [SerializeField] private bool m_isActive = true;
-        [SerializeField] private bool m_isNested = true;        
-        [SerializeField] private string m_name;
+        [SerializeField] private bool m_isNested = true;
+
+        [SerializeField] private List<UnknownWorld.Sound.Data.AudioSource> m_audios;           
+
 
         private List<UnknownWorld.Sound.SoundContainer> m_containers;
 

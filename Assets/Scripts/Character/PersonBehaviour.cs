@@ -132,10 +132,11 @@ namespace UnknownWorld.Behaviour
         }
 
 
-        [SerializeField] private UnknownWorld.Path.Data.PathPoint m_point;
-        [SerializeField] private PersonCharacteristics m_data;
         [SerializeField] private Slider m_staminaSlider;
         [SerializeField] private Slider m_healthSlider;
+
+        [SerializeField] private PersonCharacteristics m_data;
+        [SerializeField] private UnknownWorld.Path.Data.PathPoint m_point;        
         
         protected UnknownWorld.Area.Target.TracingAreaContainer m_areaContainer;
         protected event Action<float> m_staminaUIUpdater = delegate { };

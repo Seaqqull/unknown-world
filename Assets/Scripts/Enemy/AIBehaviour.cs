@@ -24,10 +24,10 @@ namespace UnknownWorld.Behaviour
             Dead
         }
 
+
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_attackDistance = 1.0f;
         [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay = 0.1f;
         
-
         private UnknownWorld.Utility.Data.DataState m_affectionDataState = Utility.Data.DataState.Unknown;
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_affectionInfo;
         private List<UnknownWorld.Path.Data.PathPoint> m_possibleTargets;
@@ -38,7 +38,6 @@ namespace UnknownWorld.Behaviour
         private bool m_isDirectTargetDetected;
         private Coroutine m_updateCorotation;
         private CapsuleCollider m_colider;
-
 
         public List<UnknownWorld.Area.Observer.SearchingArea> Areas
         {
@@ -88,12 +87,24 @@ namespace UnknownWorld.Behaviour
         {
             get { return this.m_areaManager.IsActive; }
         }
+        public float AttackDistance
+        {
+            get
+            {
+                return m_attackDistance;
+            }
+
+            set
+            {
+                m_attackDistance = value;
+            }
+        }
         public AIState State
         {
             get { return this.m_state; }
             set { this.m_state = value; }
         }
-                
+       
 
         protected override void Awake()
         {

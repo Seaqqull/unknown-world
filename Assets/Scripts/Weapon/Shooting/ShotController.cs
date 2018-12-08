@@ -7,9 +7,9 @@ namespace UnknownWorld.Weapon.Shooting
 {
     public abstract class ShotController : MonoBehaviour
     {
-        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponModeType m_type = WeaponModeType.Unknown;
-        [SerializeField] protected ushort m_bulletsToPerformShot = 1;
+        [SerializeField] protected UnknownWorld.Weapon.Data.WeaponModeType m_type = WeaponModeType.Unknown;        
         [SerializeField] protected bool m_isDirectCallOnly = true;
+        [SerializeField] protected ushort m_bulletsToPerformShot = 1;
 
         protected UnknownWorld.Weapon.Data.ShotState m_state = Data.ShotState.ReadyToShot;
         protected UnknownWorld.Weapon.Data.WeaponCharacteristic m_weaponSpecification;

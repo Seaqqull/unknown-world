@@ -24,16 +24,19 @@ namespace UnknownWorld.Path.Data
     [System.Serializable]
     public class PathPoint
     {
-        [SerializeField] [Range(0, ushort.MaxValue)] private float m_transferDelay = 0;
-        [SerializeField] private PointAction m_action = PointAction.Undefined;
-        [SerializeField] [Range(0, 1)] private float m_minImpactSpeed = 1.0f;
         [SerializeField] private PointType m_type = PointType.PathFollowing;
+        [SerializeField] private PointAction m_action = PointAction.Undefined;
         [SerializeField] [Range(0, 255)] private ushort m_priority = 0;
-        [SerializeField] private float m_animationSpeed = 1.0f;
-        [SerializeField] private float m_movementSpeed = 1.0f;
-        [SerializeField] private float m_accuracyRadius = 0.5f;
-        [SerializeField] private float m_impactRadius = 0.0f;
         [SerializeField] private IntermediatePoint m_point;
+
+        [SerializeField] [Range(0, ushort.MaxValue)] private float m_transferDelay = 0;
+
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_minImpactSpeed = 1.0f;
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_animationSpeed = 1.0f;
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_movementSpeed = 1.0f;
+        [SerializeField] [Range(0, 255)] private float m_accuracyRadius = 0.5f;
+        [SerializeField] [Range(0, 255)] private float m_impactRadius = 0.0f;
+        
 
         public IntermediatePoint Point
         {

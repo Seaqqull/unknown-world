@@ -7,15 +7,18 @@ namespace UnknownWorld.Visualizer
     public class AudioSourceVisualizer : MonoBehaviour {
 
         [SerializeField] private UnknownWorld.Sound.SoundContainer m_audios;
+
+        [SerializeField] private bool m_drawDetection = true;
+        [SerializeField] private bool m_drawOnSelected = true;
+
+        [SerializeField] private int m_drawZone = 0;
+        [SerializeField] [Range(0.1f, 1.0f)] private float m_step = 0.1f;
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_alpha = 0.05f;
+
         [SerializeField] private Color m_colorZone = Color.black;
         [SerializeField] private Color m_colorNoiseBad = Color.red;
         [SerializeField] private Color m_colorNoiseGood = Color.green;
-        [SerializeField] private bool m_drawDetection = true;
-        [SerializeField] private bool m_drawOnSelected = true;
-        [SerializeField] private int m_drawZone = 0;
-        [SerializeField] private float m_step = 0.1f;
-        [SerializeField] private float m_alpha = 0.05f;
-        
+                        
 
         private void OnDrawGizmos()
         {

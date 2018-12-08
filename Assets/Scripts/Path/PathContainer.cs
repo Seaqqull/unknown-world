@@ -6,13 +6,17 @@ namespace UnknownWorld.Path
 {
     public abstract class PathContainer : MonoBehaviour
     {
+        [SerializeField] protected Transform m_ownerTransform;
+
         [SerializeField] protected List<UnknownWorld.Path.Data.PathPoint> m_points;
+
+        [SerializeField] protected bool m_isRandom = false;
+        [SerializeField] protected int m_startupPoint = 0;
+
         [SerializeField] protected Color m_impactColor = Color.yellow;
         [SerializeField] protected Color m_accuracyColor = Color.red;
         [SerializeField] protected Color m_lineColor = Color.green;
-        [SerializeField] protected Transform m_ownerTransform;
-        [SerializeField] protected bool m_isRandom = false;        
-        [SerializeField] protected int m_startupPoint = 0;
+        
 
         public List<UnknownWorld.Path.Data.PathPoint> Points
         {
@@ -36,7 +40,6 @@ namespace UnknownWorld.Path
         {
             get { return Points.Count; }
         }
-
 
 
         //protected int m_prePreviousPoint = -1;
