@@ -158,7 +158,7 @@ namespace UnknownWorld.Behaviour
                 CheckNearness();
             }            
         }
-
+        
 
         private void CheckTargets()
         {
@@ -200,7 +200,14 @@ namespace UnknownWorld.Behaviour
                 );
             }            
         }
-    
+
+        private bool IsTargetValid()
+        {
+            if (m_behaviour.State != AIBehaviour.AIState.FollowingTarget) return false;
+
+            return m_behaviour.Manager.IsTargetValid(m_targetsDirect.Points[m_pathIndex].Point);
+        }
+
         private void CheckIsSuspicion()
         {
             if (m_targetsDirect.Length != 0) // if found direct target
@@ -226,7 +233,7 @@ namespace UnknownWorld.Behaviour
                 );
             }
         }
-        
+
 
         private void CheckNearness()
         {
@@ -334,6 +341,7 @@ namespace UnknownWorld.Behaviour
                     m_agent.speed = 0.0f;
 
                     if ((m_animation.IsActionPerfomerable()) &&
+                        IsTargetValid() &&
                         (m_weapons[m_activeWeapon].DoShot()))
                     {
                         m_behaviour.State = AIBehaviour.AIState.Attacking;                        

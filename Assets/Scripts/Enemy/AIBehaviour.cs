@@ -53,6 +53,10 @@ namespace UnknownWorld.Behaviour
             get { return this.m_affectionDataState; }
             set { this.m_affectionDataState = value; }
         }
+        public UnknownWorld.Manager.AreaManager Manager
+        {
+            get { return this.m_areaManager; }
+        }
         public List<AreaAffectionMask> AffectionInfo
         {
             get
@@ -104,7 +108,7 @@ namespace UnknownWorld.Behaviour
             get { return this.m_state; }
             set { this.m_state = value; }
         }
-       
+        
 
         protected override void Awake()
         {

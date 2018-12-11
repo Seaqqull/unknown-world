@@ -192,7 +192,7 @@ namespace UnknownWorld.Manager
                     }
                 }
             }
-        }        
+        }
 
 
         public void ClearMasks(uint observerId)
@@ -250,6 +250,19 @@ namespace UnknownWorld.Manager
                 }
             }
             return null;
+        }
+
+        public bool IsTargetValid(Path.IntermediatePoint point)
+        {
+            for (int i = 0; i < m_targets.Count; i++)
+            {
+                if (m_targets[i].Subject.FollowingPoint.Point == point)
+                {
+                    return !m_targets[i].Subject.IsDeath;
+                }
+            }
+
+            return false;
         }
 
         public void ClearMask(uint targetId, uint observerId, uint areaId)
