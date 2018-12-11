@@ -53,6 +53,12 @@ namespace UnknownWorld.Behaviour
         }
 
 
+        protected override void Death()
+        {
+            base.Death();
+            gameObject.layer = 15;
+        }
+
         protected override void SetIsActive(bool isActive)
         {
             if (IsActive == isActive) return;

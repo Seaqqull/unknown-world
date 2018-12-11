@@ -51,4 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458cc33b87da86d40b8d5b69af292b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isManagerActive: 1
+  m_searchingDelay: 0.3
   m_targets: []

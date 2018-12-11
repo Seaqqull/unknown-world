@@ -181,7 +181,7 @@ ModelImporter:
       name: Swat_Walk
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 242
+      lastFrame: 88
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1069,7 +1069,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1

@@ -9,9 +9,9 @@ namespace UnknownWorld.Behaviour
 {
     public class AIController : MonoBehaviour
     {
-        [SerializeField] private UnknownWorld.Behaviour.AiAnimationController m_animation;
+        [SerializeField] private UnknownWorld.Behaviour.AIAnimationController m_animation;
 
-        [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay;
+        [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay = 0.1f;
         [SerializeField] private bool m_isTargetUltimate = true;
         
         [SerializeField] private List<UnknownWorld.Weapon.WeaponBase> m_weapons;
@@ -68,7 +68,7 @@ namespace UnknownWorld.Behaviour
         private void Start()
         {
             if(m_animation == null)
-                m_animation = GetComponent<UnknownWorld.Behaviour.AiAnimationController>();
+                m_animation = GetComponent<UnknownWorld.Behaviour.AIAnimationController>();
             m_agent = GetComponent<NavMeshAgent>();
 
             m_targetsSuspicion = gameObject.AddComponent<UnknownWorld.Path.PriorityClosenessPath>();
@@ -79,9 +79,23 @@ namespace UnknownWorld.Behaviour
 
             m_agent.updateRotation = false;
             m_agent.autoBraking = false;
+            
+            if ((m_pathIndex >= 0) && (m_pathIndex < m_path.Length)) {
+                m_agent.SetDestination(m_path.GetDestination(ref m_pathIndex));
+                m_agent.speed = m_path.GetPoint(m_pathIndex).MovementSpeed;
+            }
+            else // empty path or other einconsistencies
+            {
+                m_pathIndex = 0;
+                m_path.Add(new Path.Data.PathPoint());
+                m_path.Points[m_pathIndex].Point = Instantiate(UnknownWorld.Path.Data.PathHelper.PathPrefab, UnknownWorld.Path.Data.PathHelper.PathSpawner.transform).
+                                    GetComponent<Path.IntermediatePoint>();
 
-            m_agent.SetDestination(m_path.GetDestination(ref m_pathIndex));
-            m_agent.speed = m_path.GetPoint(m_pathIndex).MovementSpeed;
+                m_path.Points[m_pathIndex].Transform.position = transform.position;
+                m_path.Points[m_pathIndex].Type = Path.Data.PointType.PathFollowing;
+                m_path.Points[m_pathIndex].Action = Path.Data.PointAction.Stop;
+                m_path.Points[m_pathIndex].TransferDelay = 1.0f;
+            }
 
             // only when 1 weapon or order not required
             Weapons = GetComponentsInChildren<UnknownWorld.Weapon.WeaponBase>().
@@ -222,6 +236,7 @@ namespace UnknownWorld.Behaviour
 
                 case AIBehaviour.AIState.ReturningPath:
                     if ((!m_agent.pathPending) &&
+                        ((m_pathIndex >= 0) && (m_pathIndex < m_path.Length)) &&
                         (m_agent.remainingDistance <= m_path.GetPoint(m_pathIndex).AccuracyRadius))
                     {
                         UpdatePathAction();
@@ -229,6 +244,7 @@ namespace UnknownWorld.Behaviour
                     break;
                 case AIBehaviour.AIState.FollowingSuspicion:
                     if ((!m_agent.pathPending) &&
+                        ((m_pathIndex >= 0) && (m_pathIndex < m_targetsSuspicion.Length)) &&
                         (m_agent.remainingDistance <= m_targetsSuspicion.GetPoint(m_pathIndex).AccuracyRadius))
                     {
                         UpdateSuspicionAction();
@@ -249,18 +265,21 @@ namespace UnknownWorld.Behaviour
             m_speed = 0.0f;
 
             if (((m_behaviour.State == AIBehaviour.AIState.FollowingPath) || (m_behaviour.State == AIBehaviour.AIState.ReturningPath)) &&
+                ((m_pathIndex >= 0) && (m_pathIndex < m_path.Length)) &&
                 (m_agent.remainingDistance > m_path.GetPoint(m_pathIndex).AccuracyRadius))
             {
                 m_speed = m_path.GetPoint(m_pathIndex).MovementSpeed;
                 m_path.CalculateSpeedOnPath(ref m_speed, transform.position);
             }
             else if ((m_behaviour.State == AIBehaviour.AIState.FollowingTarget) &&
+                ((m_pathIndex >= 0) && (m_pathIndex < m_targetsDirect.Length)) &&
                 (m_agent.remainingDistance > m_targetsDirect.GetPoint(m_pathIndex).AccuracyRadius))
             {
                 m_speed = m_targetsDirect.GetPoint(m_pathIndex).MovementSpeed;
                 m_targetsDirect.CalculateSpeedOnPath(ref m_speed, transform.position);
             }
             else if ((m_behaviour.State == AIBehaviour.AIState.FollowingSuspicion) &&
+                ((m_pathIndex >= 0) && (m_pathIndex < m_targetsSuspicion.Length)) &&
                 (m_agent.remainingDistance > m_targetsSuspicion.GetPoint(m_pathIndex).AccuracyRadius))
             {
                 m_speed = m_targetsSuspicion.GetPoint(m_pathIndex).MovementSpeed;

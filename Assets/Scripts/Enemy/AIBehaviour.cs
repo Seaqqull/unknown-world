@@ -123,6 +123,12 @@ namespace UnknownWorld.Behaviour
         }
 
 
+        protected override void Death()
+        {
+            base.Death();
+            gameObject.layer = 14;
+        }
+
         private IEnumerator UpdateTargets(float delay)
         {
             while (true)
@@ -161,7 +167,7 @@ namespace UnknownWorld.Behaviour
                             if (temp.Type == PointType.FollowingSuspicion)
                             {
                                 Vector3 position = temp.Transform.position;
-                                temp.Point = Instantiate(UnknownWorld.Path.Data.PathHelper.PathPrefab, PathHelper.PathSpawner.transform).
+                                temp.Point = Instantiate(UnknownWorld.Path.Data.PathHelper.PathPrefab, UnknownWorld.Path.Data.PathHelper.PathSpawner.transform).
                                     GetComponent<Path.IntermediatePoint>();
                                 temp.Transform.position = position;
 

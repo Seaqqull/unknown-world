@@ -7,7 +7,7 @@ namespace UnknownWorld.Behaviour
     [RequireComponent(typeof(Rigidbody))]    
     [RequireComponent(typeof(Animator))]
 
-    public class AiAnimationController : MonoBehaviour, Data.IPersonAction
+    public class AIAnimationController : MonoBehaviour, Data.IPersonAction
     {
         [SerializeField] [Range(1f, 4f)]private float m_gravityMultiplier = 2f;
         [SerializeField] private float m_jumpPower = 12f;

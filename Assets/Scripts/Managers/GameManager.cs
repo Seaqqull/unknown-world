@@ -22,13 +22,14 @@ namespace UnknownWorld.Manager
 
 
         // Use this for initialization
-        private void Start()
+        private void Awake()
         {
             SetCameraTargetFromPlayer();
 
             // ignore colision between character and target
             Physics.IgnoreLayerCollision(11, 10);
-            Physics.IgnoreLayerCollision(11, 12);
+            Physics.IgnoreLayerCollision(11, 14);
+            Physics.IgnoreLayerCollision(12, 15);
 
             // initialize path data
             SetPathStandartData();
@@ -84,7 +85,6 @@ namespace UnknownWorld.Manager
             );
             
         }
-
 
         public Camera GetActiveCamera()
         {
