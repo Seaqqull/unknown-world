@@ -9849,6 +9849,11 @@ Prefab:
       propertyPath: m_LightProbeUsage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23320729667516496, guid: a153c3d54f4684c4d96ef03800bf84e4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2bef17269e471d14bb20526367bef2e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a153c3d54f4684c4d96ef03800bf84e4, type: 2}
   m_IsPrefabAsset: 0
