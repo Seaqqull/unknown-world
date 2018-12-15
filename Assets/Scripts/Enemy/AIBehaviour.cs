@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnknownWorld.Path.Data;
 using UnknownWorld.Area.Data;
+using UnityEngine.AI;
 
 namespace UnknownWorld.Behaviour
 {
@@ -32,12 +33,14 @@ namespace UnknownWorld.Behaviour
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_affectionInfo;
         private List<UnknownWorld.Path.Data.PathPoint> m_possibleTargets;
         private List<UnknownWorld.Area.Observer.SearchingArea> m_areas;
-        protected UnknownWorld.Manager.AreaManager m_areaManager;        
-        private AIState m_state = AIState.FollowingPath;
+        protected UnknownWorld.Manager.AreaManager m_areaManager;
+        private AIState m_state = AIState.FollowingPath;        
+        private NavMeshModifierVolume m_navVolume;        
         private bool m_isSuspicionTargetDetected;
         private bool m_isDirectTargetDetected;
         private Coroutine m_updateCorotation;
-        private CapsuleCollider m_colider;
+        private CapsuleCollider m_collider;
+        private uint m_navigationId;
 
         public List<UnknownWorld.Area.Observer.SearchingArea> Areas
         {
@@ -83,9 +86,9 @@ namespace UnknownWorld.Behaviour
         {
             get { return this.m_isDirectTargetDetected; }
         }
-        public CapsuleCollider Colider
+        public CapsuleCollider Collider
         {
-            get { return this.m_colider; }
+            get { return this.m_collider; }
         }
         public bool IsManagerActive
         {
@@ -103,6 +106,20 @@ namespace UnknownWorld.Behaviour
                 m_attackDistance = value;
             }
         }
+        public uint NavigationId
+        {
+            get { return this.m_navigationId; }
+            set
+            {
+                this.m_navigationId = value;
+                Manager.RebakeNavigation(value);
+            }
+        }
+        public bool IsObstacle
+        {
+            get { return this.m_navVolume.enabled; }
+            set { this.m_navVolume.enabled = value; }
+        }
         public AIState State
         {
             get { return this.m_state; }
@@ -118,7 +135,8 @@ namespace UnknownWorld.Behaviour
             m_areas = GetComponents<UnknownWorld.Area.Observer.SearchingArea>().
                 OfType<UnknownWorld.Area.Observer.SearchingArea>().ToList();
 
-            m_colider = GetComponent<CapsuleCollider>();
+            m_navVolume = GetComponent<NavMeshModifierVolume>();
+            m_collider = GetComponent<CapsuleCollider>();            
         }
 
         protected override void Update()
@@ -212,7 +230,7 @@ namespace UnknownWorld.Behaviour
                 m_updateCorotation = StartCoroutine("UpdateTargets", m_targetUpdateDelay);
             }
         }
-
+        
 
         public int GetTargetsCount()
         {

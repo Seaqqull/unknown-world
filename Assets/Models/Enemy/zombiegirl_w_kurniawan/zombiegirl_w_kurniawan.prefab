@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 54319510881279252}
   - component: {fileID: 136775471019161852}
   - component: {fileID: 195985315165076886}
+  - component: {fileID: 208607359714060494}
   - component: {fileID: 114661422349567874}
   - component: {fileID: 114453305322677238}
   - component: {fileID: 114734547681644710}
@@ -196,6 +197,7 @@ GameObject:
   - component: {fileID: 114011824263163270}
   - component: {fileID: 114423784316183802}
   - component: {fileID: 114883428851195792}
+  - component: {fileID: 114634407797455784}
   m_Layer: 12
   m_Name: zombiegirl_w_kurniawan
   m_TagString: Untagged
@@ -2212,6 +2214,21 @@ MonoBehaviour:
   m_moveSpeedMultiplier: 1
   m_animSpeedMultiplier: 1
   m_runCycleLegOffset: 0.2
+--- !u!114 &114634407797455784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1139719715265488}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!114 &114661422349567874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2269,7 +2286,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_animation: {fileID: 114453305322677238}
   m_targetUpdateDelay: 0.1
+  m_pathUpdateDelay: 1
   m_isTargetUltimate: 1
+  m_avoidOtherAi: 0
+  m_aiActive: 1
   m_weapons:
   - {fileID: 114429628956624414}
   m_activeWeapon: 0
@@ -2559,7 +2579,7 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1139719715265488}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 0
@@ -2573,3 +2593,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!208 &208607359714060494
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1139719715265488}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.7, y: 1, z: 0.7}
+  m_MoveThreshold: 0
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 1, z: 0}
+  m_TimeToStationary: 0
