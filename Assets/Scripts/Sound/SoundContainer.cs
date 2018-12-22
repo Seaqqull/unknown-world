@@ -84,7 +84,10 @@ namespace UnknownWorld.Sound
             m_audios[index].Play();
 
             if (!m_audios[index].Loop)
-                RunLater(() => m_audios[index].DestroyAudioSource(), m_audios[index].AudioLength + m_audios[index].PlayDelay);
+                RunLater(
+                    () => m_audios[index].DestroyAudioSource(),
+                    m_audios[index].PlayDelay + ((m_audios[index].PlayTime == 0.0f)? m_audios[index].AudioLength : m_audios[index].PlayTime)
+                );
 
             return true;
         }
@@ -116,7 +119,10 @@ namespace UnknownWorld.Sound
             m_audios[index].PlayInstant();
 
             if (!m_audios[index].Loop)
-                RunLater(() => m_audios[index].DestroyAudioSource(), m_audios[index].AudioLength);
+                RunLater(
+                    () => m_audios[index].DestroyAudioSource(),
+                    ((m_audios[index].PlayTime == 0.0f)? m_audios[index].AudioLength : m_audios[index].PlayTime)
+                );
 
             return true;
         }
@@ -146,7 +152,10 @@ namespace UnknownWorld.Sound
             m_audios[index].PlayDelayed(delay);
 
             if (!m_audios[index].Loop)
-                RunLater(() => m_audios[index].DestroyAudioSource(), m_audios[index].AudioLength + delay);
+                RunLater(
+                    () => m_audios[index].DestroyAudioSource(),
+                    delay + ((m_audios[index].PlayTime == 0.0f) ? m_audios[index].AudioLength : m_audios[index].PlayTime)
+                );
 
             return true;
         }
