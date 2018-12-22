@@ -41,8 +41,9 @@ namespace UnknownWorld.Sound.Data
         [SerializeField] private bool m_loop;
         [SerializeField] private bool m_mute;
 
-        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playDelay;
-        [SerializeField] [Range(0.0f, 1.1f)] private float m_reverbZoneMix = 1.0f;        
+        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playDelay;        
+        [SerializeField] [Range(0.0f, 1.1f)] private float m_reverbZoneMix = 1.0f;
+        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playTime;
         [SerializeField] [Range(-3.0f, 3.0f)] private float m_pitch = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_volume = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_spatialBlend;
@@ -93,6 +94,11 @@ namespace UnknownWorld.Sound.Data
         public bool IsAttached
         {
             get { return (m_source != null); }
+        }
+        public float PlayTime
+        {
+            get { return this.m_playTime; }
+            set { this.m_playTime = value; }
         }
         public string Name
         {
