@@ -3103,7 +3103,7 @@ MonoBehaviour:
     m_reverbZoneMix: 1
     m_playTime: 0
     m_pitch: 1
-    m_volume: 0.8
+    m_volume: 0.5
     m_spatialBlend: 1
     m_settingDetection:
       m_audibility: 100
@@ -3452,7 +3452,7 @@ MonoBehaviour:
     m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: 7a7cbc114e9fd6c4db70b2c2ec8dfa55, type: 3}
-    m_loop: 0
+    m_loop: 1
     m_mute: 0
     m_playDelay: 0
     m_reverbZoneMix: 1
@@ -3636,6 +3636,7 @@ MonoBehaviour:
   m_healthSlider: {fileID: 0}
   m_data:
     m_percentToExhaustion: 1
+    m_percentToLowHealth: 10
     m_recoveryAfterExhaustion: 1
     m_staminaMultiplier: 1
     m_healthMultiplier: 1

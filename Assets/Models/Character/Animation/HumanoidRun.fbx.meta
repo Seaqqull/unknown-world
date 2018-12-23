@@ -681,14 +681,14 @@ ModelImporter:
       events:
       - time: 0.45077673
         functionName: RunEvent
-        data: 
+        data: Run
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.91450846
         functionName: RunEvent
-        data: 
+        data: Run
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

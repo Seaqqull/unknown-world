@@ -530,14 +530,14 @@ ModelImporter:
       events:
       - time: 0.29666036
         functionName: WalkEvent
-        data: 
+        data: HalfRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.8221868
         functionName: WalkEvent
-        data: 
+        data: HalfRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -572,14 +572,14 @@ ModelImporter:
       events:
       - time: 0.29533678
         functionName: WalkEvent
-        data: 
+        data: HalfLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.81865287
         functionName: WalkEvent
-        data: 
+        data: HalfLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

@@ -342,7 +342,8 @@ namespace UnknownWorld.Behaviour
             if ((m_isDeath) ||
                 (m_data.Stamina >= m_data.StaminaMax)) return;
 
-            if (m_data.Stamina <= StaminaMin + ((StaminaMax - StaminaMin) * m_data.PercentToExhaustion * 0.01))
+            if ((!m_data.IsExhausted) &&
+                (m_data.Stamina <= StaminaMin + ((StaminaMax - StaminaMin) * m_data.PercentToExhaustion * 0.01)))
             {
                 m_data.IsExhausted = true;
 

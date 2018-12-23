@@ -25,6 +25,7 @@ namespace UnknownWorld.Behaviour
         [SerializeField] private StaminaActionCost m_staminaConsumption;
 
         private UnknownWorld.Manager.ObserverManager m_observerManager;
+        private string m_audioBreatheKey;
 
         public StaminaActionCost StaminaConsumption
         {
@@ -55,15 +56,15 @@ namespace UnknownWorld.Behaviour
             if (!m_sound) return;
 
             Exhaustion += (playtime) => {
-                //m_sound.PlayTime("Exhaustion", playtime);
+                m_sound.Play("Exhaustion", playtime);
             };
 
             LowHealth += () => {
-                m_sound.Play("Breathe");
+                m_audioBreatheKey = m_sound.Play("Breathe");
             };
 
             NormalHealth += () => {
-                m_sound.Stop("Breathe");
+                m_sound.Stop("Breathe", m_audioBreatheKey);
             };
         }
 

@@ -530,14 +530,14 @@ ModelImporter:
       events:
       - time: 0.30070108
         functionName: WalkEvent
-        data: 
+        data: QuaterRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.82642496
         functionName: WalkEvent
-        data: 
+        data: QuaterRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -572,14 +572,14 @@ ModelImporter:
       events:
       - time: 0.29533675
         functionName: WalkEvent
-        data: 
+        data: QuaterLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.82642496
         functionName: WalkEvent
-        data: 
+        data: QuaterLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

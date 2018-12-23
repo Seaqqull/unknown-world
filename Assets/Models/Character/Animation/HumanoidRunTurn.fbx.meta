@@ -534,14 +534,14 @@ ModelImporter:
       events:
       - time: 0.4041449
         functionName: RunEvent
-        data: 
+        data: QuaterRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.89378244
         functionName: RunEvent
-        data: 
+        data: QuaterRight
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -576,14 +576,14 @@ ModelImporter:
       events:
       - time: 0.4015546
         functionName: RunEvent
-        data: 
+        data: QuaterLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.89637315
         functionName: RunEvent
-        data: 
+        data: QuaterLeft
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
