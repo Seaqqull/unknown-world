@@ -9,26 +9,34 @@ namespace UnknownWorld.Behaviour
     {
         [System.Serializable]
         public class PersonCharacteristics
-        {
-            [SerializeField] [Range(0, 100)] private float m_percentToExhaustion = 1.0f;
-            [SerializeField] [Range(0, 100)] private float m_percentToLowHealth = 10.0f;
-            [SerializeField] private float m_recoveryAfterExhaustion = 1.0f;            
-            [SerializeField] private float m_staminaMultiplier = 1.0f;                        
-            [SerializeField] private float m_healthMultiplier = 1.0f;
+        {            
             [SerializeField] private bool m_isPersonActive = true;
             [SerializeField] private float m_movementSpeed = 1.0f;
             [SerializeField] private float m_rotationSpeed = 1.0f;
+
+            [SerializeField] private float m_staminaMultiplier = 1.0f;
+            [SerializeField] private float m_healthMultiplier = 1.0f;
+
+            [SerializeField] [Range(0, 100)] private float m_percentToExhaustion = 1.0f;
+            [SerializeField] [Range(0, 100)] private float m_percentToLowHealth = 10.0f;
+
             [SerializeField] private bool m_isStaminaLock = false;
-            [SerializeField] private bool m_isHealthLock = false;
-            [SerializeField] private float m_staminaRegen = 1.0f;
-            [SerializeField] private float m_staminaMax = 100.0f;            
-            [SerializeField] private float m_healthRegen = 1.0f;
-            [SerializeField] private float m_healthMax = 100.0f;
-            [SerializeField] private float m_staminaMin = 0.0f;
-            [SerializeField] private float m_healthMin = 0.0f;
+            [SerializeField] private bool m_isStaminaRegen = true;
             [SerializeField] private float m_stamina = 100.0f;
-            [SerializeField] private float m_health = 100.0f;            
+            [SerializeField] private float m_staminaMin = 0.0f;
+            [SerializeField] private float m_staminaMax = 100.0f;
+            [SerializeField] private float m_staminaRegen = 1.0f;
+            [SerializeField] private float m_recoveryAfterExhaustion = 1.0f;
+
+
+            [SerializeField] private bool m_isHealthLock = false;
+            [SerializeField] private bool m_isHealthRegen = true;
+            [SerializeField] private float m_health = 100.0f;
+            [SerializeField] private float m_healthMin = 0.0f;
+            [SerializeField] private float m_healthMax = 100.0f;
+            [SerializeField] private float m_healthRegen = 1.0f;
             
+
             private float m_timeFromExhaustion;
             private bool m_isExhausted = false;
             private bool m_isHealthLow = false;
@@ -78,6 +86,16 @@ namespace UnknownWorld.Behaviour
             {
                 get { return this.m_rotationSpeed; }
                 set { this.m_rotationSpeed = value; }
+            }
+            public bool IsStaminaRegen
+            {
+                get { return this.m_isStaminaRegen; }
+                set { this.m_isStaminaRegen = value; }
+            }
+            public bool IsHealthRegen
+            {
+                get { return this.m_isHealthRegen; }
+                set { this.m_isHealthRegen = value; }
             }
             public float StaminaRegen
             {
@@ -321,6 +339,7 @@ namespace UnknownWorld.Behaviour
         private void HealthRegen()
         {
             if ((m_isDeath) ||
+                (!m_data.IsHealthRegen) ||
                 (m_data.Health >= m_data.HealthMax)) return;
 
             if ((!m_data.IsHealthLow) &&
@@ -340,6 +359,7 @@ namespace UnknownWorld.Behaviour
         private void StaminaRegen()
         {
             if ((m_isDeath) ||
+                (!m_data.IsStaminaRegen) ||
                 (m_data.Stamina >= m_data.StaminaMax)) return;
 
             if ((!m_data.IsExhausted) &&
