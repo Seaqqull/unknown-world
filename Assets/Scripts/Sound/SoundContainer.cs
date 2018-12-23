@@ -71,105 +71,173 @@ namespace UnknownWorld.Sound
         }
 
 
-        private bool Play(int index)
+        private string Play(int index)
         {
             if ((index < 0) ||
-                (index >= m_audios.Count) ||
-                (m_audios[index].IsAttached))
-                return false;
+                (index >= m_audios.Count))
+                return string.Empty;
 
-            if (!m_audios[index].InitializeAudioSource(gameObject))
-                return false;
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
 
-            m_audios[index].Play();
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].Play(audioKey);
 
             if (!m_audios[index].Loop)
                 RunLater(
-                    () => m_audios[index].DestroyAudioSource(),
+                    () => m_audios[index].DestroyAudioSource(audioKey),
                     m_audios[index].PlayDelay + ((m_audios[index].PlayTime == 0.0f)? m_audios[index].AudioLength : m_audios[index].PlayTime)
                 );
 
-            return true;
+            return audioKey;
         }
 
-        // on clip end - use on loop clips
-        private bool Stop(int index)
+        private bool Stop(int index, string audioKey)
         {
             if ((index < 0) ||
                 (index >= m_audios.Count) ||
-                (!m_audios[index].IsAttached))
+                (!m_audios[index].ContainAudio(audioKey)))
                 return false;
 
-            RunLater(() => m_audios[index].DestroyAudioSource(),
-                m_audios[index].AudioLength - m_audios[index].AudioTime);
+            RunLater(() => m_audios[index].DestroyAudioSource(audioKey),
+                m_audios[index].AudioLength - m_audios[index].Records[audioKey].time);
 
             return true;
         }
+        
 
-        private bool PlayInstant(int index)
+        private string PlayInstant(int index)
         {
             if ((index < 0) ||
-                (index >= m_audios.Count) ||
-                (m_audios[index].IsAttached))
-                return false;
+                (index >= m_audios.Count))
+                return string.Empty;
 
-            if (!m_audios[index].InitializeAudioSource(gameObject))
-                return false;
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
 
-            m_audios[index].PlayInstant();
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].PlayInstant(audioKey);
 
             if (!m_audios[index].Loop)
                 RunLater(
-                    () => m_audios[index].DestroyAudioSource(),
+                    () => m_audios[index].DestroyAudioSource(audioKey),
                     ((m_audios[index].PlayTime == 0.0f)? m_audios[index].AudioLength : m_audios[index].PlayTime)
                 );
 
-            return true;
+            return audioKey;
         }
 
-        private bool StopInstant(int index)
+        private bool StopInstant(int index, string audioKey)
         {
             if ((index < 0) ||
                 (index >= m_audios.Count) ||
-                (!m_audios[index].IsAttached))
+                (!m_audios[index].ContainAudio(audioKey)))
                 return false;
             
-            m_audios[index].DestroyAudioSource();
+            m_audios[index].DestroyAudioSource(audioKey);
 
             return true;
         }
 
-        private bool PlayDelayed(int index, float delay)
+
+        private string PlayDelayed(int index, float delay)
         {
             if ((index < 0) ||
-                (index >= m_audios.Count) ||
-                (m_audios[index].IsAttached))
-                return false;
+                (index >= m_audios.Count))
+                return string.Empty;
 
-            if (!m_audios[index].InitializeAudioSource(gameObject))
-                return false;
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
 
-            m_audios[index].PlayDelayed(delay);
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].PlayDelayed(audioKey, delay);
 
             if (!m_audios[index].Loop)
                 RunLater(
-                    () => m_audios[index].DestroyAudioSource(),
+                    () => m_audios[index].DestroyAudioSource(audioKey),
                     delay + ((m_audios[index].PlayTime == 0.0f) ? m_audios[index].AudioLength : m_audios[index].PlayTime)
                 );
+
+            return audioKey;
+        }
+
+        private bool StopDelayed(int index, float delay, string audioKey)
+        {
+            if ((index < 0) ||
+                (index >= m_audios.Count) ||
+                (!m_audios[index].ContainAudio(audioKey)))
+                return false;
+
+            RunLater(() => m_audios[index].DestroyAudioSource(audioKey), delay);
 
             return true;
         }
 
-        private bool StopDelayed(int index, float delay)
+
+        private string Play(int index, float playTime)
         {
             if ((index < 0) ||
-                (index >= m_audios.Count) ||
-                (!m_audios[index].IsAttached))
-                return false;
+                (index >= m_audios.Count))
+                return string.Empty;
 
-            RunLater(() => m_audios[index].DestroyAudioSource(), delay);
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
 
-            return true;
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].Play(audioKey);
+
+            RunLater(
+                () => m_audios[index].DestroyAudioSource(audioKey),
+                m_audios[index].PlayDelay + ((playTime < m_audios[index].AudioLength) ? playTime : m_audios[index].AudioLength)
+            );
+
+            return audioKey;
+        }
+
+        private string PlayInstant(int index, float playTime)
+        {
+            if ((index < 0) ||
+                (index >= m_audios.Count))
+                return string.Empty;
+
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
+
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].PlayInstant(audioKey);
+
+            RunLater(
+                () => m_audios[index].DestroyAudioSource(audioKey),
+                ((playTime < m_audios[index].AudioLength) ? playTime : m_audios[index].AudioLength)
+            );
+
+            return audioKey;
+        }
+
+        private string PlayDelayed(int index, float delay, float playTime)
+        {
+            if ((index < 0) ||
+                (index >= m_audios.Count))
+                return string.Empty;
+
+            string audioKey = m_audios[index].InitializeAudioSource(gameObject);
+
+            if (audioKey == string.Empty)
+                return string.Empty;
+
+            m_audios[index].PlayDelayed(audioKey, delay);
+
+            RunLater(
+                () => m_audios[index].DestroyAudioSource(audioKey),
+                delay + ((playTime < m_audios[index].AudioLength) ? playTime : m_audios[index].AudioLength)
+            );
+
+            return audioKey;
         }
 
         // delay call methods
@@ -189,7 +257,7 @@ namespace UnknownWorld.Sound
         }
 
 
-        public bool Play(string audioName, bool searchInNested = true, bool onlyDirect = true)
+        public string Play(string audioName, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
@@ -199,26 +267,26 @@ namespace UnknownWorld.Sound
                 }
             }
 
-            if (!searchInNested) return false;
+            if (!searchInNested) return string.Empty;
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].Play(audioName, !onlyDirect, false))
-                {
-                    return true;
-                }
+                string audioKey = m_containers[i].Play(audioName, !onlyDirect, false);
+
+                if (audioKey != string.Empty)
+                    return audioKey;
             }
 
-            return false;
+            return string.Empty;
         }
 
-        public bool Stop(string audioName, bool searchInNested = true, bool onlyDirect = true)
+        public bool Stop(string audioName, string audioKey, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
                 if (m_audios[i].Name == audioName)
                 {
-                    return Stop(i);
+                    return Stop(i, audioKey);
                 }
             }
 
@@ -226,7 +294,7 @@ namespace UnknownWorld.Sound
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].Stop(audioName, !onlyDirect, false))
+                if (m_containers[i].Stop(audioName, audioKey, !onlyDirect, false))
                 {
                     return true;
                 }
@@ -235,7 +303,8 @@ namespace UnknownWorld.Sound
             return false;
         }
 
-        public bool PlayInstant(string audioName, bool searchInNested = true, bool onlyDirect = true)
+
+        public string PlayInstant(string audioName, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
@@ -245,26 +314,26 @@ namespace UnknownWorld.Sound
                 }
             }
 
-            if (!searchInNested) return false;
+            if (!searchInNested) return string.Empty;
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].PlayInstant(audioName, !onlyDirect, false))
-                {
-                    return true;
-                }
+                string audioKey = m_containers[i].PlayInstant(audioName, !onlyDirect, false);
+
+                if (audioKey != string.Empty)
+                    return audioKey;
             }
 
-            return false;
+            return string.Empty;
         }
 
-        public bool StopInstant(string audioName, bool searchInNested = true, bool onlyDirect = true)
+        public bool StopInstant(string audioName, string audioKey, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
                 if (m_audios[i].Name == audioName)
                 {
-                    return StopInstant(i);
+                    return StopInstant(i, audioKey);
                 }
             }
 
@@ -272,7 +341,7 @@ namespace UnknownWorld.Sound
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].StopInstant(audioName, !onlyDirect, false))
+                if (m_containers[i].StopInstant(audioName, audioKey, !onlyDirect, false))
                 {
                     return true;
                 }
@@ -281,7 +350,8 @@ namespace UnknownWorld.Sound
             return false;
         }
 
-        public bool PlayDelayed(string audioName, float delay, bool searchInNested = true, bool onlyDirect = true)
+
+        public string PlayDelayed(string audioName, float delay, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
@@ -291,26 +361,26 @@ namespace UnknownWorld.Sound
                 }
             }
 
-            if (!searchInNested) return false;
+            if (!searchInNested) return string.Empty;
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].PlayDelayed(audioName, delay, !onlyDirect, false))
-                {
-                    return true;
-                }
+                string audioKey = m_containers[i].PlayDelayed(audioName, delay, !onlyDirect, false);
+                
+                if (audioKey != string.Empty)
+                    return audioKey;
             }
 
-            return false;
+            return string.Empty;
         }
 
-        public bool StopDelayed(string audioName, float delay, bool searchInNested = true, bool onlyDirect = true)
+        public bool StopDelayed(string audioName, float delay, string audioKey, bool searchInNested = true, bool onlyDirect = true)
         {
             for (int i = 0; i < m_audios.Count; i++)
             {
                 if (m_audios[i].Name == audioName)
                 {
-                    return StopDelayed(i, delay);
+                    return StopDelayed(i, delay, audioKey);
                 }
             }
 
@@ -318,7 +388,7 @@ namespace UnknownWorld.Sound
 
             for (int i = 0; i < m_containers.Count; i++)
             {
-                if (m_containers[i].StopDelayed(audioName, delay, !onlyDirect, false))
+                if (m_containers[i].StopDelayed(audioName, delay, audioKey, !onlyDirect, false))
                 {
                     return true;
                 }
@@ -326,6 +396,77 @@ namespace UnknownWorld.Sound
 
             return false;
         }
+
+
+        public string Play(string audioName, float playTime, bool searchInNested = true, bool onlyDirect = true)
+        {
+            for (int i = 0; i < m_audios.Count; i++)
+            {
+                if (m_audios[i].Name == audioName)
+                {
+                    return Play(i, playTime);
+                }
+            }
+
+            if (!searchInNested) return string.Empty;
+
+            for (int i = 0; i < m_containers.Count; i++)
+            {
+                string audioKey = m_containers[i].Play(audioName, playTime, !onlyDirect, false);
+
+                if (audioKey != string.Empty)
+                    return audioKey;
+            }
+
+            return string.Empty;
+        }
+
+        public string PlayInstant(string audioName, float playTime, bool searchInNested = true, bool onlyDirect = true)
+        {
+            for (int i = 0; i < m_audios.Count; i++)
+            {
+                if (m_audios[i].Name == audioName)
+                {
+                    return PlayInstant(i, playTime);
+                }
+            }
+
+            if (!searchInNested) return string.Empty;
+
+            for (int i = 0; i < m_containers.Count; i++)
+            {
+                string audioKey = m_containers[i].PlayInstant(audioName, playTime, !onlyDirect, false);
+
+                if (audioKey != string.Empty)
+                    return audioKey;
+            }
+
+            return string.Empty;
+        }
+
+        public string PlayDelayed(string audioName, float delay, float playTime, bool searchInNested = true, bool onlyDirect = true)
+        {
+            for (int i = 0; i < m_audios.Count; i++)
+            {
+                if (m_audios[i].Name == audioName)
+                {
+                    return PlayDelayed(i, delay, playTime);
+                }
+            }
+
+            if (!searchInNested) return string.Empty;
+
+            for (int i = 0; i < m_containers.Count; i++)
+            {
+                string audioKey = m_containers[i].PlayDelayed(audioName, delay, playTime, !onlyDirect, false);
+
+                if (audioKey != string.Empty)
+                    return audioKey;
+            }
+
+            return string.Empty;
+        }
+
 
         public float GetAudibility(Vector3 source, Vector3 listener, bool searchInNested = true, bool onlyDirect = true)
         {
