@@ -37,6 +37,12 @@ namespace UnknownWorld.Behaviour
             base.Awake();
 
             m_observerManager = FindObjectOfType<UnknownWorld.Manager.ObserverManager>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
             StaminaUIUpdate += (stamina) => {
                 StaminaSlider.value =
                 UnknownWorld.Utility.Methods.VectorOperations.Map(stamina, StaminaMin, StaminaMax, StaminaSlider.minValue, StaminaSlider.maxValue);
@@ -44,6 +50,20 @@ namespace UnknownWorld.Behaviour
             HealthUIUpdate += (health) => {
                 HealthSlider.value =
                 UnknownWorld.Utility.Methods.VectorOperations.Map(health, HealthMin, HealthMax, HealthSlider.minValue, HealthSlider.maxValue);
+            };
+
+            if (!m_sound) return;
+
+            Exhaustion += (playtime) => {
+                //m_sound.PlayTime("Exhaustion", playtime);
+            };
+
+            LowHealth += () => {
+                m_sound.Play("Breathe");
+            };
+
+            NormalHealth += () => {
+                m_sound.Stop("Breathe");
             };
         }
 

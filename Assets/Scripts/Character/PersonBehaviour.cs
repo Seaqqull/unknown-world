@@ -11,6 +11,7 @@ namespace UnknownWorld.Behaviour
         public class PersonCharacteristics
         {
             [SerializeField] [Range(0, 100)] private float m_percentToExhaustion = 1.0f;
+            [SerializeField] [Range(0, 100)] private float m_percentToLowHealth = 10.0f;
             [SerializeField] private float m_recoveryAfterExhaustion = 1.0f;            
             [SerializeField] private float m_staminaMultiplier = 1.0f;                        
             [SerializeField] private float m_healthMultiplier = 1.0f;
@@ -30,6 +31,7 @@ namespace UnknownWorld.Behaviour
             
             private float m_timeFromExhaustion;
             private bool m_isExhausted = false;
+            private bool m_isHealthLow = false;
             private float m_recoveryAfterDead;
 
             public float RecoveryAfterExhaustion
@@ -41,6 +43,11 @@ namespace UnknownWorld.Behaviour
             {
                 get { return m_percentToExhaustion; }
                 set { m_percentToExhaustion = value; }
+            }
+            public float PercentToLowHealth
+            {
+                get { return this.m_percentToLowHealth; }
+                set { this.m_percentToLowHealth = value; }
             }
             public float TimeFromExhaustion
             {
@@ -97,6 +104,11 @@ namespace UnknownWorld.Behaviour
                 get { return this.m_isExhausted; }
                 set { this.m_isExhausted = value; }
             }
+            public bool IsHealthLow
+            {
+                get { return this.m_isHealthLow; }
+                set { this.m_isHealthLow = value; }
+            }
             public float StaminaMin
             {
                 get { return this.m_staminaMin; }
@@ -128,7 +140,6 @@ namespace UnknownWorld.Behaviour
                 set { this.m_health = value; }
             }
 
-
         }
 
 
@@ -141,7 +152,10 @@ namespace UnknownWorld.Behaviour
         protected UnknownWorld.Area.Target.TracingAreaContainer m_areaContainer;
         protected event Action<float> m_staminaUIUpdater = delegate { };
         protected event Action<float> m_healthUIUpdater = delegate { };
+        protected event Action<float> m_exhaustion = delegate { };
+        protected event Action m_normalHealth = delegate { };
         protected UnknownWorld.Sound.SoundContainer m_sound;
+        protected event Action m_lowHealth = delegate { };        
         private static uint m_idCounter = 0;
         private bool m_isActive;
         private bool m_isDeath;
@@ -167,6 +181,25 @@ namespace UnknownWorld.Behaviour
         {
             add { this.m_healthUIUpdater += value; }
             remove { this.m_healthUIUpdater -= value; }
+        }
+        public PersonCharacteristics Data
+        {
+            get { return this.m_data; }
+        }
+        public event Action<float> Exhaustion
+        {
+            add { this.m_exhaustion += value; }
+            remove { this.m_exhaustion -= value; }
+        }
+        public event Action NormalHealth
+        {
+            add { this.m_normalHealth += value; }
+            remove { this.m_normalHealth -= value; }
+        }
+        public event Action LowHealth
+        {
+            add { this.m_lowHealth += value; }
+            remove { this.m_lowHealth -= value; }
         }
         public Slider StaminaSlider
         {
@@ -272,7 +305,13 @@ namespace UnknownWorld.Behaviour
                 else
                     m_data.TimeFromExhaustion += Time.deltaTime;
             }
-            
+
+            if ((m_data.IsHealthLow) &&
+                (m_data.Health > HealthMin + ((HealthMax - HealthMin) * m_data.PercentToLowHealth * 0.01)))
+            {
+                m_data.IsHealthLow = false;
+                m_normalHealth();
+            }
 
             StaminaRegen();
             HealthRegen();
@@ -283,6 +322,13 @@ namespace UnknownWorld.Behaviour
         {
             if ((m_isDeath) ||
                 (m_data.Health >= m_data.HealthMax)) return;
+
+            if ((!m_data.IsHealthLow) &&
+                (m_data.Health <= HealthMin + ((HealthMax - HealthMin) * m_data.PercentToLowHealth * 0.01)))
+            {
+                m_data.IsHealthLow = true;
+                m_lowHealth();
+            }            
 
             m_data.Health += m_data.HealthRegen * Time.deltaTime;
 
@@ -299,7 +345,9 @@ namespace UnknownWorld.Behaviour
             if (m_data.Stamina <= StaminaMin + ((StaminaMax - StaminaMin) * m_data.PercentToExhaustion * 0.01))
             {
                 m_data.IsExhausted = true;
-                m_data.TimeFromExhaustion = 0;
+
+                m_exhaustion(m_data.RecoveryAfterExhaustion);
+                m_data.TimeFromExhaustion = 0;                
             }
 
 

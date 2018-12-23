@@ -17,6 +17,16 @@ namespace UnknownWorld.Behaviour.Data
         Grounded
     }
 
+    [System.Serializable]
+    public enum RotationState
+    {
+        Unknown,
+        QuaterLeft,
+        QuaterRight,
+        HalfLeft,
+        HalfRight
+    }
+
 
     public interface IPersonAction
     {

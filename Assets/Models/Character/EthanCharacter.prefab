@@ -664,6 +664,8 @@ GameObject:
   - component: {fileID: 114232518152029220}
   - component: {fileID: 114362505788326610}
   - component: {fileID: 114832524694989730}
+  - component: {fileID: 114750865502093250}
+  - component: {fileID: 114802876934537556}
   m_Layer: 11
   m_Name: EthanCharacter
   m_TagString: Untagged
@@ -3086,18 +3088,375 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e098eee531d1adc46bc757bfa5e841ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_name: 
+  m_name: CharacterSound
   m_isAccommodate: 1
   m_isActive: 1
   m_isNested: 1
   m_audios:
-  - m_name: 
-    m_output: {fileID: 0}
-    m_audioClip: {fileID: 0}
+  - m_name: Walk
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
     m_mute: 0
     m_playDelay: 0
     m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.8
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Run
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 1
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Crouch
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.5
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Hit
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: ea9de7ef397811143857cda30f644e4f, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 1
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Exhaustion
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: db9d9f5da7a93b6449b373d3263b185f, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 1
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Breathe
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: 7a7cbc114e9fd6c4db70b2c2ec8dfa55, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
     m_pitch: 1
     m_volume: 1
     m_spatialBlend: 1
@@ -3219,6 +3578,28 @@ MonoBehaviour:
   m_gizmoColorInactive: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_gizmoColorActive: {r: 0, g: 0, b: 1, a: 1}
   m_gizmoSize: 0.1
+--- !u!114 &114750865502093250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58275182206b0104994a5c10077d8e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114802876934537556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16f1c52dda15f6449d78c7cec7cb862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114832524694989730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3231,8 +3612,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_audios: {fileID: 114362505788326610}
-  m_drawDetection: 0
-  m_drawOnSelected: 1
+  m_vizualize: 0
+  m_drawDetection: 1
+  m_drawOnSelected: 0
   m_drawZone: 0
   m_step: 0.1
   m_alpha: 0.05
