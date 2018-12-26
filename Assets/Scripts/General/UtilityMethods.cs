@@ -1,9 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace UnknownWorld.Utility.Methods
 {
+    public static class Hasher
+    {
+        private static readonly System.DateTime Jan1st1970 = new System.DateTime
+            (1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+
+
+        public static string GenerateHash()
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(
+                System.Text.Encoding.Default.GetBytes(GenerateString())
+            );
+
+            return System.BitConverter.ToString(data);
+        }
+
+        public static string GenerateString()
+        {
+            return System.Guid.NewGuid().ToString() + CurrentTimeMillis();
+        }
+
+        public static long CurrentTimeMillis()
+        {
+            return (long)(System.DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
+        }
+
+        public static string GenerateHash(string input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(
+                System.Text.Encoding.Default.GetBytes(input)
+            );
+
+            return System.BitConverter.ToString(data);
+        }
+
+    }
+
     public static class VectorOperations
     {
         public static float Map(float value, float istart, float istop, float ostart, float ostop)
@@ -32,7 +71,7 @@ namespace UnknownWorld.Utility.Methods
     }
 
 
-    class AreaEqualityComparer : IEqualityComparer<UnknownWorld.Area.Target.TracingArea>
+    public class AreaEqualityComparer : IEqualityComparer<UnknownWorld.Area.Target.TracingArea>
     {
         public int GetHashCode(UnknownWorld.Area.Target.TracingArea obj)
         {

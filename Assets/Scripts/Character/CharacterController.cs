@@ -5,7 +5,7 @@ using UnityScript;
 
 namespace UnknownWorld.Behaviour
 {
-    public class CharacterInputController : MonoBehaviour
+    public class CharacterController : MonoBehaviour
     {
         [SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
 
