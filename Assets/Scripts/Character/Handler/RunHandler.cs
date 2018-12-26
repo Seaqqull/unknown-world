@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnknownWorld
+namespace UnknownWorld.Sound.Character
 {
-    public class RunHandler : BaseSoundCharacterHandler
+    public class RunHandler : UnknownWorld.Sound.Data.BaseSoundCharacterHandler
     {
         public void RunEvent(string eventKey)
         {
-            if (m_animation.State == Behaviour.Data.AnimationState.Walk)
+            if (m_animation.State != Behaviour.Data.AnimationState.Run)//if (m_animation.State == Behaviour.Data.AnimationState.Walk)
                 return;
 
             if ((m_animation.State == Behaviour.Data.AnimationState.Run) &&
                 (m_animation.RotationState == Behaviour.Data.RotationState.Unknown))
                 OnForward(eventKey);
-            else if ((m_animation.RotationState == Behaviour.Data.RotationState.QuaterLeft) ||
-                     (m_animation.RotationState == Behaviour.Data.RotationState.QuaterRight))
+            else if ((m_animation.RotationState == Behaviour.Data.RotationState.QuarterLeft) ||
+                     (m_animation.RotationState == Behaviour.Data.RotationState.QuarterRight))
                 OnQuater(eventKey);
             else if ((m_animation.RotationState == Behaviour.Data.RotationState.HalfLeft) ||
                      (m_animation.RotationState == Behaviour.Data.RotationState.HalfRight))

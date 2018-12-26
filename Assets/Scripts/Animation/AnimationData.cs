@@ -21,8 +21,8 @@ namespace UnknownWorld.Behaviour.Data
     public enum RotationState
     {
         Unknown,
-        QuaterLeft,
-        QuaterRight,
+        QuarterLeft,
+        QuarterRight,
         HalfLeft,
         HalfRight
     }

@@ -338,11 +338,11 @@ namespace UnknownWorld.Behaviour
                 m_state = Data.AnimationState.Crouch;
 
             if (m_turnAmount > 0.05)
-                m_rotation = Data.RotationState.QuaterRight;
+                m_rotation = Data.RotationState.QuarterRight;
             else if (m_turnAmount > 0.55)
                 m_rotation = Data.RotationState.HalfRight;
             else if (m_turnAmount < -0.05)
-                m_rotation = Data.RotationState.QuaterLeft;
+                m_rotation = Data.RotationState.QuarterLeft;
             else if (m_turnAmount < -0.55)
                 m_rotation = Data.RotationState.HalfLeft;
             else

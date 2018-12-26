@@ -666,6 +666,7 @@ GameObject:
   - component: {fileID: 114832524694989730}
   - component: {fileID: 114750865502093250}
   - component: {fileID: 114802876934537556}
+  - component: {fileID: 114901378655066832}
   m_Layer: 11
   m_Name: EthanCharacter
   m_TagString: Untagged
@@ -3235,7 +3236,7 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-  - m_name: Crouch
+  - m_name: InPlace
     m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
@@ -3245,7 +3246,7 @@ MonoBehaviour:
     m_reverbZoneMix: 1
     m_playTime: 0
     m_pitch: 1
-    m_volume: 0.5
+    m_volume: 0.3
     m_spatialBlend: 1
     m_settingDetection:
       m_audibility: 100
@@ -3381,7 +3382,7 @@ MonoBehaviour:
     m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: db9d9f5da7a93b6449b373d3263b185f, type: 3}
-    m_loop: 0
+    m_loop: 1
     m_mute: 0
     m_playDelay: 0
     m_reverbZoneMix: 1
@@ -3461,7 +3462,7 @@ MonoBehaviour:
     m_volume: 1
     m_spatialBlend: 1
     m_settingDetection:
-      m_audibility: 100
+      m_audibility: 0
       m_maxDistance: 5
       m_minDistance: 2
       m_cutOnMin: 0
@@ -3651,7 +3652,7 @@ MonoBehaviour:
     m_recoveryAfterExhaustion: 1
     m_isHealthLock: 0
     m_isHealthRegen: 1
-    m_health: 25
+    m_health: 1
     m_healthMin: 0
     m_healthMax: 100
     m_healthRegen: 3
@@ -3669,6 +3670,17 @@ MonoBehaviour:
   m_staminaConsumption:
     m_jumpCost: 10
     m_runCost: 2
+--- !u!114 &114901378655066832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 149790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c83fcaba22805114cb99b18b7fe6b547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114965968284805498
 MonoBehaviour:
   m_ObjectHideFlags: 1

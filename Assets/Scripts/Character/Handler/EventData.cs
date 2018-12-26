@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnknownWorld
+namespace UnknownWorld.Sound.Data
 {
     public abstract class BaseSoundCharacterHandler : MonoBehaviour
     {
