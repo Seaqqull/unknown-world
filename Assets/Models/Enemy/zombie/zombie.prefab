@@ -457,6 +457,10 @@ GameObject:
   - component: {fileID: 114995632485348652}
   - component: {fileID: 114234593570438692}
   - component: {fileID: 114636882157376716}
+  - component: {fileID: 114930240248676782}
+  - component: {fileID: 114628306820299068}
+  - component: {fileID: 114388217051268408}
+  - component: {fileID: 114452229726957558}
   m_Layer: 12
   m_Name: zombie
   m_TagString: Untagged
@@ -3003,6 +3007,39 @@ MonoBehaviour:
   m_weapons:
   - {fileID: 114175093701274126}
   m_activeWeapon: 0
+--- !u!114 &114388217051268408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394821967084268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d24ad93b2104d84ba016597953020f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114452229726957558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394821967084268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ed55fe740c7bf489ff3f1a11807ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114628306820299068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394821967084268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b8b70ac6cfed9478e64a2a506611c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114636882157376716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3070,23 +3107,26 @@ MonoBehaviour:
   m_staminaSlider: {fileID: 0}
   m_healthSlider: {fileID: 0}
   m_data:
-    m_percentToExhaustion: 1
-    m_recoveryAfterExhaustion: 1
-    m_staminaMultiplier: 1
-    m_healthMultiplier: 1
     m_isPersonActive: 1
     m_movementSpeed: 1
     m_rotationSpeed: 1
+    m_staminaMultiplier: 1
+    m_healthMultiplier: 1
+    m_percentToExhaustion: 1
+    m_percentToLowHealth: 10
     m_isStaminaLock: 0
-    m_isHealthLock: 0
-    m_staminaRegen: 1
-    m_staminaMax: 100
-    m_healthRegen: 1
-    m_healthMax: 100
-    m_staminaMin: 0
-    m_healthMin: 0
+    m_isStaminaRegen: 1
     m_stamina: 100
+    m_staminaMin: 0
+    m_staminaMax: 100
+    m_staminaRegen: 1
+    m_recoveryAfterExhaustion: 1
+    m_isHealthLock: 0
+    m_isHealthRegen: 1
     m_health: 100
+    m_healthMin: 0
+    m_healthMax: 100
+    m_healthRegen: 1
   m_point:
     m_type: 3
     m_action: 3
@@ -3129,6 +3169,235 @@ MonoBehaviour:
     m_targetMask:
       serializedVersion: 2
       m_Bits: 1024
+--- !u!114 &114930240248676782
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394821967084268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e098eee531d1adc46bc757bfa5e841ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_name: EnemySound
+  m_isAccommodate: 1
+  m_isActive: 1
+  m_isNested: 1
+  m_audios:
+  - m_name: Walk
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.5
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Run
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 1
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: InPlace
+    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
 --- !u!114 &114995632485348652
 MonoBehaviour:
   m_ObjectHideFlags: 1
