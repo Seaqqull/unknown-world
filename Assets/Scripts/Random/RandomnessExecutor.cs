@@ -9,10 +9,13 @@ namespace UnknownWorld.Random
         [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_pollFrequency = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_possibility = 0.2f;
 
+        private static uint m_idCounter = 0;
+
         private bool m_isPollAllowed = true;
         protected bool m_isBusy = false;
         private System.Random m_random;
         private float m_timeSincePoll;
+        private uint m_id;
 
         public float PollFrequency
         {
@@ -27,11 +30,18 @@ namespace UnknownWorld.Random
         {
             get { return this.m_isBusy; }
         }
+        public uint Id
+        {
+            get { return this.m_id; }
+        }
 
 
         protected virtual void Awake()
-        {
-            m_random = new System.Random();
+        {            
+            m_id = m_idCounter++;
+
+            m_random = new System.Random((int)m_id + 
+                (int)UnknownWorld.Utility.Methods.Hasher.CurrentTimeMillis());
         }
 
         protected virtual void Update()

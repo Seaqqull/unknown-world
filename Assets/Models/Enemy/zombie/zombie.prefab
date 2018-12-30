@@ -457,7 +457,8 @@ GameObject:
   - component: {fileID: 114995632485348652}
   - component: {fileID: 114234593570438692}
   - component: {fileID: 114636882157376716}
-  - component: {fileID: 114930240248676782}
+  - component: {fileID: 114916796705537944}
+  - component: {fileID: 114033872243932246}
   - component: {fileID: 114628306820299068}
   - component: {fileID: 114388217051268408}
   - component: {fileID: 114452229726957558}
@@ -2857,6 +2858,30 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114033872243932246
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394821967084268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b50957005128ba43b1ef5a1a0bed60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pollFrequency: 1.05
+  m_possibility: 0.2
+  m_timeLimit: 5
+  m_container: {fileID: 114916796705537944}
+  m_timeLimitFromAudio: 0
+  m_audios:
+  - Voice_01
+  - Voice_02
+  - Voice_03
+  - Voice_04
+  - Voice_05
+  - Voice_06
+  - Voice_07
 --- !u!114 &114175093701274126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3140,6 +3165,7 @@ MonoBehaviour:
     m_impactRadius: 0
   m_attackDistance: 1.5
   m_targetUpdateDelay: 0.1
+  m_audioOnWait: {fileID: 114033872243932246}
 --- !u!114 &114894218456553118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3169,7 +3195,7 @@ MonoBehaviour:
     m_targetMask:
       serializedVersion: 2
       m_Bits: 1024
---- !u!114 &114930240248676782
+--- !u!114 &114916796705537944
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3186,7 +3212,7 @@ MonoBehaviour:
   m_isNested: 1
   m_audios:
   - m_name: Walk
-    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -3257,7 +3283,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Run
-    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -3328,7 +3354,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: InPlace
-    m_output: {fileID: 243827570738627584, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -3373,6 +3399,503 @@ MonoBehaviour:
       m_maxDistance: 100
       m_minDistance: 0
       m_dopplerLevel: 1
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_01
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: 092583de3e7ab6f48b354fda2b8f77b9, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_02
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: 7eb193f8872afe345b5d08002edd20ad, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_03
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: 73ea438530b31ee49834a235a84a8fb9, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_04
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: cb845fc40c7e90a4db03b94660d7a21d, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_05
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: b5dffb3045d6de14f881f32cc74e9649, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_06
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: a155f7ed1868c1646b325812b60108e5, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
+      m_spread: 0
+      m_curveVolume:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - m_name: Voice_07
+    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+      type: 2}
+    m_audioClip: {fileID: 8300000, guid: 041cc684882ba26498112ac8e681518b, type: 3}
+    m_loop: 0
+    m_mute: 0
+    m_playDelay: 0
+    m_reverbZoneMix: 1
+    m_playTime: 0
+    m_pitch: 1
+    m_volume: 0.3
+    m_spatialBlend: 1
+    m_settingDetection:
+      m_audibility: 100
+      m_maxDistance: 5
+      m_minDistance: 2
+      m_cutOnMin: 0
+      m_cutOnMax: 1
+      m_curveAudibility:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: -1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_setting3D:
+      m_maxDistance: 100
+      m_minDistance: 0
+      m_dopplerLevel: 0
       m_spread: 0
       m_curveVolume:
         serializedVersion: 2

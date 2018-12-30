@@ -42,7 +42,9 @@ namespace UnknownWorld.Random
         {
             base.Awake();
 
-            m_random = new System.Random();
+            m_random = new System.Random((int)Id + 
+                (int)UnknownWorld.Utility.Methods.Hasher.CurrentTimeMillis());
+
             m_initialTimeLimit = base.TimeLimit;
         }
 
