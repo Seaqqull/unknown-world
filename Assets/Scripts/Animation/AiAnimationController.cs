@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnknownWorld.Behaviour.Data;
+
 
 namespace UnknownWorld.Behaviour
 {
@@ -7,6 +7,7 @@ namespace UnknownWorld.Behaviour
     [RequireComponent(typeof(Rigidbody))]    
     [RequireComponent(typeof(Animator))]
 
+    [System.Serializable]
     public class AIAnimationController : MonoBehaviour, Data.IPersonAction
     {
         [SerializeField] [Range(1f, 4f)]private float m_gravityMultiplier = 2f;

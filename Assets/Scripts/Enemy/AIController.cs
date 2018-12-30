@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
+
 
 namespace UnknownWorld.Behaviour
 {
+    [System.Serializable]
     public class AIController : MonoBehaviour
     {
         [SerializeField] private UnknownWorld.Behaviour.AIAnimationController m_animation;
@@ -430,24 +431,7 @@ namespace UnknownWorld.Behaviour
             if ((m_behaviour.State == AIBehaviour.AIState.Waiting) ||
                 (m_behaviour.State == AIBehaviour.AIState.FollowingSuspicion))
             {
-                //if (!m_isTargetReselect)
-                //{
-                //    m_targetsSuspicion.GetPoint(m_pathIndex).ClearPoint();
-                //    m_targetsSuspicion.RemoveAt(m_pathIndex);
-                //    Debug.Log("Updated");
-                //}
-                //else
-                //    Debug.Log("Not Updated");
-                ////m_agent.SetDestination(
-                ////    m_targetsSuspicion.GetPoint(m_pathIndex).Transform.position
-                ////);
-                //m_isTargetReselect = true;
-
-                //UnknownWorld.Path.Data.PathHelper.ClearExceptOne(m_targetsSuspicion.Points, ref m_pathIndex);
-
                 UnknownWorld.Path.Data.PathHelper.ClearAll(m_targetsSuspicion.Points);
-                //    m_targetsSuspicion.GetPoint(m_pathIndex).ClearPoint();
-                //    m_targetsSuspicion.RemoveAt(m_pathIndex);
                 m_isTargetReselect = true;
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingSuspicion;
