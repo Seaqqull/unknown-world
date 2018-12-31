@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 114244233346947116}
   - component: {fileID: 114889809375001862}
   - component: {fileID: 114658850511300248}
-  - component: {fileID: 114319684813333020}
+  - component: {fileID: 114525335428753846}
   - component: {fileID: 114302596258064090}
   - component: {fileID: 114302024384474336}
   - component: {fileID: 114309442258360210}
@@ -2446,7 +2446,7 @@ MonoBehaviour:
   m_pollFrequency: 1.1
   m_possibility: 0.2
   m_timeLimit: 5
-  m_container: {fileID: 114319684813333020}
+  m_container: {fileID: 114525335428753846}
   m_timeLimitFromAudio: 0
   m_audios:
   - Voice_01
@@ -2467,7 +2467,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d24ad93b2104d84ba016597953020f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114319684813333020
+--- !u!114 &114456998263876296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1046872178486360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88a6389cf383ec41b0e25e20af76255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_animation: {fileID: 114552711201402392}
+  m_targetUpdateDelay: 0.1
+  m_pathUpdateDelay: 1
+  m_isTargetUltimate: 1
+  m_avoidOtherAi: 0
+  m_aiActive: 1
+  m_weapons:
+  - {fileID: 114254556664307200}
+  m_activeWeapon: 0
+--- !u!114 &114479665954127680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1046872178486360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832d0519748c9284aae3ba923a5d8ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isAreaActive: 1
+  m_type: 2
+  m_searchingDelay: 0.5
+  m_priority: 0
+  m_socket: {fileID: 4739887387400324}
+  m_colorZone: {r: 0.07971394, g: 1, b: 0, a: 1}
+  m_colorTarget: {r: 1, g: 0, b: 0, a: 1}
+  m_data:
+    m_offset: {x: 0, y: 0, z: 0}
+    m_rotation: {x: 0, y: 0, z: 0}
+    m_radius: 5
+    m_angle: 360
+    m_obstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    m_targetMask:
+      serializedVersion: 2
+      m_Bits: 1024
+  m_maxVolume: 65535
+  m_minVolume: 1
+--- !u!114 &114525335428753846
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2484,7 +2535,7 @@ MonoBehaviour:
   m_isNested: 1
   m_audios:
   - m_name: Walk
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243360484985012414, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -2555,7 +2606,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Run
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243360484985012414, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -2626,7 +2677,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: InPlace
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243360484985012414, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a73d5ebdeb041d7439798f44f585e82d, type: 3}
     m_loop: 0
@@ -2697,7 +2748,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_01
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: 092583de3e7ab6f48b354fda2b8f77b9, type: 3}
     m_loop: 0
@@ -2768,7 +2819,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_02
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: 7eb193f8872afe345b5d08002edd20ad, type: 3}
     m_loop: 0
@@ -2839,7 +2890,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_03
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: 73ea438530b31ee49834a235a84a8fb9, type: 3}
     m_loop: 0
@@ -2910,7 +2961,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_04
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: cb845fc40c7e90a4db03b94660d7a21d, type: 3}
     m_loop: 0
@@ -2981,7 +3032,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_05
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: b5dffb3045d6de14f881f32cc74e9649, type: 3}
     m_loop: 0
@@ -3052,7 +3103,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_06
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: a155f7ed1868c1646b325812b60108e5, type: 3}
     m_loop: 0
@@ -3123,7 +3174,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   - m_name: Voice_07
-    m_output: {fileID: 243271896790227318, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
+    m_output: {fileID: 243147607532866674, guid: 74ee42bec7e4e49458aa2cc0935b12f6,
       type: 2}
     m_audioClip: {fileID: 8300000, guid: 041cc684882ba26498112ac8e681518b, type: 3}
     m_loop: 0
@@ -3193,57 +3244,6 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
---- !u!114 &114456998263876296
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1046872178486360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88a6389cf383ec41b0e25e20af76255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animation: {fileID: 114552711201402392}
-  m_targetUpdateDelay: 0.1
-  m_pathUpdateDelay: 1
-  m_isTargetUltimate: 1
-  m_avoidOtherAi: 0
-  m_aiActive: 1
-  m_weapons:
-  - {fileID: 114254556664307200}
-  m_activeWeapon: 0
---- !u!114 &114479665954127680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1046872178486360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832d0519748c9284aae3ba923a5d8ea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isAreaActive: 1
-  m_type: 2
-  m_searchingDelay: 0.5
-  m_priority: 0
-  m_socket: {fileID: 4739887387400324}
-  m_colorZone: {r: 0.07971394, g: 1, b: 0, a: 1}
-  m_colorTarget: {r: 1, g: 0, b: 0, a: 1}
-  m_data:
-    m_offset: {x: 0, y: 0, z: 0}
-    m_rotation: {x: 0, y: 0, z: 0}
-    m_radius: 5
-    m_angle: 360
-    m_obstacleMask:
-      serializedVersion: 2
-      m_Bits: 512
-    m_targetMask:
-      serializedVersion: 2
-      m_Bits: 1024
-  m_maxVolume: 65535
-  m_minVolume: 1
 --- !u!114 &114552711201402392
 MonoBehaviour:
   m_ObjectHideFlags: 1
