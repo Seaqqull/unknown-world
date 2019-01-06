@@ -2246,7 +2246,7 @@ MonoBehaviour:
     m_setting3D:
       m_maxDistance: 100
       m_minDistance: 0
-      m_dopplerLevel: 1
+      m_dopplerLevel: 0
       m_spread: 0
       m_curveVolume:
         serializedVersion: 2
@@ -2317,7 +2317,7 @@ MonoBehaviour:
     m_setting3D:
       m_maxDistance: 100
       m_minDistance: 0
-      m_dopplerLevel: 1
+      m_dopplerLevel: 0
       m_spread: 0
       m_curveVolume:
         serializedVersion: 2
@@ -2388,7 +2388,7 @@ MonoBehaviour:
     m_setting3D:
       m_maxDistance: 100
       m_minDistance: 0
-      m_dopplerLevel: 1
+      m_dopplerLevel: 0
       m_spread: 0
       m_curveVolume:
         serializedVersion: 2
