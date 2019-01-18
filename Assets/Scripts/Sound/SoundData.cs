@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 namespace UnknownWorld.Sound.Data
 {
@@ -41,21 +42,27 @@ namespace UnknownWorld.Sound.Data
         [SerializeField] private bool m_loop;
         [SerializeField] private bool m_mute;
 
-        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playDelay;
-        [SerializeField] [Range(0.0f, 1.1f)] private float m_reverbZoneMix = 1.0f;        
+        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playDelay;        
+        [SerializeField] [Range(0.0f, 1.1f)] private float m_reverbZoneMix = 1.0f;
+        [SerializeField] [Range(0.0f, ushort.MaxValue)] private float m_playTime;
         [SerializeField] [Range(-3.0f, 3.0f)] private float m_pitch = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_volume = 1.0f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_spatialBlend;
 
-        [SerializeField] SoundSettingDetection m_settingDetection;        
+        [SerializeField] SoundSettingDetection m_settingDetection;
         [SerializeField] SoundSetting3D m_setting3D;
         
 
-        private UnityEngine.AudioSource m_source;
+        private Dictionary<string, UnityEngine.AudioSource> m_records;
 
-        public UnityEngine.AudioSource Source
+
+        public Dictionary<string, UnityEngine.AudioSource> Records
         {
-            get { return this.m_source; }
+            get
+            {
+                return (this.m_records) ??
+                    (this.m_records = new Dictionary<string, UnityEngine.AudioSource>());
+            }
         }
         public float OutherRadiusDetection
         {
@@ -81,18 +88,15 @@ namespace UnknownWorld.Sound.Data
         {
             get { return (this.m_audioClip)? this.m_audioClip.length : 0.0f; }
         }
-        public float AudioTime
-        {
-            get { return (this.m_source) ? this.m_source.time : 0.0f; }
-        }
         public float PlayDelay
         {
             get { return this.m_playDelay; }
             set { this.m_playDelay = value; }
         }
-        public bool IsAttached
+        public float PlayTime
         {
-            get { return (m_source != null); }
+            get { return this.m_playTime; }
+            set { this.m_playTime = value; }
         }
         public string Name
         {
@@ -106,69 +110,89 @@ namespace UnknownWorld.Sound.Data
         }
 
 
-        public void Play()
+        public bool Play(string audioKey)
         {
-            if (!m_source) return;
+            if (!Records.ContainsKey(audioKey))
+                return false;
 
             if (m_playDelay == 0.0f)
-                m_source.Play();
+                Records[audioKey].Play();
             else
-                m_source.PlayDelayed(m_playDelay);
-        }
-
-        public void PlayInstant()
-        {
-            if (m_source)
-                m_source.Play();         
-        }
-
-        public void DestroyAudioSource()
-        {
-            if (!m_source) return;
-
-            m_source.Stop();
-            UnityEngine.Object.Destroy(m_source);
-
-            m_source = null;
-        }
-      
-        public void PlayDelayed(float delay)
-        {
-            if (m_source)
-                m_source.PlayDelayed(delay);
-        }
-
-        public bool InitializeAudioSource(GameObject gameObject)
-        {
-            if ((!m_audioClip) ||
-                (!m_output)) return false;
-
-            m_source = gameObject.AddComponent<UnityEngine.AudioSource>();
-
-            m_source.clip = m_audioClip;
-            m_source.outputAudioMixerGroup = m_output;
-            m_source.mute = m_mute;
-            m_source.playOnAwake = false;
-            m_source.loop = m_loop;
-            m_source.volume = m_volume;
-            m_source.pitch = m_pitch;
-            m_source.spatialBlend = m_spatialBlend;
-            m_source.reverbZoneMix = m_reverbZoneMix;
-
-            m_source.dopplerLevel = m_setting3D.m_dopplerLevel;
-            m_source.spread = m_setting3D.m_spread;
-            m_source.minDistance = m_setting3D.m_minDistance;
-            m_source.maxDistance = m_setting3D.m_maxDistance;
-
-            m_source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, m_setting3D.m_curveVolume);
-            m_source.rolloffMode = AudioRolloffMode.Custom;
+                Records[audioKey].PlayDelayed(m_playDelay);
 
             return true;
         }
 
+        public bool PlayInstant(string audioKey)
+        {
+            if (!Records.ContainsKey(audioKey))
+                return false;
+
+            Records[audioKey].Play();
+
+            return true;
+        }
+
+        public bool ContainAudio(string audioKey)
+        {
+            return Records.ContainsKey(audioKey);
+        }
+
+        public bool DestroyAudioSource(string audioKey)
+        {
+            if (!Records.ContainsKey(audioKey))
+                return false;
+
+            Records[audioKey].Stop();
+            UnityEngine.Object.Destroy(Records[audioKey]);
+
+            Records.Remove(audioKey);
+
+            return true;
+        }
+      
+        public bool PlayDelayed(string audioKey, float delay)
+        {
+            if (!Records.ContainsKey(audioKey))
+                return false;
+            
+            Records[audioKey].PlayDelayed(delay);
+
+            return true;
+        }
+
+        public string InitializeAudioSource(GameObject gameObject)
+        {
+            if ((!m_output) ||
+                (!m_audioClip)) return string.Empty;
+
+            string sourceKey = UnknownWorld.Utility.Methods.Hasher.GenerateHash();
+            Records.Add(sourceKey, gameObject.AddComponent<UnityEngine.AudioSource>());
+            
+            Records[sourceKey].clip = m_audioClip;
+            Records[sourceKey].outputAudioMixerGroup = m_output;
+            Records[sourceKey].mute = m_mute;
+            Records[sourceKey].playOnAwake = false;
+            Records[sourceKey].loop = m_loop;
+            Records[sourceKey].volume = m_volume;
+            Records[sourceKey].pitch = m_pitch;
+            Records[sourceKey].spatialBlend = m_spatialBlend;
+            Records[sourceKey].reverbZoneMix = m_reverbZoneMix;
+
+            Records[sourceKey].dopplerLevel = m_setting3D.m_dopplerLevel;
+            Records[sourceKey].spread = m_setting3D.m_spread;
+            Records[sourceKey].minDistance = m_setting3D.m_minDistance;
+            Records[sourceKey].maxDistance = m_setting3D.m_maxDistance;
+
+            Records[sourceKey].SetCustomCurve(AudioSourceCurveType.CustomRolloff, m_setting3D.m_curveVolume);
+            Records[sourceKey].rolloffMode = AudioRolloffMode.Custom;
+
+            return sourceKey;
+        }
+
         public float GetAudibility(Vector3 source, Vector3 listener)
         {
-            if (!m_source) return 0.0f;
+            if (Records.Count == 0) return 0.0f;
 
             float distance = Vector3.Distance(source, listener);
 

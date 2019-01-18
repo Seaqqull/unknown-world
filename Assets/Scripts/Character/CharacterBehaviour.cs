@@ -25,6 +25,9 @@ namespace UnknownWorld.Behaviour
         [SerializeField] private StaminaActionCost m_staminaConsumption;
 
         private UnknownWorld.Manager.ObserverManager m_observerManager;
+        private string m_audioStaminaKey;
+        private string m_audioHealthKey;
+        
 
         public StaminaActionCost StaminaConsumption
         {
@@ -37,6 +40,12 @@ namespace UnknownWorld.Behaviour
             base.Awake();
 
             m_observerManager = FindObjectOfType<UnknownWorld.Manager.ObserverManager>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
             StaminaUIUpdate += (stamina) => {
                 StaminaSlider.value =
                 UnknownWorld.Utility.Methods.VectorOperations.Map(stamina, StaminaMin, StaminaMax, StaminaSlider.minValue, StaminaSlider.maxValue);
@@ -44,6 +53,34 @@ namespace UnknownWorld.Behaviour
             HealthUIUpdate += (health) => {
                 HealthSlider.value =
                 UnknownWorld.Utility.Methods.VectorOperations.Map(health, HealthMin, HealthMax, HealthSlider.minValue, HealthSlider.maxValue);
+            };
+
+            if (!m_sound) return;
+
+
+            LowStamina += () => {
+                m_audioStaminaKey = m_sound.Play("Exhaustion");
+            };
+
+            NormalStamina += () => {
+                if (m_audioStaminaKey == string.Empty)
+                    return;
+
+                m_sound.Stop("Exhaustion", m_audioStaminaKey);
+                m_audioStaminaKey = string.Empty;
+            };
+
+
+            LowHealth += () => {
+                m_audioHealthKey = m_sound.Play("Breathe");
+            };
+
+            NormalHealth += () => {
+                if (m_audioHealthKey == string.Empty)
+                    return;
+
+                m_sound.Stop("Breathe", m_audioHealthKey);
+                m_audioHealthKey = string.Empty;
             };
         }
 
