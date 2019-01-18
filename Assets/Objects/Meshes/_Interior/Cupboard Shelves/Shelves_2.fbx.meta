@@ -1,0 +1,205 @@
+fileFormatVersion: 2
+guid: a14237ab3e0aa864db3f2b49152f51b1
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cube.449
+    100002: Cube.450
+    100004: Cube.451
+    100006: Cube.452
+    100008: Cube.453
+    100010: Cube.454
+    100012: Cube.455
+    100014: Cube.456
+    100016: Cube.457
+    100018: Cube.458
+    100020: Cube.459
+    100022: Cube.460
+    100024: Cube.461
+    100026: Cube.467
+    100028: Cube.543
+    100030: Cube.544
+    100032: Cube.545
+    100034: Cube.546
+    100036: Cube.547
+    100038: Cube.548
+    100040: Cube.549
+    100042: Cube.550
+    100044: Cube.551
+    100046: //RootNode
+    400000: Cube.449
+    400002: Cube.450
+    400004: Cube.451
+    400006: Cube.452
+    400008: Cube.453
+    400010: Cube.454
+    400012: Cube.455
+    400014: Cube.456
+    400016: Cube.457
+    400018: Cube.458
+    400020: Cube.459
+    400022: Cube.460
+    400024: Cube.461
+    400026: Cube.467
+    400028: Cube.543
+    400030: Cube.544
+    400032: Cube.545
+    400034: Cube.546
+    400036: Cube.547
+    400038: Cube.548
+    400040: Cube.549
+    400042: Cube.550
+    400044: Cube.551
+    400046: //RootNode
+    2100000: No Name
+    2300000: Cube.449
+    2300002: Cube.450
+    2300004: Cube.451
+    2300006: Cube.452
+    2300008: Cube.453
+    2300010: Cube.454
+    2300012: Cube.455
+    2300014: Cube.456
+    2300016: Cube.457
+    2300018: Cube.458
+    2300020: Cube.459
+    2300022: Cube.460
+    2300024: Cube.461
+    2300026: Cube.467
+    2300028: Cube.543
+    2300030: Cube.544
+    2300032: Cube.545
+    2300034: Cube.546
+    2300036: Cube.547
+    2300038: Cube.548
+    2300040: Cube.549
+    2300042: Cube.550
+    2300044: Cube.551
+    3300000: Cube.449
+    3300002: Cube.450
+    3300004: Cube.451
+    3300006: Cube.452
+    3300008: Cube.453
+    3300010: Cube.454
+    3300012: Cube.455
+    3300014: Cube.456
+    3300016: Cube.457
+    3300018: Cube.458
+    3300020: Cube.459
+    3300022: Cube.460
+    3300024: Cube.461
+    3300026: Cube.467
+    3300028: Cube.543
+    3300030: Cube.544
+    3300032: Cube.545
+    3300034: Cube.546
+    3300036: Cube.547
+    3300038: Cube.548
+    3300040: Cube.549
+    3300042: Cube.550
+    3300044: Cube.551
+    4300000: Cube.551
+    4300002: Cube.550
+    4300004: Cube.549
+    4300006: Cube.548
+    4300008: Cube.547
+    4300010: Cube.546
+    4300012: Cube.545
+    4300014: Cube.544
+    4300016: Cube.543
+    4300018: Cube.467
+    4300020: Cube.461
+    4300022: Cube.460
+    4300024: Cube.459
+    4300026: Cube.458
+    4300028: Cube.457
+    4300030: Cube.456
+    4300032: Cube.455
+    4300034: Cube.454
+    4300036: Cube.453
+    4300038: Cube.452
+    4300040: Cube.451
+    4300042: Cube.450
+    4300044: Cube.449
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

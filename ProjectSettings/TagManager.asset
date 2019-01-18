@@ -18,9 +18,15 @@ TagManager:
   - Targets
   - Character
   - Enemy
+<<<<<<< HEAD
   - Bullet
   - EnemyDead
   - CharacterDead
+=======
+  - Office_OK
+  - 
+  - 
+>>>>>>> UpdateScene
   - 
   - 
   - 
