@@ -21,8 +21,6 @@ AudioMixerController:
     name: Main
   - guid: 7ad2f7c1412010a43812b7516c5ba9c1
     name: Volume
-  - guid: bcb1f7889fb2876409b168b5d809b303
-    name: Music
   - guid: fe9324d577900634faf0c1453c336c60
     name: Effects
   m_AudioMixerGroupViews:
