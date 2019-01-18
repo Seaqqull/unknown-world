@@ -3,39 +3,39 @@ guid: 76c651d835491e64491b6d36057c49c3
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Cube.012
-    100002: Cube.017
+    100000: Cube.011
+    100002: Cube.023
     100004: Glass_9.004
     100006: Glass_9.008
     100008: //RootNode
     100010: Window_5.004
     100012: Window_5.008
-    400000: Cube.012
-    400002: Cube.017
+    400000: Cube.011
+    400002: Cube.023
     400004: Glass_9.004
     400006: Glass_9.008
     400008: //RootNode
     400010: Window_5.004
     400012: Window_5.008
     2100000: No Name
-    2300000: Cube.012
-    2300002: Cube.017
+    2300000: Cube.011
+    2300002: Cube.023
     2300004: Glass_9.004
     2300006: Glass_9.008
     2300008: Window_5.004
     2300010: Window_5.008
-    3300000: Cube.012
-    3300002: Cube.017
+    3300000: Cube.011
+    3300002: Cube.023
     3300004: Glass_9.004
     3300006: Glass_9.008
     3300008: Window_5.004
     3300010: Window_5.008
-    4300000: Cube.017
+    4300000: Cube.011
     4300002: Glass_9.008
     4300004: Window_5.008
     4300006: Window_5.004
     4300008: Glass_9.004
-    4300010: Cube.012
+    4300010: Cube.023
   externalObjects: {}
   materials:
     importMaterials: 1

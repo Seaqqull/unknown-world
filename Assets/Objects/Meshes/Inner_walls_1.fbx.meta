@@ -5,9 +5,9 @@ ModelImporter:
   fileIDToRecycleName:
     100000: Cube.008
     100002: Cube.010
-    100004: Cube.011
-    100006: Cube.014
-    100008: Cube.015
+    100004: Cube.019
+    100006: Cube.021
+    100008: Cube.022
     100010: Glass_9.001
     100012: Glass_9.002
     100014: Glass_9.003
@@ -21,9 +21,9 @@ ModelImporter:
     100030: Window_5.006
     400000: Cube.008
     400002: Cube.010
-    400004: Cube.011
-    400006: Cube.014
-    400008: Cube.015
+    400004: Cube.019
+    400006: Cube.021
+    400008: Cube.022
     400010: Glass_9.001
     400012: Glass_9.002
     400014: Glass_9.003
@@ -38,9 +38,9 @@ ModelImporter:
     2100000: No Name
     2300000: Cube.008
     2300002: Cube.010
-    2300004: Cube.011
-    2300006: Cube.014
-    2300008: Cube.015
+    2300004: Cube.019
+    2300006: Cube.021
+    2300008: Cube.022
     2300010: Glass_9.001
     2300012: Glass_9.002
     2300014: Glass_9.003
@@ -53,9 +53,9 @@ ModelImporter:
     2300028: Window_5.006
     3300000: Cube.008
     3300002: Cube.010
-    3300004: Cube.011
-    3300006: Cube.014
-    3300008: Cube.015
+    3300004: Cube.019
+    3300006: Cube.021
+    3300008: Cube.022
     3300010: Glass_9.001
     3300012: Glass_9.002
     3300014: Glass_9.003
@@ -66,21 +66,21 @@ ModelImporter:
     3300024: Window_5.003
     3300026: Window_5.005
     3300028: Window_5.006
-    4300000: Cube.015
-    4300002: Glass_9.006
-    4300004: Window_5.006
-    4300006: Cube.014
+    4300000: Cube.010
+    4300002: Cube.008
+    4300004: Glass_9.006
+    4300006: Window_5.006
     4300008: Window_5.005
     4300010: Glass_9.005
     4300012: Glass_9.003
     4300014: Window_5.003
     4300016: Window_5.002
     4300018: Glass_9.002
-    4300020: Cube.011
-    4300022: Cube.010
-    4300024: Cube.008
-    4300026: Glass_9.001
-    4300028: Window_5.001
+    4300020: Glass_9.001
+    4300022: Window_5.001
+    4300024: Cube.022
+    4300026: Cube.021
+    4300028: Cube.019
   externalObjects: {}
   materials:
     importMaterials: 1
