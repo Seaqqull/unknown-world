@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
+
 
 namespace UnknownWorld.Behaviour
 {
+    [System.Serializable]
     public class AIController : MonoBehaviour
     {
         [SerializeField] private UnknownWorld.Behaviour.AIAnimationController m_animation;
 
         [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay = 0.1f;
+        [SerializeField] [Range(0, 1)] private float m_pathUpdateDelay = 0.1f;
         [SerializeField] private bool m_isTargetUltimate = true;
+        [SerializeField] private bool m_avoidOtherAi = true;
+        [SerializeField] private bool m_aiActive = true;
         
         [SerializeField] private List<UnknownWorld.Weapon.WeaponBase> m_weapons;
         [SerializeField] private int m_activeWeapon = 0;
@@ -21,7 +25,9 @@ namespace UnknownWorld.Behaviour
         private UnknownWorld.Path.PathContainer m_targetsDirect;
         private UnknownWorld.Path.PathContainer m_path;
         private bool m_isTargetReselect = false;
+        private bool m_isPathAvoidable = false;
         private Coroutine m_updateCorotation;
+        private Coroutine m_pathCorotation;
         private Vector3 m_pointTransform;
         private AIBehaviour m_behaviour;
         private bool m_isActive = false;        
@@ -37,10 +43,34 @@ namespace UnknownWorld.Behaviour
             }
             set { this.m_weapons = value; }
         }
+        public AIBehaviour Behaviour
+        {
+            get { return this.m_behaviour; }
+        }
         public bool IsTargetUltimate
         {
             get { return this.m_isTargetUltimate; }
             set { this.m_isTargetUltimate = value; }
+        }
+        public bool IsPathAvoidable
+        {
+            get { return this.m_isPathAvoidable; }
+            set
+            {
+                if (this.m_isPathAvoidable == value) return;
+
+                this.m_isPathAvoidable = value;
+
+                if (!this.m_isPathAvoidable)
+                {
+                    if (this.m_pathCorotation != null)
+                        StopCoroutine(this.m_pathCorotation);
+                }
+                else
+                {
+                    this.m_pathCorotation = StartCoroutine("UpdatePath", this.m_pathUpdateDelay);
+                }
+            }
         }
         public bool IsActive
         {
@@ -103,7 +133,8 @@ namespace UnknownWorld.Behaviour
 
             m_weapons[m_activeWeapon].Activate();
 
-            IsActive = true;
+            IsActive = m_aiActive;
+            IsPathAvoidable = m_avoidOtherAi;            
         }
         
         private void FixedUpdate()
@@ -400,24 +431,7 @@ namespace UnknownWorld.Behaviour
             if ((m_behaviour.State == AIBehaviour.AIState.Waiting) ||
                 (m_behaviour.State == AIBehaviour.AIState.FollowingSuspicion))
             {
-                //if (!m_isTargetReselect)
-                //{
-                //    m_targetsSuspicion.GetPoint(m_pathIndex).ClearPoint();
-                //    m_targetsSuspicion.RemoveAt(m_pathIndex);
-                //    Debug.Log("Updated");
-                //}
-                //else
-                //    Debug.Log("Not Updated");
-                ////m_agent.SetDestination(
-                ////    m_targetsSuspicion.GetPoint(m_pathIndex).Transform.position
-                ////);
-                //m_isTargetReselect = true;
-
-                //UnknownWorld.Path.Data.PathHelper.ClearExceptOne(m_targetsSuspicion.Points, ref m_pathIndex);
-
                 UnknownWorld.Path.Data.PathHelper.ClearAll(m_targetsSuspicion.Points);
-                //    m_targetsSuspicion.GetPoint(m_pathIndex).ClearPoint();
-                //    m_targetsSuspicion.RemoveAt(m_pathIndex);
                 m_isTargetReselect = true;
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingSuspicion;
@@ -532,7 +546,7 @@ namespace UnknownWorld.Behaviour
                         tmp.Type = Path.Data.PointType.FollowingSuspicion;
                         tmp.Action = Path.Data.PointAction.Stop;
 
-                        tmp.AccuracyRadius = m_behaviour.Colider.radius;                        
+                        tmp.AccuracyRadius = m_behaviour.Collider.radius;                        
                         tmp.TransferDelay = 1.0f;
 
                         // adding new suspicion target and clearing direct targets
@@ -564,7 +578,7 @@ namespace UnknownWorld.Behaviour
                         tmp.Type = Path.Data.PointType.FollowingSuspicion;
                         tmp.Action = Path.Data.PointAction.Stop;
 
-                        tmp.AccuracyRadius = m_behaviour.Colider.radius;
+                        tmp.AccuracyRadius = m_behaviour.Collider.radius;
                         tmp.TransferDelay = 1.0f;
 
                         // adding new suspicion target and clearing direct targets
@@ -588,7 +602,7 @@ namespace UnknownWorld.Behaviour
                             tmp.Type = Path.Data.PointType.FollowingSuspicion;
                             tmp.Action = Path.Data.PointAction.Stop;
 
-                            tmp.AccuracyRadius = m_behaviour.Colider.radius;
+                            tmp.AccuracyRadius = m_behaviour.Collider.radius;
                             tmp.TransferDelay = 1.0f;
 
                             // adding new suspicion target and clearing direct targets                            
@@ -618,5 +632,19 @@ namespace UnknownWorld.Behaviour
             }
         }
 
+        private IEnumerator UpdatePath(float delay)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(delay);
+
+                m_behaviour.Manager.MakeAllAIAsObstacleExcept(m_behaviour.Id);
+
+                m_behaviour.Manager.RebakeNavigation(m_behaviour.NavigationId);
+                m_agent.SetDestination(m_agent.destination);                
+
+                m_behaviour.Manager.RevokeAllAIAsObstacleExcept(m_behaviour.Id);
+            }
+        }
     }
 }

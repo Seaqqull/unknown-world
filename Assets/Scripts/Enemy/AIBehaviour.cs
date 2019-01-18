@@ -1,15 +1,18 @@
-﻿using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnknownWorld.Path.Data;
 using UnknownWorld.Area.Data;
+using System.Collections;
+using UnityEngine.AI;
+using System.Linq;
+using UnityEngine;
+
 
 namespace UnknownWorld.Behaviour
 {
     [System.Serializable]
     public class AIBehaviour : PersonBehaviour
     {
+        [System.Serializable]
         public enum AIState
         {
             Unknown,
@@ -27,17 +30,22 @@ namespace UnknownWorld.Behaviour
 
         [SerializeField] [Range(0, ushort.MaxValue)] private float m_attackDistance = 1.0f;
         [SerializeField] [Range(0, 1)] private float m_targetUpdateDelay = 0.1f;
+
+        [SerializeField] private UnknownWorld.Random.AudioLimiterExecutor m_audioOnWait;
         
         private UnknownWorld.Utility.Data.DataState m_affectionDataState = Utility.Data.DataState.Unknown;
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_affectionInfo;
         private List<UnknownWorld.Path.Data.PathPoint> m_possibleTargets;
         private List<UnknownWorld.Area.Observer.SearchingArea> m_areas;
-        protected UnknownWorld.Manager.AreaManager m_areaManager;        
+        protected UnknownWorld.Manager.AreaManager m_areaManager;
         private AIState m_state = AIState.FollowingPath;
+        private NavMeshModifierVolume m_navVolume;
         private bool m_isSuspicionTargetDetected;
         private bool m_isDirectTargetDetected;
         private Coroutine m_updateCorotation;
-        private CapsuleCollider m_colider;
+        private System.Action m_waitAction;
+        private CapsuleCollider m_collider;
+        private uint m_navigationId;        
 
         public List<UnknownWorld.Area.Observer.SearchingArea> Areas
         {
@@ -83,9 +91,9 @@ namespace UnknownWorld.Behaviour
         {
             get { return this.m_isDirectTargetDetected; }
         }
-        public CapsuleCollider Colider
+        public CapsuleCollider Collider
         {
-            get { return this.m_colider; }
+            get { return this.m_collider; }
         }
         public bool IsManagerActive
         {
@@ -103,6 +111,20 @@ namespace UnknownWorld.Behaviour
                 m_attackDistance = value;
             }
         }
+        public uint NavigationId
+        {
+            get { return this.m_navigationId; }
+            set
+            {
+                this.m_navigationId = value;
+                Manager.RebakeNavigation(value);
+            }
+        }
+        public bool IsObstacle
+        {
+            get { return this.m_navVolume.enabled; }
+            set { this.m_navVolume.enabled = value; }
+        }
         public AIState State
         {
             get { return this.m_state; }
@@ -113,17 +135,31 @@ namespace UnknownWorld.Behaviour
         protected override void Awake()
         {
             base.Awake();
-            /* AI specific initialization */
+
             m_areaManager = GetComponentInParent<UnknownWorld.Manager.AreaManager>();
             m_areas = GetComponents<UnknownWorld.Area.Observer.SearchingArea>().
                 OfType<UnknownWorld.Area.Observer.SearchingArea>().ToList();
 
-            m_colider = GetComponent<CapsuleCollider>();
+            m_navVolume = GetComponent<NavMeshModifierVolume>();
+            m_collider = GetComponent<CapsuleCollider>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            m_waitAction = () => {
+                if (m_audioOnWait)
+                    m_audioOnWait.ExecuteIfPossible();
+            };
         }
 
         protected override void Update()
         {
             base.Update();
+
+            if(m_state == AIState.Waiting)
+                m_waitAction();
         }
 
 
@@ -212,7 +248,7 @@ namespace UnknownWorld.Behaviour
                 m_updateCorotation = StartCoroutine("UpdateTargets", m_targetUpdateDelay);
             }
         }
-
+        
 
         public int GetTargetsCount()
         {

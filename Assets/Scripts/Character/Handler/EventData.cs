@@ -16,4 +16,17 @@ namespace UnknownWorld.Sound.Data
         }
 
     }
+
+    public abstract class BaseSoundAIHandler : MonoBehaviour
+    {
+        protected UnknownWorld.Behaviour.AIAnimationController m_animation;
+        protected UnknownWorld.Sound.SoundContainer m_audio;
+
+        protected virtual void Start()
+        {
+            m_animation = GetComponent<UnknownWorld.Behaviour.AIAnimationController>();
+            m_audio = GetComponent<UnknownWorld.Sound.SoundContainer>();
+        }
+
+    }
 }

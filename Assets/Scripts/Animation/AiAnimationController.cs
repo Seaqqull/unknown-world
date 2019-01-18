@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnknownWorld.Behaviour.Data;
+
 
 namespace UnknownWorld.Behaviour
 {
@@ -7,6 +7,7 @@ namespace UnknownWorld.Behaviour
     [RequireComponent(typeof(Rigidbody))]    
     [RequireComponent(typeof(Animator))]
 
+    [System.Serializable]
     public class AIAnimationController : MonoBehaviour, Data.IPersonAction
     {
         [SerializeField] [Range(1f, 4f)]private float m_gravityMultiplier = 2f;
@@ -22,6 +23,10 @@ namespace UnknownWorld.Behaviour
         [SerializeField] private float m_runCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
         //[SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform        
 
+        public Data.RotationState RotationState
+        {
+            get { return this.m_rotation; }
+        }
         public float MoveSpeedMultiplier
         {
             get { return this.m_moveSpeedMultiplier; }
@@ -46,6 +51,7 @@ namespace UnknownWorld.Behaviour
         }
 
         private float m_origGroundCheckDistance;
+        private Data.RotationState m_rotation;
         private const float m_legHalf = 0.5f;
         private Data.AnimationState m_state;
         private CapsuleCollider m_capsule;
@@ -325,6 +331,11 @@ namespace UnknownWorld.Behaviour
                 HandleAirborneMovement();
             }
 
+            ScaleCapsuleForCrouching(crouch);
+
+            // send input and other state parameters to the animator
+            UpdateAnimator(move);
+
             if (m_state == Data.AnimationState.Grounded)
             {
                 if (m_forwardAmount > 0.55f)
@@ -337,10 +348,16 @@ namespace UnknownWorld.Behaviour
                     m_state = Data.AnimationState.Crouch;
             }
 
-            ScaleCapsuleForCrouching(crouch);
-
-            // send input and other state parameters to the animator
-            UpdateAnimator(move);
+            if (m_turnAmount > 0.05)
+                m_rotation = Data.RotationState.QuarterRight;
+            else if (m_turnAmount > 0.55)
+                m_rotation = Data.RotationState.HalfRight;
+            else if (m_turnAmount < -0.05)
+                m_rotation = Data.RotationState.QuarterLeft;
+            else if (m_turnAmount < -0.55)
+                m_rotation = Data.RotationState.HalfLeft;
+            else
+                m_rotation = Data.RotationState.Unknown;
         }
 
         public bool GetAnimationStateInfo(int layerIndex, string stateName)

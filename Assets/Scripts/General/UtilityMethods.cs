@@ -31,6 +31,16 @@ namespace UnknownWorld.Utility.Methods
             return (long)(System.DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
 
+        public static byte[] GenerateHashArray()
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(
+                System.Text.Encoding.Default.GetBytes(GenerateString())
+            );
+
+            return data;
+        }
+
         public static string GenerateHash(string input)
         {
             MD5 md5Hasher = MD5.Create();
@@ -39,6 +49,16 @@ namespace UnknownWorld.Utility.Methods
             );
 
             return System.BitConverter.ToString(data);
+        }
+
+        public static byte[] GenerateHashArray(string input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(
+                System.Text.Encoding.Default.GetBytes(input)
+            );
+
+            return data;
         }
 
     }
