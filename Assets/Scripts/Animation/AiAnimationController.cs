@@ -1,16 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace UnknownWorld.Behaviour
 {
     [RequireComponent(typeof(CapsuleCollider))]
-    [RequireComponent(typeof(Rigidbody))]    
+    [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Animator))]
 
     [System.Serializable]
     public class AIAnimationController : MonoBehaviour, Data.IPersonAction
     {
-        [SerializeField] [Range(1f, 4f)]private float m_gravityMultiplier = 2f;
+        [SerializeField] [Range(1f, 4f)] private float m_gravityMultiplier = 2f;
         [SerializeField] private float m_jumpPower = 12f;
 
         [SerializeField] private float m_groundCheckDistance = 0.3f;
@@ -19,7 +19,7 @@ namespace UnknownWorld.Behaviour
 
         [SerializeField] [Range(0.0f, 1.0f)] private float m_moveSpeedMultiplier = 1f;
         [SerializeField] [Range(0.0f, 1.0f)] private float m_animSpeedMultiplier = 1f;
-        
+
         [SerializeField] private float m_runCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
         //[SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform        
 
@@ -79,7 +79,7 @@ namespace UnknownWorld.Behaviour
         }
 
         private void OnAnimatorMove()
-        {        
+        {
             // we implement this function to override the default root motion.
             // this allows us to modify the positional speed before it's applied.
             if (m_isGrounded && Time.deltaTime > 0)
@@ -273,14 +273,14 @@ namespace UnknownWorld.Behaviour
                 return;
 
             m_forwardAmount = 0.0f;
-            m_turnAmount = 0.0f;            
+            m_turnAmount = 0.0f;
 
             m_animator.SetFloat("Forward", m_forwardAmount);
             m_animator.SetFloat("Turn", m_turnAmount);
             m_animator.SetBool("Attack", true);
 
             m_state = Data.AnimationState.Attacking;
-            
+
             Invoke("SetWaiting", animationDuration);
         }
 
