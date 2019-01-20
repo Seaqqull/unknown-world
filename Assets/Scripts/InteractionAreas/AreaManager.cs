@@ -16,7 +16,6 @@ namespace UnknownWorld.Manager
         
         private List<UnknownWorld.Area.Data.AreaAffectionMask> m_areasMask;
         private List<UnknownWorld.Behaviour.AIBehaviour> m_observers;
-        private NavigationManager m_navigationManager;
         private BitArray m_affectedTargetMask; // Update every time, when target.count changed        
         protected static uint m_idCounter = 0;
         private int[][] m_targetIndexes;
@@ -102,8 +101,6 @@ namespace UnknownWorld.Manager
         {
             IsActive = m_isManagerActive;
             m_id = m_idCounter++;
-
-            m_navigationManager = FindObjectOfType<NavigationManager>();
         }
 
         protected virtual void Start()
@@ -194,70 +191,6 @@ namespace UnknownWorld.Manager
                         m_observers[i].AffectionState = Utility.Data.DataState.Updated;
                     }
                 }
-            }
-        }
-
-
-        public void MakeAllAIAsObstacle()
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                m_observers[i].IsObstacle = true;
-            }
-        }
-
-        public void RevokeAllAIAsObstacle()
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                m_observers[i].IsObstacle = false;
-            }
-        }
-
-        public void RebakeNavigation(uint id)
-        {
-            m_navigationManager.Rebake(id);
-        }
-
-        public void MakeAIAsObstacle(uint aiId)
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                if (m_observers[i].Id == aiId)
-                {
-                    m_observers[i].IsObstacle = true;
-                    return;
-                }                
-            }
-        }
-
-        public void RevokeAIAsObstacle(uint aiId)
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                if (m_observers[i].Id == aiId)
-                {
-                    m_observers[i].IsObstacle = false;
-                    return;
-                }
-            }
-        }
-
-        public void MakeAllAIAsObstacleExcept(uint aiId)
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                if (m_observers[i].Id != aiId)
-                    m_observers[i].IsObstacle = true;
-            }
-        }
-        
-        public void RevokeAllAIAsObstacleExcept(uint aiId)
-        {
-            for (int i = 0; i < m_observers.Count; i++)
-            {
-                if (m_observers[i].Id != aiId)
-                    m_observers[i].IsObstacle = false;
             }
         }
 

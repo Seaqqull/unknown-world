@@ -44,8 +44,7 @@ namespace UnknownWorld.Behaviour
         private bool m_isDirectTargetDetected;
         private Coroutine m_updateCorotation;
         private System.Action m_waitAction;
-        private CapsuleCollider m_collider;
-        private uint m_navigationId;        
+        private CapsuleCollider m_collider;      
 
         public List<UnknownWorld.Area.Observer.SearchingArea> Areas
         {
@@ -109,15 +108,6 @@ namespace UnknownWorld.Behaviour
             set
             {
                 m_attackDistance = value;
-            }
-        }
-        public uint NavigationId
-        {
-            get { return this.m_navigationId; }
-            set
-            {
-                this.m_navigationId = value;
-                Manager.RebakeNavigation(value);
             }
         }
         public bool IsObstacle

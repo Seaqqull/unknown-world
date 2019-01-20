@@ -27,13 +27,14 @@ namespace UnknownWorld.Behaviour
         private bool m_isTargetReselect = false;
         private bool m_isPathAvoidable = false;
         private Coroutine m_updateCorotation;
-        private Coroutine m_pathCorotation;
+        private float m_timeSincePathUpdate;
+        private NavMeshObstacle m_obstacle;
         private Vector3 m_pointTransform;
         private AIBehaviour m_behaviour;
         private bool m_isActive = false;        
         private NavMeshAgent m_agent;
         private int m_pathIndex;
-        private float m_speed;
+        private float m_speed;        
 
         public List<UnknownWorld.Weapon.WeaponBase> Weapons
         {
@@ -60,16 +61,6 @@ namespace UnknownWorld.Behaviour
                 if (this.m_isPathAvoidable == value) return;
 
                 this.m_isPathAvoidable = value;
-
-                if (!this.m_isPathAvoidable)
-                {
-                    if (this.m_pathCorotation != null)
-                        StopCoroutine(this.m_pathCorotation);
-                }
-                else
-                {
-                    this.m_pathCorotation = StartCoroutine("UpdatePath", this.m_pathUpdateDelay);
-                }
             }
         }
         public bool IsActive
@@ -99,7 +90,8 @@ namespace UnknownWorld.Behaviour
         {
             if(m_animation == null)
                 m_animation = GetComponent<UnknownWorld.Behaviour.AIAnimationController>();
-            m_agent = GetComponent<NavMeshAgent>();
+            m_obstacle = GetComponent<NavMeshObstacle>();
+            m_agent = GetComponent<NavMeshAgent>();            
 
             m_targetsSuspicion = gameObject.AddComponent<UnknownWorld.Path.PriorityClosenessPath>();
             m_targetsDirect = gameObject.AddComponent<UnknownWorld.Path.PriorityClosenessPath>();
@@ -109,9 +101,10 @@ namespace UnknownWorld.Behaviour
 
             m_agent.updateRotation = false;
             m_agent.autoBraking = false;
+            m_agent.autoRepath = false;
             
             if ((m_pathIndex >= 0) && (m_pathIndex < m_path.Length)) {
-                m_agent.SetDestination(m_path.GetDestination(ref m_pathIndex));
+                UpdatePath(m_path.GetDestination(ref m_pathIndex));
                 m_agent.speed = m_path.GetPoint(m_pathIndex).MovementSpeed;
             }
             else // empty path or other einconsistencies
@@ -129,7 +122,7 @@ namespace UnknownWorld.Behaviour
 
             // only when 1 weapon or order not required
             Weapons = GetComponentsInChildren<UnknownWorld.Weapon.WeaponBase>().
-                OfType<UnknownWorld.Weapon.WeaponBase>().ToList();
+                OfType<UnknownWorld.Weapon.WeaponBase>().ToList();            
 
             m_weapons[m_activeWeapon].Activate();
 
@@ -137,7 +130,7 @@ namespace UnknownWorld.Behaviour
             IsPathAvoidable = m_avoidOtherAi;            
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
             if (!m_isActive) return;
 
@@ -147,6 +140,8 @@ namespace UnknownWorld.Behaviour
                     m_animation.Dead();
                 return;
             }
+
+            m_timeSincePathUpdate += Time.deltaTime;
 
             // set attack distance based on current weapon
             m_behaviour.AttackDistance = m_weapons[m_activeWeapon].Range;
@@ -195,16 +190,18 @@ namespace UnknownWorld.Behaviour
         {
             if (m_targetsDirect.Length != 0) // if found direct target
             {
-                m_agent.SetDestination(
-                    m_targetsDirect.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsDirect.GetDestination(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingTarget;
             }
             else if (m_targetsSuspicion.Length != 0) // if found suspicion target
             {
-                m_agent.SetDestination(
-                    m_targetsSuspicion.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsSuspicion.GetDestination(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingSuspicion;
@@ -220,13 +217,14 @@ namespace UnknownWorld.Behaviour
             else if ((!m_isTargetUltimate) &&
                  (m_targetsDirect.Length > 1)) // if the are more, than 1 direct target and target selection not ultimate
             {
-                m_agent.SetDestination(
-                    m_targetsDirect.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsDirect.GetDestination(ref m_pathIndex),
+                    true
                 );
             }
             else // update direct target position for NavMeshAgent
             {
-                m_agent.SetDestination(
+                UpdatePath(
                     m_targetsDirect.GetPoint(m_pathIndex).Transform.position
                 );
             }            
@@ -243,24 +241,27 @@ namespace UnknownWorld.Behaviour
         {
             if (m_targetsDirect.Length != 0) // if found direct target
             {
-                m_agent.SetDestination(
-                    m_targetsDirect.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsDirect.GetDestination(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingTarget;
             }
             else if (m_targetsSuspicion.Length == 0) // if was lost suspicion target
             {
-                m_agent.SetDestination(
-                    m_path.GetClosestPoint(ref m_pathIndex)
+                UpdatePath(
+                    m_path.GetClosestPoint(ref m_pathIndex),
+                    true
                 );
                 m_behaviour.State = AIBehaviour.AIState.ReturningPath;
             }
             else if ((!m_isTargetUltimate) &&
                      (m_targetsSuspicion.Length > 1)) // if the are more, than 1 suspicion target and target selection not ultimate
             {
-                m_agent.SetDestination(
-                    m_targetsSuspicion.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsSuspicion.GetDestination(ref m_pathIndex),
+                    true
                 );
             }
         }
@@ -419,8 +420,9 @@ namespace UnknownWorld.Behaviour
                 (m_behaviour.State == AIBehaviour.AIState.FollowingPath) ||
                 (m_behaviour.State == AIBehaviour.AIState.ReturningPath))
             {
-                m_agent.SetDestination(
-                    m_path.GetClosestPoint(ref m_pathIndex)
+                UpdatePath(
+                    m_path.GetClosestPoint(ref m_pathIndex),
+                    true
                 );
                 m_behaviour.State = AIBehaviour.AIState.FollowingPath;
             }
@@ -444,8 +446,9 @@ namespace UnknownWorld.Behaviour
                 (m_behaviour.State == AIBehaviour.AIState.FollowingPath) ||
                 (m_behaviour.State == AIBehaviour.AIState.ReturningPath))
             {
-                m_agent.SetDestination(
-                    m_path.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_path.GetDestination(ref m_pathIndex),
+                    true
                 );
                 m_behaviour.State = AIBehaviour.AIState.FollowingPath;
             }
@@ -468,30 +471,44 @@ namespace UnknownWorld.Behaviour
         {
             if (m_targetsDirect.Length != 0) // if found direct target
             {
-                m_agent.SetDestination(
-                    m_targetsDirect.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsDirect.GetDestination(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingTarget;
             }
             else if (m_targetsSuspicion.Length != 0) // if found suspicion target
             {
-                m_agent.SetDestination(
-                    m_targetsSuspicion.GetDestination(ref m_pathIndex)
+                UpdatePath(
+                    m_targetsSuspicion.GetDestination(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.FollowingSuspicion;
             }
             else // returning to path
             {
-                m_agent.SetDestination(
-                    m_path.GetClosestPoint(ref m_pathIndex)
+                UpdatePath(
+                    m_path.GetClosestPoint(ref m_pathIndex),
+                    true
                 );
 
                 m_behaviour.State = AIBehaviour.AIState.ReturningPath;
             }
         }
 
+        private void UpdatePath(Vector3 destination = new Vector3(), bool isImmediate = false)
+        {
+            if ((!isImmediate) &&
+                (m_timeSincePathUpdate < m_pathUpdateDelay))
+                return;            
+
+            m_agent.SetDestination((destination == Vector3.zero) ? 
+                m_agent.destination : destination);
+
+            m_timeSincePathUpdate = 0.0f;
+        }
 
         private IEnumerator UpdateTargets(float delay)
         {
@@ -578,9 +595,9 @@ namespace UnknownWorld.Behaviour
                         tmp.Type = Path.Data.PointType.FollowingSuspicion;
                         tmp.Action = Path.Data.PointAction.Stop;
 
-                        tmp.AccuracyRadius = m_behaviour.Collider.radius;
+                        tmp.AccuracyRadius = m_behaviour.Collider.radius /** 10*/;
                         tmp.TransferDelay = 1.0f;
-
+                        
                         // adding new suspicion target and clearing direct targets
                         m_targetsSuspicion.Add(tmp, ref m_pathIndex);
 
@@ -631,20 +648,6 @@ namespace UnknownWorld.Behaviour
                 m_behaviour.AffectionState = Utility.Data.DataState.Processed;
             }
         }
-
-        private IEnumerator UpdatePath(float delay)
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(delay);
-
-                m_behaviour.Manager.MakeAllAIAsObstacleExcept(m_behaviour.Id);
-
-                m_behaviour.Manager.RebakeNavigation(m_behaviour.NavigationId);
-                m_agent.SetDestination(m_agent.destination);                
-
-                m_behaviour.Manager.RevokeAllAIAsObstacleExcept(m_behaviour.Id);
-            }
-        }
+      
     }
 }
