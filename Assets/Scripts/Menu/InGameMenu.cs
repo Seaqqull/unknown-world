@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour {
 
     public static bool isPaused = false;
     public GameObject pauseMenuUI;
-    
+    public Slider loadingSlider;
 
     private void Update()
     {
@@ -25,19 +25,18 @@ public class InGameMenu : MonoBehaviour {
     }
 
 
-    private void Pause()
+    private IEnumerator LoadAsynchronously(int sceneIndex)
     {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0.0f;
-        isPaused = true;
-    }
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneIndex);
 
-    private void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        isPaused = false;
-    }    
+        while (!loadOperation.isDone)
+        {
+            loadingSlider.value =
+                Mathf.Clamp01(loadOperation.progress / 0.9f);
+
+            yield return null;
+        }
+    }
 
 
     public void Exit()
@@ -45,8 +44,22 @@ public class InGameMenu : MonoBehaviour {
         Application.Quit();
     }
 
-    public void LoadMainMenu()
+    public void Pause()
     {
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0.0f;
+        isPaused = true;
+    }
 
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1.0f;
+        isPaused = false;
+    }
+
+    public void LoadLevel(int sceneIndex)
+    {
+        StartCoroutine(LoadAsynchronously(sceneIndex));
     }
 }
