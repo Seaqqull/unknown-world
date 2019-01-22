@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -34,21 +34,26 @@ public class SettingsMenu : MonoBehaviour {
 
     [SerializeField] private AudioSetting[] m_audioSettings;
     [SerializeField] private Dropdown m_graphicsDropdown;
+    [SerializeField] private Toggle m_fullscreen;
+
     [SerializeField] private AudioMixer m_audioMixer;
+    
 
     private Resolution[] m_resolutions;
 
 
     private void Start()
     {
-        m_resolutions = Screen.resolutions;
+        m_resolutions = Screen.resolutions.Where((res) => res.refreshRate == 60).ToArray();
         m_graphicsDropdown.ClearOptions();
-
+        
         List<string> options = Array.ConvertAll(m_resolutions, x => x.width + "x" + x.height).ToList();
         m_graphicsDropdown.AddOptions(options);
         m_graphicsDropdown.value = 
-            options.FindIndex((res) => res == Screen.currentResolution.width + " x " + Screen.currentResolution.height);
+            options.FindIndex((res) => res == (Screen.width + "x" + Screen.height));
         m_graphicsDropdown.RefreshShownValue();
+
+        m_fullscreen.isOn = Screen.fullScreen;
 
         for (int i = 0; i < m_audioSettings.Length; i++)
         {
@@ -67,6 +72,19 @@ public class SettingsMenu : MonoBehaviour {
             }
         }
         return 0.0f;
+    }
+
+    private IEnumerator WaitForScreenChange(bool fullscreen, int widthIncome = 0, int heightIncome = 0)
+    {
+        int width = (widthIncome == 0) ? Screen.width : widthIncome;
+        int height = (heightIncome == 0) ? Screen.height : heightIncome;
+
+        Screen.fullScreen = fullscreen;
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        Screen.SetResolution(width, height, Screen.fullScreen);
     }
 
 
@@ -97,11 +115,11 @@ public class SettingsMenu : MonoBehaviour {
 
     public void SetFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        StartCoroutine(WaitForScreenChange(isFullscreen, Screen.width, Screen.height));
     }
 
     public void SetResolution(int resolutionIndex)
-    {
-        Screen.SetResolution(m_resolutions[resolutionIndex].width, m_resolutions[resolutionIndex].height, Screen.fullScreen);
+    {     
+        StartCoroutine(WaitForScreenChange(Screen.fullScreen, m_resolutions[resolutionIndex].width, m_resolutions[resolutionIndex].height));
     }
 }
