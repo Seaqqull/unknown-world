@@ -3,109 +3,114 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class InGameMenu : MonoBehaviour {
-
-    public static bool isPaused = false;
-    public GameObject pauseMenuUI;
-    public Slider loadingSlider;
-
-    public float delayOnDead = 3.0f;
-    public GameObject panelDead;
-
-    private Image imageDead = null;
-    
-
-    public bool IsDeadActive
+namespace UnknownWorld.UI
+{
+    [System.Serializable]
+    public class InGameMenu : MonoBehaviour
     {
-        get { return imageDead != null; }
-    }
+
+        public static bool isPaused = false;
+        public GameObject pauseMenuUI;
+        public Slider loadingSlider;
+
+        public float delayOnDead = 3.0f;
+        public GameObject panelDead;
+
+        private Image imageDead = null;
 
 
-    private void Update()
-    {
-        if ((imageDead == null) && 
-            (Input.GetKeyDown(KeyCode.Escape)))
+        public bool IsDeadActive
         {
-            if (isPaused)
+            get { return imageDead != null; }
+        }
+
+
+        private void Update()
+        {
+            if ((imageDead == null) &&
+                (Input.GetKeyDown(KeyCode.Escape)))
             {
-                Resume();
+                if (isPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
-            else
+
+            if (imageDead != null)
             {
-                Pause();
+                var tempColor = imageDead.color;
+                tempColor.a += ((delayOnDead * Time.deltaTime) / delayOnDead);
+
+                imageDead.color = tempColor;
             }
         }
 
-        if (imageDead != null)
+
+        private IEnumerator LoadAsynchronously(int sceneIndex)
         {
-            var tempColor = imageDead.color;
-            tempColor.a += ((delayOnDead * Time.deltaTime) / delayOnDead);
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneIndex);
 
-            imageDead.color = tempColor;
+            while (!loadOperation.isDone)
+            {
+                loadingSlider.value =
+                    Mathf.Clamp01(loadOperation.progress / 0.9f);
+
+                yield return null;
+            }
         }
-    }
 
-
-    private IEnumerator LoadAsynchronously(int sceneIndex)
-    {
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneIndex);
-
-        while (!loadOperation.isDone)
+        private void RunLater(System.Action method, float waitSeconds)
         {
-            loadingSlider.value =
-                Mathf.Clamp01(loadOperation.progress / 0.9f);
-
-            yield return null;
+            if (waitSeconds < 0 || method == null)
+            {
+                return;
+            }
+            StartCoroutine(RunLaterCoroutine(method, waitSeconds));
         }
-    }
 
-    private void RunLater(System.Action method, float waitSeconds)
-    {
-        if (waitSeconds < 0 || method == null)
+        private IEnumerator RunLaterCoroutine(System.Action method, float waitSeconds)
         {
-            return;
+            yield return new WaitForSeconds(waitSeconds);
+            method();
         }
-        StartCoroutine(RunLaterCoroutine(method, waitSeconds));
-    }
-
-    private IEnumerator RunLaterCoroutine(System.Action method, float waitSeconds)
-    {
-        yield return new WaitForSeconds(waitSeconds);
-        method();
-    }
 
 
-    public void OnDead()
-    {
-        panelDead.SetActive(true);
-        imageDead = panelDead.GetComponent<Image>();
-        
-        RunLater(
-            () => LoadLevel(0)
-            , delayOnDead);
-    }
+        public void OnDead()
+        {
+            panelDead.SetActive(true);
+            imageDead = panelDead.GetComponent<Image>();
 
-    public void Exit()
-    {
-        Application.Quit();
-    }
+            RunLater(
+                () => LoadLevel(0)
+                , delayOnDead);
+        }
 
-    public void Pause()
-    {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0.0f;
-        isPaused = true;
-    }
+        public void Exit()
+        {
+            Application.Quit();
+        }
 
-    public void Resume()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1.0f;
-        isPaused = false;
-    }
+        public void Pause()
+        {
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0.0f;
+            isPaused = true;
+        }
 
-    public void LoadLevel(int sceneIndex)
-    {
-        StartCoroutine(LoadAsynchronously(sceneIndex));
+        public void Resume()
+        {
+            pauseMenuUI.SetActive(false);
+            Time.timeScale = 1.0f;
+            isPaused = false;
+        }
+
+        public void LoadLevel(int sceneIndex)
+        {
+            StartCoroutine(LoadAsynchronously(sceneIndex));
+        }
     }
 }

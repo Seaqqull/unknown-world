@@ -9,11 +9,13 @@ namespace UnknownWorld.Behaviour
     {
         [SerializeField] private CameraController m_cameraSettings; // A reference to the main camera in the scenes transform
 
-        private CharacterAnimationController m_animation; // A reference to the ThirdPersonCharacter on the object
-        private CharacterBehaviour m_behaviour;        
+        private CharacterAnimationController m_animation; // A reference to the ThirdPersonCharacter on the object        
+        private CharacterBehaviour m_behaviour;
+
+        private UnknownWorld.UI.InGameMenu m_inMenu;
+
         private float m_movementInputValue;
-        private float m_turnInputValue;
-        private InGameMenu m_inMenu;
+        private float m_turnInputValue;        
         private Vector3 m_move;
         private bool m_crouch;
         private bool m_jump; // the world-relative desired move direction, calculated from the camForward and user input.                       
@@ -24,7 +26,8 @@ namespace UnknownWorld.Behaviour
         {
             m_animation = GetComponent<CharacterAnimationController>();
             m_behaviour = GetComponent<CharacterBehaviour>();
-            m_inMenu = FindObjectOfType<InGameMenu>();
+
+            m_inMenu = FindObjectOfType<UnknownWorld.UI.InGameMenu>();
         }
 
         private void Update()
