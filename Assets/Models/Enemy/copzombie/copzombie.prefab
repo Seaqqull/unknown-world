@@ -1458,7 +1458,6 @@ GameObject:
   - component: {fileID: 54262827646347328}
   - component: {fileID: 136894987371043116}
   - component: {fileID: 195823340498072880}
-  - component: {fileID: 208884859605595882}
   - component: {fileID: 114138955525115154}
   - component: {fileID: 114385360398729808}
   - component: {fileID: 114780386614113150}
@@ -1570,22 +1569,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!208 &208884859605595882
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573453168349710}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.7, y: 1, z: 0.7}
-  m_MoveThreshold: 0
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 1, z: 0}
-  m_TimeToStationary: 0
 --- !u!114 &114138955525115154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,8 +1743,8 @@ MonoBehaviour:
   m_data:
     m_offset: {x: 0, y: 0, z: 0}
     m_rotation: {x: 0, y: 0, z: 0}
-    m_radius: 4
-    m_angle: 120
+    m_radius: 12
+    m_angle: 70
     m_obstacleMask:
       serializedVersion: 2
       m_Bits: 512
@@ -1861,7 +1844,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 20
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1932,7 +1915,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 25
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2003,7 +1986,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 15
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2074,7 +2057,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2145,7 +2128,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2216,7 +2199,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2287,7 +2270,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2358,7 +2341,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2429,7 +2412,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -2500,7 +2483,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0

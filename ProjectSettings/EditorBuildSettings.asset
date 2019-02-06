@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/StartMenu.unity
     guid: 6c6b90693401bbb45b4b2dee48f58ca9
   - enabled: 1
-    path: Assets/Scenes/GameLevels/BotScene.unity
-    guid: 56f61caeeba714348a12d9fe5d8060ae
+    path: Assets/Scenes/GameLevels/First_Level.unity
+    guid: ba1783bf2cebba54994b763e66a16a1d
   m_configObjects: {}

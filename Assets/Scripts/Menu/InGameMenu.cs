@@ -9,9 +9,22 @@ public class InGameMenu : MonoBehaviour {
     public GameObject pauseMenuUI;
     public Slider loadingSlider;
 
+    public float delayOnDead = 3.0f;
+    public GameObject panelDead;
+
+    private Image imageDead = null;
+    
+
+    public bool IsDeadActive
+    {
+        get { return imageDead != null; }
+    }
+
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if ((imageDead == null) && 
+            (Input.GetKeyDown(KeyCode.Escape)))
         {
             if (isPaused)
             {
@@ -21,6 +34,14 @@ public class InGameMenu : MonoBehaviour {
             {
                 Pause();
             }
+        }
+
+        if (imageDead != null)
+        {
+            var tempColor = imageDead.color;
+            tempColor.a += ((delayOnDead * Time.deltaTime) / delayOnDead);
+
+            imageDead.color = tempColor;
         }
     }
 
@@ -38,6 +59,31 @@ public class InGameMenu : MonoBehaviour {
         }
     }
 
+    private void RunLater(System.Action method, float waitSeconds)
+    {
+        if (waitSeconds < 0 || method == null)
+        {
+            return;
+        }
+        StartCoroutine(RunLaterCoroutine(method, waitSeconds));
+    }
+
+    private IEnumerator RunLaterCoroutine(System.Action method, float waitSeconds)
+    {
+        yield return new WaitForSeconds(waitSeconds);
+        method();
+    }
+
+
+    public void OnDead()
+    {
+        panelDead.SetActive(true);
+        imageDead = panelDead.GetComponent<Image>();
+        
+        RunLater(
+            () => LoadLevel(0)
+            , delayOnDead);
+    }
 
     public void Exit()
     {

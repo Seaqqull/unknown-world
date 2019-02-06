@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 54319510881279252}
   - component: {fileID: 136775471019161852}
   - component: {fileID: 195985315165076886}
-  - component: {fileID: 208607359714060494}
   - component: {fileID: 114661422349567874}
   - component: {fileID: 114453305322677238}
   - component: {fileID: 114734547681644710}
@@ -466,22 +465,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!208 &208607359714060494
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139719715265488}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.7, y: 1, z: 0.7}
-  m_MoveThreshold: 0
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 1, z: 0}
-  m_TimeToStationary: 0
 --- !u!114 &114661422349567874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +616,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 1024
   m_maxVolume: 65535
-  m_minVolume: 1
+  m_minVolume: 20
 --- !u!114 &114011824263163270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,8 +639,8 @@ MonoBehaviour:
   m_data:
     m_offset: {x: 0, y: 0, z: 0}
     m_rotation: {x: 0, y: 0, z: 0}
-    m_radius: 4
-    m_angle: 120
+    m_radius: 12
+    m_angle: 70
     m_obstacleMask:
       serializedVersion: 2
       m_Bits: 512
@@ -727,7 +710,7 @@ MonoBehaviour:
     m_volume: 0.5
     m_spatialBlend: 1
     m_settingDetection:
-      m_audibility: 100
+      m_audibility: 35
       m_maxDistance: 5
       m_minDistance: 2
       m_cutOnMin: 0
@@ -757,7 +740,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 20
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -798,7 +781,7 @@ MonoBehaviour:
     m_volume: 1
     m_spatialBlend: 1
     m_settingDetection:
-      m_audibility: 100
+      m_audibility: 45
       m_maxDistance: 5
       m_minDistance: 2
       m_cutOnMin: 0
@@ -828,7 +811,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 25
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -869,7 +852,7 @@ MonoBehaviour:
     m_volume: 0.3
     m_spatialBlend: 1
     m_settingDetection:
-      m_audibility: 100
+      m_audibility: 25
       m_maxDistance: 5
       m_minDistance: 2
       m_cutOnMin: 0
@@ -899,7 +882,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 15
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -970,7 +953,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1041,7 +1024,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1112,7 +1095,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1254,7 +1237,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1325,7 +1308,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
@@ -1396,7 +1379,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     m_setting3D:
-      m_maxDistance: 100
+      m_maxDistance: 35
       m_minDistance: 0
       m_dopplerLevel: 0
       m_spread: 0
