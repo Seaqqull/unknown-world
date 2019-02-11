@@ -559,7 +559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isAreaActive: 1
   m_type: 2
-  m_searchingDelay: 0.5
+  m_searchingDelay: 0.2
   m_priority: 0
   m_socket: {fileID: 4716854585519824}
   m_colorZone: {r: 0.07971394, g: 1, b: 0, a: 1}
