@@ -62,7 +62,7 @@ namespace UnknownWorld.Visualizer
                         Mathf.Lerp(m_colorNoiseBad.g, m_colorNoiseGood.g, progress),
                         Mathf.Lerp(m_colorNoiseBad.b, m_colorNoiseGood.b, progress), m_alpha);
 
-                    UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.position, 360, i);
+                    UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, -transform.right, 360, i);
                 }
             }
             else
@@ -93,7 +93,7 @@ namespace UnknownWorld.Visualizer
                         Mathf.Lerp(m_colorNoiseBad.g, m_colorNoiseGood.g, progress),
                         Mathf.Lerp(m_colorNoiseBad.b, m_colorNoiseGood.b, progress), m_alpha);
 
-                    UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.position, 360, i);
+                    UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, -transform.right, 360, i);
                 }
             }
             else
